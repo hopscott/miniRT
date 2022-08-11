@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:10 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:50:47 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,14 @@ typedef struct s_cylinder
 /* * Functions * */
 /* ************* */
 
-int		parser(char *path, t_list **lst);
+/* PARSING */
+/* linked_list.c */
+t_list		*ft_lstnew(int type, void *content);
+t_list		*ft_lstlast(t_list *lst);
+void		ft_lstadd_back(t_list **lst, t_list *new);
+/* ambient.c */
+t_ambient	*build_ambient(char **tbl);
+/* parser.c */
+int			parser(char *path, t_list **lst);
 
 #endif

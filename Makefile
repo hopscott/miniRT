@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 18:15:41 by swillis           #+#    #+#              #
-#    Updated: 2022/08/11 17:39:27 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/11 17:51:04 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g #
 HEADERS := 	$(INC_DIR)/libft.h\
 
 SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
+			$(SRC_DIR)/parsing/linked_list.c\
+			$(SRC_DIR)/parsing/ambient.c\
 			$(SRC_DIR)/main.c\
 
 # Make all ========================================

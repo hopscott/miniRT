@@ -1,17 +1,6 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/parser.o src/parsing/parser.c
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/linked_list.o src/parsing/linked_list.c
- 
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/ambient.o src/parsing/ambient.c
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/camera.o src/parsing/camera.c
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/light.o src/parsing/light.c
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/sphere.o src/parsing/sphere.c
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/parsing/plane.o src/parsing/plane.c
- 
-make: *** No rule to make target 'src/parsing/cylinder.o', needed by 'miniRT'.
-
-cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  -o src/main.o src/main.c
 make -C lib/libft -f Makefile
+cc -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g  src/parsing/parser.o src/parsing/linked_list.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/main.o lib/libft/libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o ./miniRT
 make: Leaving directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
  

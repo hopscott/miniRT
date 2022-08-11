@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 15:49:00 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 22:40:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ char		**ft_freetbl(char **tbl, int pos);
 int			ft_wordcount(char *str, char c);
 char		**ft_split(char *s, char c);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+double		ft_atod(char *str);
 
 #endif

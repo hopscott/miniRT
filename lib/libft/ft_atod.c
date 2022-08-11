@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 22:42:12 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 22:52:44 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 static int	ft_isspace(char c)
 {
@@ -26,7 +28,7 @@ static int	ft_isnum(char c)
 	return (0);
 }
 
-int	ft_atoi(char *str)
+static int	ft_atoi(char *str)
 {
 	int				i;
 	int				sign;
@@ -50,5 +52,27 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	nbr = n * sign;
+	return (nbr);
+}
+
+double	ft_atod(char *str)
+{
+	int		i;
+	int		integral;
+	int		fractional;
+	double	nbr;
+
+	integral = ft_atoi(str);
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (str[i] && (str[i] == '+' || str[i] == '-'))
+		i++;
+	while (str[i] && ft_isnum(str[i]))
+		i++;
+	fractional = ft_atoi(&str[++i]);
+	if (fractional == 0)
+		return ((double)integral);
+	nbr = (double)integral + ((double)fractional / 10);
 	return (nbr);
 }

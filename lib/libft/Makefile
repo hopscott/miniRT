@@ -1,4 +1,5 @@
 SRCS	=	ft_atoi.c\
+			ft_atod.c\
 			ft_strdup.c\
 			ft_strjoin.c\
 			ft_strlen.c\

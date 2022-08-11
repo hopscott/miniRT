@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 22:25:35 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 22:53:38 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ t_light	*build_light(char **tbl)
 	if (!obj)
 		return (NULL);
 	xyz = ft_split(tbl[1], ',');
-	obj->x = (double)ft_atoi(xyz[0]);
-	obj->y = (double)ft_atoi(xyz[1]);
-	obj->z = (double)ft_atoi(xyz[2]);
+	obj->x = (double)ft_atod(xyz[0]);
+	obj->y = (double)ft_atod(xyz[1]);
+	obj->z = (double)ft_atod(xyz[2]);
 	ft_freetbl(xyz, -1);
-	obj->brightness_ratio = (double)ft_atoi(tbl[2]);
+	obj->brightness_ratio = (double)ft_atod(tbl[2]);
 	rgb = ft_split(tbl[3], ',');
 	obj->r = (size_t)ft_atoi(rgb[0]);
 	obj->g = (size_t)ft_atoi(rgb[1]);

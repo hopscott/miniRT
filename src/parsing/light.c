@@ -1,48 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 21:35:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 22:25:35 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_list	*ft_lstnew(int type, void *content)
+t_light	*build_light(char **tbl)
 {
-	t_list	*elem;
+	t_light		*obj;
+	char		**xyz;
+	char		**rgb;
 
-	elem = malloc(sizeof(t_list));
-	if (!elem)
+	obj = malloc(sizeof(t_light));
+	if (!obj)
 		return (NULL);
-	elem->type = type;
-	elem->content = content;
-	elem->next = NULL;
-	return (elem);
-}
-
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last;
-
-	if (lst && *lst)
-	{
-		last = ft_lstlast(*lst);
-		last->next = new;
-	}
-	else
-		*lst = new;
+	xyz = ft_split(tbl[1], ',');
+	obj->x = (double)ft_atoi(xyz[0]);
+	obj->y = (double)ft_atoi(xyz[1]);
+	obj->z = (double)ft_atoi(xyz[2]);
+	ft_freetbl(xyz, -1);
+	obj->brightness_ratio = (double)ft_atoi(tbl[2]);
+	rgb = ft_split(tbl[3], ',');
+	obj->r = (size_t)ft_atoi(rgb[0]);
+	obj->g = (size_t)ft_atoi(rgb[1]);
+	obj->b = (size_t)ft_atoi(rgb[2]);
+	ft_freetbl(rgb, -1);
+	return (obj);
 }

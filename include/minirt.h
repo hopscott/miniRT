@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 17:15:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:29:10 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ typedef struct s_cylinder
 /* * Functions * */
 /* ************* */
 
-t_list	**parser(char *path);
+int		parser(char *path, t_list **lst);
 
 #endif

@@ -6,19 +6,31 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 16:25:51 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:14:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minirt.h"
 
-	char	*path;
+t_list	*ft_lstnew(int type, void *content)
+{
+	t_list	*elem;
+
+	elem = malloc(sizeof(t_list));
+	if (!elem)
+		return (NULL);
+	elem->type = type;
+	elem->content = content;
+	elem->next = NULL;
+	return (elem);
+}
+
+t_list	**parser(char *path)
+{
 	int		fd;
 	char	*str;
 	char	**tbl;
 
-	if (ac != 2)
-		return (1);
-	path = av[1];
 	fd = open(path, O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
@@ -41,3 +53,5 @@
 		str = get_next_line(fd);
 	}
 	close(fd);
+	return (NULL);
+}

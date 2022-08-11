@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 17:05:17 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:15:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct s_list
 typedef struct s_ambient
 {
 	double	lighting_ratio;
-	t_size	r;
-	t_size	g;
-	t_size	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 }			t_ambient;
 
 /* identifier: C 												*/
@@ -66,7 +66,7 @@ typedef struct s_camera
 	double	vec_x;
 	double	vec_y;
 	double	vec_z;
-	t_size	fov;
+	size_t	fov;
 }			t_camera;
 
 /* identifier: L 												*/
@@ -80,9 +80,9 @@ typedef struct s_light
 	double	y;
 	double	z;
 	double	brightness_ratio;
-	t_size	r;
-	t_size	g;
-	t_size	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 }			t_light;
 
 /* identifier: sp											*/
@@ -96,9 +96,9 @@ typedef struct s_sphere
 	double	y;
 	double	z;
 	double	diameter;
-	t_size	r;
-	t_size	g;
-	t_size	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 }			t_sphere;
 
 /* identifier: pl										*/
@@ -115,9 +115,9 @@ typedef struct s_plane
 	double	vec_x;
 	double	vec_y;
 	double	vec_z;
-	t_size	r;
-	t_size	g;
-	t_size	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 }			t_plane;
 
 /* identifier: cy										*/
@@ -138,9 +138,15 @@ typedef struct s_cylinder
 	double	vec_z;
 	double	diameter;
 	double	height;
-	t_size	r;
-	t_size	g;
-	t_size	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 }			t_cylinder;
+
+/* ************* */
+/* * Functions * */
+/* ************* */
+
+t_list	**parser(char *path);
 
 #endif

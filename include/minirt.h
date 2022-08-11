@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 17:50:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:57:38 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 /* ambient.c */
 t_ambient	*build_ambient(char **tbl);
+/* camera.c */
+t_camera	*build_camera(char **tbl);
 /* parser.c */
 int			parser(char *path, t_list **lst);
 

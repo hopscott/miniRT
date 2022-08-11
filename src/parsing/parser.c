@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 17:51:37 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:57:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	parser(char *path, t_list **lst)
 		if ((ft_strncmp(tbl[0], "A", 2)) == 0)
 			ft_lstadd_back(lst, ft_lstnew(AMBIENT, build_ambient(tbl)));
 		else if ((ft_strncmp(tbl[0], "C", 2)) == 0)
-			printf("Camera\n");
+			ft_lstadd_back(lst, ft_lstnew(CAMERA, build_camera(tbl)));
 		else if ((ft_strncmp(tbl[0], "L", 2)) == 0)
 			printf("Light\n");
 		else if ((ft_strncmp(tbl[0], "sp", 3)) == 0)

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 18:15:41 by swillis           #+#    #+#              #
-#    Updated: 2022/08/11 20:49:53 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/12 14:55:25 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,9 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/sphere.c\
 			$(SRC_DIR)/parsing/plane.c\
 			$(SRC_DIR)/parsing/cylinder.c\
+			$(SRC_DIR)/vec3/init.c\
+			$(SRC_DIR)/vec3/basic_ops.c\
+			$(SRC_DIR)/vec3/adv_ops.c\
 			$(SRC_DIR)/main.c\
 
 # Make all ========================================

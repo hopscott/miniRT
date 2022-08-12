@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 21:49:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:45:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_H
 
 # include "libft.h"
+# include "vec3.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -154,29 +155,36 @@ typedef union u_object {
 	t_cylinder	cy;	
 }				t_object;
 
-/* ************* */
-/* * Functions * */
-/* ************* */
-/* ==================== PARSING ======================= */
+/* ************************************************* */
+/* ***************** FUNCTIONS ********************* */
+/* ************************************************* */
+/* ================== PARSING ====================== */
 /* linked_list.c */
 t_list		*ft_lstnew(int type, void *content);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
+
 /* ambient.c */
 t_ambient	*build_ambient(char **tbl);
+
 /* camera.c */
 t_camera	*build_camera(char **tbl);
+
 /* light.c */
 t_light		*build_light(char **tbl);
+
 /* sphere.c */
 t_sphere	*build_sphere(char **tbl);
+
 /* plane.c */
 t_plane		*build_plane(char **tbl);
+
 /* cylinder.c */
 t_cylinder	*build_cylinder(char **tbl);
+
 /* parser.c */
 int			parser(char *path, t_list **lst);
 void		ft_print_objects(t_list **lst);
-/* ==================================================== */
+/* ================================================= */
 
 #endif

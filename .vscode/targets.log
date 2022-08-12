@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Fri Aug 12 15:29:04 2022
+# Make data base, printed on Fri Aug 12 19:20:40 2022
 
 # Variables
 
@@ -70,7 +69,7 @@ OBJS := src/parsing/parser.o src/parsing/linked_list.o src/parsing/ambient.o src
 # environment
 MANAGERPID = 716676
 # environment
-VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis/miniRT
+VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session8
 # environment
@@ -116,7 +115,7 @@ GIO_LAUNCHED_DESKTOP_FILE_PID = 718875
 # environment
 DISPLAY = :0
 # environment
-PWD = /mnt/nfs/homes/swillis/sgoinfre/miniRT
+PWD = /sgoinfre/goinfre/Perso/swillis/miniRT
 # default
 .LOADED := 
 # environment
@@ -186,7 +185,7 @@ LESS = -R
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/swillis/sgoinfre
+OLDPWD = /mnt/nfs/homes/swillis/sgoinfre/miniRT
 # environment
 TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # default
@@ -250,7 +249,7 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/40596/docker.sock
 # environment
-VSCODE_PID = 719047
+VSCODE_PID = 751592
 # environment
 TERMINATOR_UUID = urn:uuid:6994386c-ea04-478e-94b0-9731efd12f69
 # variable set hash-table stats:
@@ -262,11 +261,11 @@ TERMINATOR_UUID = urn:uuid:6994386c-ea04-478e-94b0-9731efd12f69
 
 # Directories
 
-# include (device 54, inode 12752506): 5 files, no impossibilities so far.
-# . (device 54, inode 36807445): 11 files, no impossibilities.
-# src/parsing (device 54, inode 37275879): 7 files, no impossibilities so far.
+# include (device 54, inode 4845708): 4 files, no impossibilities so far.
+# . (device 54, inode 4845589): 11 files, no impossibilities.
+# src/parsing (device 54, inode 4845985): 4 files, no impossibilities so far.
 
-# 23 files, no impossibilities in 3 directories.
+# 19 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -277,6 +276,7 @@ TERMINATOR_UUID = urn:uuid:6994386c-ea04-478e-94b0-9731efd12f69
 # 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
+ 
 
 # Not a target:
 src/vec3/basic_ops.o:
@@ -284,11 +284,10 @@ src/vec3/basic_ops.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 # Not a target:
 src/parsing/parser.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-11 23:14:14.967562312
+#  Last modified 2022-08-12 19:19:57.061028048
 #  File has been updated.
 #  Successfully updated.
 
@@ -326,7 +325,7 @@ miniRT: src/parsing/parser.o src/parsing/linked_list.o src/parsing/ambient.o src
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-12 14:55:25.44691244
+#  Last modified 2022-08-12 19:19:56.693041755
 #  File has been updated.
 #  Successfully updated.
 
@@ -447,7 +446,7 @@ lib/libft/libft.a:
 # Not a target:
 include/libft.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-11 22:40:53.88993823
+#  Last modified 2022-08-12 19:19:56.697041606
 #  File has been updated.
 #  Successfully updated.
 
@@ -471,12 +470,12 @@ src/parsing/plane.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 49 / storage = 570 B / avg = 11 B
-# current buf: size = 8162 B / used = 570 B / count = 49 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 45 / storage = 531 B / avg = 11 B
+# current buf: size = 8162 B / used = 531 B / count = 45 / avg = 11 B
 
-# strcache performance: lookups = 80 / hit rate = 38%
+# strcache performance: lookups = 76 / hit rate = 40%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=3/80=4%
-# Finished Make data base on Fri Aug 12 15:29:04 2022
+# Load=45/8192=1%, Rehash=0, Collisions=3/76=4%
+# Finished Make data base on Fri Aug 12 19:20:40 2022
 
  

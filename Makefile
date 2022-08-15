@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
+#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 18:15:41 by swillis           #+#    #+#              #
-#    Updated: 2022/08/12 14:55:25 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/15 01:55:42 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name ==========================================
 
-NAME := miniRT.a
+NAME := miniRT.a #I'm not sure if we are suppose to build a library
 
 # Dirs ==========================================
 
@@ -37,6 +37,7 @@ HEADERS := 	$(INC_DIR)/libft.h\
 
 SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/linked_list.c\
+			$(SRC_DIR)/parsing/errorinizer.c\
 			$(SRC_DIR)/parsing/ambient.c\
 			$(SRC_DIR)/parsing/camera.c\
 			$(SRC_DIR)/parsing/light.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/12 15:45:56 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/15 03:02:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "mlx.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+
+#define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
+#define HELP_MSG "usage: ./miniRT scene_file.rt\n"
+#define ERROR_PARSING "Parsing error\n"
 
 /* type of objects in linked list */
 
@@ -152,7 +157,7 @@ typedef union u_object {
 	t_light		l;
 	t_sphere	sp;
 	t_plane		pl;
-	t_cylinder	cy;	
+	t_cylinder	cy;
 }				t_object;
 
 /* ************************************************* */
@@ -163,6 +168,11 @@ typedef union u_object {
 t_list		*ft_lstnew(int type, void *content);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
+void		free_lst_tbl(t_list **lst, char **tbl);
+
+/* errorinizer.c */
+void		putstr_error(char *err);
+void		print_help(void);
 
 /* ambient.c */
 t_ambient	*build_ambient(char **tbl);
@@ -183,6 +193,8 @@ t_plane		*build_plane(char **tbl);
 t_cylinder	*build_cylinder(char **tbl);
 
 /* parser.c */
+int			sub_parser_1(char **tbl, t_list **lst);
+t_list		*sub_parser_2(char **tbl, t_list **lst, int type);
 int			parser(char *path, t_list **lst);
 void		ft_print_objects(t_list **lst);
 /* ================================================= */

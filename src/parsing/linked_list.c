@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 21:35:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/15 02:25:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_list	*ft_lstnew(int type, void *content)
 {
 	t_list	*elem;
 
+	if (!content)
+		return (NULL);
 	elem = malloc(sizeof(t_list));
 	if (!elem)
 		return (NULL);
@@ -45,4 +47,25 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 	else
 		*lst = new;
+}
+
+void	free_lst_tbl(t_list **lst, char **tbl)
+{
+	t_list	*tmp;
+
+	ft_freetbl(tbl, -1);
+	if (lst)
+	{
+		if (*lst)
+		{
+			while (*lst)
+			{
+				tmp = *lst;
+				*lst = (*lst)->next;
+				free (tmp);
+			}
+		}
+		free(lst);
+		lst = NULL;
+	}
 }

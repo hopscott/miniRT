@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+build_ambient	parsing/ambient.c	/^t_ambient	*build_ambient(char **tbl)$/;"	f	typeref:typename:t_ambient *
+build_camera	parsing/camera.c	/^t_camera	*build_camera(char **tbl)$/;"	f	typeref:typename:t_camera *
+build_cylinder	parsing/cylinder.c	/^t_cylinder	*build_cylinder(char **tbl)$/;"	f	typeref:typename:t_cylinder *
+build_light	parsing/light.c	/^t_light	*build_light(char **tbl)$/;"	f	typeref:typename:t_light *
+build_plane	parsing/plane.c	/^t_plane	*build_plane(char **tbl)$/;"	f	typeref:typename:t_plane *
+build_sphere	parsing/sphere.c	/^t_sphere	*build_sphere(char **tbl)$/;"	f	typeref:typename:t_sphere *
+ft_lstadd_back	parsing/linked_list.c	/^void	ft_lstadd_back(t_list **lst, t_list *new)$/;"	f	typeref:typename:void
+ft_lstlast	parsing/linked_list.c	/^t_list	*ft_lstlast(t_list *lst)$/;"	f	typeref:typename:t_list *
+ft_lstnew	parsing/linked_list.c	/^t_list	*ft_lstnew(int type, void *content)$/;"	f	typeref:typename:t_list *
+ft_print_objects	parsing/parser.c	/^void	ft_print_objects(t_list **lst)$/;"	f	typeref:typename:void
+main	main.c	/^int	main(int ac, char **av)$/;"	f	typeref:typename:int
+parser	parsing/parser.c	/^int	parser(char *path, t_list **lst)$/;"	f	typeref:typename:int
+vec3_add	vec3/basic_ops.c	/^t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *
+vec3_cross	vec3/adv_ops.c	/^t_vec3	*vec3_cross(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *
+vec3_divide	vec3/basic_ops.c	/^t_vec3	*vec3_divide(t_vec3 *vec1, double n)$/;"	f	typeref:typename:t_vec3 *
+vec3_dot	vec3/adv_ops.c	/^double	vec3_dot(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:double
+vec3_init	vec3/init.c	/^t_vec3	*vec3_init(double a, double b, double c)$/;"	f	typeref:typename:t_vec3 *
+vec3_len	vec3/init.c	/^double	vec3_len(t_vec3 *vec)$/;"	f	typeref:typename:double
+vec3_lensq	vec3/init.c	/^double	vec3_lensq(t_vec3 *vec)$/;"	f	typeref:typename:double
+vec3_multiply	vec3/basic_ops.c	/^t_vec3	*vec3_multiply(t_vec3 *vec1, double n)$/;"	f	typeref:typename:t_vec3 *
+vec3_print	vec3/adv_ops.c	/^void	vec3_print(t_vec3 *vec)$/;"	f	typeref:typename:void
+vec3_subtract	vec3/basic_ops.c	/^t_vec3	*vec3_subtract(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *
+vec3_unit	vec3/adv_ops.c	/^t_vec3	*vec3_unit(t_vec3 *vec1)$/;"	f	typeref:typename:t_vec3 *

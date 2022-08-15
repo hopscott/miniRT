@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Fri Aug 12 15:29:04 2022
+# Make data base, printed on Mon Aug 15 15:10:58 2022
 
 # Variables
 
@@ -28,15 +28,17 @@ XDG_SESSION_TYPE = x11
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-XAUTHORITY = /mnt/nfs/homes/swillis/.Xauthority
+XAUTHORITY = /mnt/nfs/homes/omoudni/.Xauthority
 # environment
 GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /sgoinfre/goinfre/Perso/swillis/miniRT
+CURDIR := /mnt/nfs/homes/omoudni/miniRT
 # makefile
 SHELL = /bin/sh
+# environment
+GDM_LANG = en
 # environment
 VTE_VERSION = 6003
 # environment
@@ -46,7 +48,7 @@ _ = /usr/bin/code
 # makefile (from 'Makefile', line 32)
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g 
 # environment
-JOURNAL_STREAM = 9:3679577
+JOURNAL_STREAM = 9:1519502
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -62,39 +64,39 @@ GNUMAKEFLAGS :=
 # environment
 MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
-XDG_DATA_DIRS = /usr/share/gnome:/usr/share/ubuntu:/mnt/nfs/homes/swillis/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /usr/share/gnome:/usr/share/ubuntu:/mnt/nfs/homes/omoudni/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/40596/bus
-# makefile (from 'Makefile', line 62)
-OBJS := src/parsing/parser.o src/parsing/linked_list.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/main.o
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
+# makefile (from 'Makefile', line 63)
+OBJS := src/parsing/parser.o src/parsing/linked_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/main.o
 # environment
-MANAGERPID = 716676
+MANAGERPID = 362282
 # environment
-VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis/miniRT
+VSCODE_CWD = /mnt/nfs/homes/omoudni/miniRT
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session8
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session9
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_40596_IqNt9p
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_GwAK6d
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /mnt/nfs/homes/swillis/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /mnt/nfs/homes/omoudni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
-GPG_AGENT_INFO = /run/user/40596/gnupg/S.gpg-agent:0:1
+GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # makefile (from 'Makefile', line 22)
 BIN_DIR := .
 # environment
-SESSION_MANAGER = local/e1r13p4.clusters.42paris.fr:@/tmp/.ICE-unix/717198,unix/e1r13p4.clusters.42paris.fr:/tmp/.ICE-unix/717198
+SESSION_MANAGER = local/e1r4p23.clusters.42paris.fr:@/tmp/.ICE-unix/362809,unix/e1r4p23.clusters.42paris.fr:/tmp/.ICE-unix/362809
 # environment
-XDG_RUNTIME_DIR = /run/user/40596
+XDG_RUNTIME_DIR = /run/user/101608
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = e45f194c392f48348e1f4228af13bdb4
+INVOCATION_ID = 215fddb0893348d3be7511db15f73d74
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # default
@@ -102,25 +104,25 @@ LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
-XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/swillis
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/omoudni
 # environment
 LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # environment
 XDG_SESSION_DESKTOP = ubuntu
 # environment
-SSH_AUTH_SOCK = /run/user/40596/keyring/ssh
+SSH_AUTH_SOCK = /run/user/101608/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 718875
+GIO_LAUNCHED_DESKTOP_FILE_PID = 370847
 # automatic
 %F = $(notdir $%)
 # environment
 DISPLAY = :0
 # environment
-PWD = /mnt/nfs/homes/swillis/sgoinfre/miniRT
+PWD = /mnt/nfs/homes/omoudni/miniRT
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 717158
+SSH_AGENT_PID = 362773
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 20)
@@ -130,19 +132,19 @@ GTK_MODULES = gail:atk-bridge
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /mnt/nfs/homes/swillis
+HOME = /mnt/nfs/homes/omoudni
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/swillis/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
-LOGNAME = swillis
+LOGNAME = omoudni
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from 'Makefile', line 36)
 HEADERS := include/libft.h 
 # environment
-ZSH = /mnt/nfs/homes/swillis/.oh-my-zsh
+ZSH = /mnt/nfs/homes/omoudni/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # environment
@@ -160,10 +162,10 @@ MAKECMDGOALS := all
 # environment
 QT_IM_MODULE = ibus
 # makefile (from 'Makefile', line 38)
-SRCS := src/parsing/parser.c src/parsing/linked_list.c src/parsing/ambient.c src/parsing/camera.c src/parsing/light.c src/parsing/sphere.c src/parsing/plane.c src/parsing/cylinder.c src/vec3/init.c src/vec3/basic_ops.c src/vec3/adv_ops.c src/main.c 
+SRCS := src/parsing/parser.c src/parsing/linked_list.c src/parsing/errorinizer.c src/parsing/ambient.c src/parsing/camera.c src/parsing/light.c src/parsing/sphere.c src/parsing/plane.c src/parsing/cylinder.c src/vec3/init.c src/vec3/basic_ops.c src/vec3/adv_ops.c src/main.c 
 # environment
 SHLVL = 2
-# makefile (from 'Makefile', line 66)
+# makefile (from 'Makefile', line 67)
 LIBFT := lib/libft/libft.a
 # makefile (from 'Makefile', line 30)
 CC := cc
@@ -172,7 +174,7 @@ IM_CONFIG_PHASE = 1
 # default
 MAKE_VERSION := 4.2.1
 # environment
-USER = swillis
+USER = omoudni
 # makefile
 .DEFAULT_GOAL := all
 # environment
@@ -186,7 +188,7 @@ LESS = -R
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/swillis/sgoinfre
+OLDPWD = /mnt/nfs/homes/omoudni
 # environment
 TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # default
@@ -194,9 +196,11 @@ TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # automatic
 *F = $(notdir $*)
 # environment
+LANGUAGE = en
+# environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/40596/vscode-f6bb8478-1.69.2-main.sock
+VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.69.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -236,7 +240,7 @@ CHROME_DESKTOP = code-url-handler.desktop
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # makefile (from 'Makefile', line 15)
-NAME := miniRT.a
+NAME := miniRT.a 
 # default
 .RECIPEPREFIX := 
 # makefile (from 'Makefile', line 26)
@@ -248,13 +252,13 @@ TERM = xterm-256color
 # environment
 TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
-DOCKER_HOST = unix:///run/user/40596/docker.sock
+DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 719047
+VSCODE_PID = 370973
 # environment
-TERMINATOR_UUID = urn:uuid:6994386c-ea04-478e-94b0-9731efd12f69
+TERMINATOR_UUID = urn:uuid:3c2ee865-16b9-404b-b3f3-dff83cbf1e7e
 # variable set hash-table stats:
-# Load=121/1024=12%, Rehash=0, Collisions=24/176=14%
+# Load=123/1024=12%, Rehash=0, Collisions=24/179=13%
 
 # Pattern-specific Variable Values
 
@@ -262,16 +266,16 @@ TERMINATOR_UUID = urn:uuid:6994386c-ea04-478e-94b0-9731efd12f69
 
 # Directories
 
-# include (device 54, inode 12752506): 5 files, no impossibilities so far.
-# . (device 54, inode 36807445): 11 files, no impossibilities.
-# src/parsing (device 54, inode 37275879): 7 files, no impossibilities so far.
+# include (device 59, inode 194865738): 5 files, no impossibilities so far.
+# . (device 59, inode 194826351): 11 files, no impossibilities.
+# src/parsing (device 59, inode 195115032): 7 files, no impossibilities so far.
 
 # 23 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
 %.o: %.c include/libft.h
-#  recipe to execute (from 'Makefile', line 58):
+#  recipe to execute (from 'Makefile', line 59):
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 # 1 implicit rules, 0 (0.0%) terminal.
@@ -284,11 +288,11 @@ src/vec3/basic_ops.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 # Not a target:
 src/parsing/parser.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-11 23:14:14.967562312
+ 
+#  Last modified 2022-08-15 02:31:06.754132815
 #  File has been updated.
 #  Successfully updated.
 
@@ -313,20 +317,26 @@ src/main.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-miniRT: src/parsing/parser.o src/parsing/linked_list.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/main.o lib/libft/libft.a
+# Not a target:
+src/parsing/errorinizer.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+miniRT: src/parsing/parser.o src/parsing/linked_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/main.o lib/libft/libft.a
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/6=0%
-#  recipe to execute (from 'Makefile', line 74):
+#  recipe to execute (from 'Makefile', line 75):
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(EXE)
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-12 14:55:25.44691244
+#  Last modified 2022-08-15 01:55:42.535846437
 #  File has been updated.
 #  Successfully updated.
 
@@ -355,7 +365,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 83):
+#  recipe to execute (from 'Makefile', line 84):
 	make -C lib/libft -f Makefile fclean
 	rm -rf $(EXE)
 
@@ -376,7 +386,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 79):
+#  recipe to execute (from 'Makefile', line 80):
 	make -C lib/libft -f Makefile clean
 	rm -rf $(OBJS)
 
@@ -416,7 +426,7 @@ src/parsing/parser.o: src/parsing/parser.c include/libft.h
 # ? := src/parsing/parser.c include/libft.h
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/16=6%
-#  recipe to execute (from 'Makefile', line 58):
+#  recipe to execute (from 'Makefile', line 59):
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Not a target:
@@ -441,13 +451,13 @@ lib/libft/libft.a:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 69):
+#  recipe to execute (from 'Makefile', line 70):
 	make -C lib/libft -f Makefile
 
 # Not a target:
 include/libft.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-11 22:40:53.88993823
+#  Last modified 2022-08-12 18:16:59.148471457
 #  File has been updated.
 #  Successfully updated.
 
@@ -464,19 +474,19 @@ src/parsing/plane.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=25/1024=2%, Rehash=0, Collisions=3/65=5%
+# Load=26/1024=3%, Rehash=0, Collisions=3/67=4%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 49 / storage = 570 B / avg = 11 B
-# current buf: size = 8162 B / used = 570 B / count = 49 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 50 / storage = 601 B / avg = 12 B
+# current buf: size = 8162 B / used = 601 B / count = 50 / avg = 12 B
 
-# strcache performance: lookups = 80 / hit rate = 38%
+# strcache performance: lookups = 81 / hit rate = 38%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=3/80=4%
-# Finished Make data base on Fri Aug 12 15:29:04 2022
+# Load=50/8192=1%, Rehash=0, Collisions=3/81=4%
+# Finished Make data base on Mon Aug 15 15:10:58 2022
 
  

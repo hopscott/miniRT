@@ -5,9 +5,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
+<<<<<<< HEAD
 # Make data base, printed on Mon Aug 15 15:10:58 2022
+=======
+# Make data base, printed on Fri Aug 12 19:20:40 2022
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 
 # Variables
 
@@ -72,7 +75,11 @@ OBJS := src/parsing/parser.o src/parsing/linked_list.o src/parsing/errorinizer.o
 # environment
 MANAGERPID = 362282
 # environment
+<<<<<<< HEAD
 VSCODE_CWD = /mnt/nfs/homes/omoudni/miniRT
+=======
+VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session9
 # environment
@@ -118,7 +125,11 @@ GIO_LAUNCHED_DESKTOP_FILE_PID = 370847
 # environment
 DISPLAY = :0
 # environment
+<<<<<<< HEAD
 PWD = /mnt/nfs/homes/omoudni/miniRT
+=======
+PWD = /sgoinfre/goinfre/Perso/swillis/miniRT
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 # default
 .LOADED := 
 # environment
@@ -188,7 +199,11 @@ LESS = -R
 # default
 MAKE_COMMAND := make
 # environment
+<<<<<<< HEAD
 OLDPWD = /mnt/nfs/homes/omoudni
+=======
+OLDPWD = /mnt/nfs/homes/swillis/sgoinfre/miniRT
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 # environment
 TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # default
@@ -254,7 +269,11 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
+<<<<<<< HEAD
 VSCODE_PID = 370973
+=======
+VSCODE_PID = 751592
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 # environment
 TERMINATOR_UUID = urn:uuid:3c2ee865-16b9-404b-b3f3-dff83cbf1e7e
 # variable set hash-table stats:
@@ -266,11 +285,17 @@ TERMINATOR_UUID = urn:uuid:3c2ee865-16b9-404b-b3f3-dff83cbf1e7e
 
 # Directories
 
+<<<<<<< HEAD
 # include (device 59, inode 194865738): 5 files, no impossibilities so far.
 # . (device 59, inode 194826351): 11 files, no impossibilities.
 # src/parsing (device 59, inode 195115032): 7 files, no impossibilities so far.
+=======
+# include (device 54, inode 4845708): 4 files, no impossibilities so far.
+# . (device 54, inode 4845589): 11 files, no impossibilities.
+# src/parsing (device 54, inode 4845985): 4 files, no impossibilities so far.
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 
-# 23 files, no impossibilities in 3 directories.
+# 19 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -281,6 +306,7 @@ TERMINATOR_UUID = urn:uuid:3c2ee865-16b9-404b-b3f3-dff83cbf1e7e
 # 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
+ 
 
 # Not a target:
 src/vec3/basic_ops.o:
@@ -291,8 +317,12 @@ src/vec3/basic_ops.o:
 # Not a target:
 src/parsing/parser.c:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
  
 #  Last modified 2022-08-15 02:31:06.754132815
+=======
+#  Last modified 2022-08-12 19:19:57.061028048
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 #  File has been updated.
 #  Successfully updated.
 
@@ -336,7 +366,11 @@ miniRT: src/parsing/parser.o src/parsing/linked_list.o src/parsing/errorinizer.o
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
 #  Last modified 2022-08-15 01:55:42.535846437
+=======
+#  Last modified 2022-08-12 19:19:56.693041755
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 #  File has been updated.
 #  Successfully updated.
 
@@ -457,7 +491,11 @@ lib/libft/libft.a:
 # Not a target:
 include/libft.h:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
 #  Last modified 2022-08-12 18:16:59.148471457
+=======
+#  Last modified 2022-08-12 19:19:56.697041606
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 #  File has been updated.
 #  Successfully updated.
 
@@ -481,6 +519,7 @@ src/parsing/plane.o:
 
 # No general ('VPATH' variable) search path.
 
+<<<<<<< HEAD
 # strcache buffers: 1 (0) / strings = 50 / storage = 601 B / avg = 12 B
 # current buf: size = 8162 B / used = 601 B / count = 50 / avg = 12 B
 
@@ -488,5 +527,14 @@ src/parsing/plane.o:
 # hash-table stats:
 # Load=50/8192=1%, Rehash=0, Collisions=3/81=4%
 # Finished Make data base on Mon Aug 15 15:10:58 2022
+=======
+# strcache buffers: 1 (0) / strings = 45 / storage = 531 B / avg = 11 B
+# current buf: size = 8162 B / used = 531 B / count = 45 / avg = 11 B
+
+# strcache performance: lookups = 76 / hit rate = 40%
+# hash-table stats:
+# Load=45/8192=1%, Rehash=0, Collisions=3/76=4%
+# Finished Make data base on Fri Aug 12 19:20:40 2022
+>>>>>>> a4cb38749aa121c16a5460179724ef721fe694ea
 
  

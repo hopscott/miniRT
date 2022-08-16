@@ -6,11 +6,11 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 18:51:44 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/12 18:59:22 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/16 19:18:41 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt"
+#include "minirt.h"
 
 void	object_space_to_camera_space(t_list **lst)
 {

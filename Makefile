@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/01/17 18:15:41 by swillis           #+#    #+#              #
-#    Updated: 2022/08/16 19:50:36 by swillis          ###   ########.fr        #
+#    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
+#    Updated: 2022/08/16 19:55:09 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name ==========================================
 
-NAME := miniRT.a
+NAME := miniRT.a #I'm not sure if we are suppose to build a library
 
 # Dirs ==========================================
 
@@ -37,6 +37,7 @@ HEADERS := 	$(INC_DIR)/libft.h\
 
 SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/linked_list.c\
+			$(SRC_DIR)/parsing/errorinizer.c\
 			$(SRC_DIR)/parsing/ambient.c\
 			$(SRC_DIR)/parsing/camera.c\
 			$(SRC_DIR)/parsing/light.c\

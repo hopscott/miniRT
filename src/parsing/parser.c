@@ -3,14 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/12 16:07:04 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/15 02:31:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_list	*sub_parser_2(char **tbl, t_list **lst, int type)
+{
+	t_list	*elem;
+
+	if (type == AMBIENT && !(elem = ft_lstnew(AMBIENT, build_ambient(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	else if (type == CAMERA && !(elem =ft_lstnew(CAMERA, build_camera(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	else if (type == LIGHT && !(elem = ft_lstnew(LIGHT, build_light(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	else if (type == SPHERE && !(elem = ft_lstnew(SPHERE, build_sphere(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	else if (type == PLANE && !(elem = ft_lstnew(PLANE, build_plane(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	else if (type == CYLINDER && !(elem = ft_lstnew(CYLINDER, build_cylinder(tbl))))
+		return (free_lst_tbl(lst, tbl), NULL);
+	return (elem);
+}
+
+int	sub_parser_1(char **tbl, t_list **lst)
+{
+		if (!ft_strncmp(tbl[0], "A", 2) && sub_parser_2(tbl, lst, AMBIENT))
+			return (ft_lstadd_back(lst, ft_lstnew(AMBIENT, build_ambient(tbl))), 0);
+		else if (!ft_strncmp(tbl[0], "C", 2) && sub_parser_2(tbl, lst, CAMERA))
+			return (ft_lstadd_back(lst, ft_lstnew(CAMERA, build_camera(tbl))), 0);
+		else if (!ft_strncmp(tbl[0], "L", 2) && sub_parser_2(tbl, lst, LIGHT))
+			return (ft_lstadd_back(lst, ft_lstnew(LIGHT, build_light(tbl))), 0);
+		else if (!ft_strncmp(tbl[0], "sp", 3) && sub_parser_2(tbl, lst, SPHERE))
+			return (ft_lstadd_back(lst, ft_lstnew(SPHERE, build_sphere(tbl))), 0);
+		else if (!ft_strncmp(tbl[0], "pl", 3) && sub_parser_2(tbl, lst, PLANE))
+			return (ft_lstadd_back(lst, ft_lstnew(PLANE, build_plane(tbl))), 0);
+		else if (!ft_strncmp(tbl[0], "cy", 3) && sub_parser_2(tbl, lst, CYLINDER))
+			return (ft_lstadd_back(lst, ft_lstnew(CYLINDER, build_cylinder(tbl))), 0);
+		return (1);
+}
 
 int	parser(char *path, t_list **lst)
 {
@@ -25,21 +61,11 @@ int	parser(char *path, t_list **lst)
 	while (str)
 	{
 		tbl = ft_split(str, ' ');
-		if ((ft_strncmp(tbl[0], "A", 2)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(AMBIENT, build_ambient(tbl)));
-		else if ((ft_strncmp(tbl[0], "C", 2)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(CAMERA, build_camera(tbl)));
-		else if ((ft_strncmp(tbl[0], "L", 2)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(LIGHT, build_light(tbl)));
-		else if ((ft_strncmp(tbl[0], "sp", 3)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(SPHERE, build_sphere(tbl)));
-		else if ((ft_strncmp(tbl[0], "pl", 3)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(PLANE, build_plane(tbl)));
-		else if ((ft_strncmp(tbl[0], "cy", 3)) == 0)
-			ft_lstadd_back(lst, ft_lstnew(CYLINDER, build_cylinder(tbl)));
+		if (sub_parser_1(tbl, lst))
+			return (1);
 		ft_freetbl(tbl, -1);
 		free(str);
-		str = get_next_line(fd);
+		str = get_next_line(fd); //r u sure that this last lign is not to free?
 	}
 	close(fd);
 	return (0);

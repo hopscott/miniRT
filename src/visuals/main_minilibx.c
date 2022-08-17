@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/15 15:10:57 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/17 23:52:51 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_data
 	int width;
 	int height;
 }	t_data;
+
 typedef struct s_vars
 {
 	void *mlx;
@@ -55,8 +56,6 @@ void	clear_window(t_vars *vars)
 int	render_frame(t_vars *vars)
 {
 	clear_window(vars);
-	//draw_background(&vars->image);
-	draw_sprite(&vars->image, &vars->tex, vars->pos.x, vars->pos.y);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->image.img, 0, 0);
 	return (0);
 }

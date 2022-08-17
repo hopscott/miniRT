@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/15 03:02:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/17 22:37:12 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-#define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
-#define HELP_MSG "usage: ./miniRT scene_file.rt\n"
-#define ERROR_PARSING "Parsing error\n"
+# define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
+# define HELP_MSG "usage: ./miniRT scene_file.rt\n"
+# define ERROR_PARSING "Parsing error\n"
 
 /* type of objects in linked list */
 
@@ -39,12 +39,12 @@ enum {
 
 /* Use void pointers in linked list to build up objects */
 
-typedef struct s_list
+typedef struct s_obj_lst
 {
 	int				type;
 	void			*content;
-	struct s_list	*next;
-}			t_list;
+	struct s_obj_lst	*next;
+}			t_obj_lst;
 
 /* identifier: A								 	*/
 /* ambient lighting ratio in range [0.0,1.0]: 0.2	*/
@@ -160,25 +160,43 @@ typedef union u_object {
 	t_cylinder	cy;
 }				t_object;
 
+/*	Light list structure	*/
+
+typedef struct s_light_lst {
+	t_light				*light;
+	struct s_light_lst	*next;
+}	t_light_lst;
+
+/*	Space structure	*/
+
+typedef struct s_space {
+	t_camera	*camera;
+	t_ambient	*ambient;
+	t_light_lst	*lights;
+	t_obj_lst	*objects;
+}	t_space;
+
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
 /* ================== PARSING ====================== */
-/* linked_list.c */
-t_list		*ft_lstnew(int type, void *content);
-t_list		*ft_lstlast(t_list *lst);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		free_lst_tbl(t_list **lst, char **tbl);
+/* object_list.c */
+int			obj_lstadd(t_obj_lst **lst, int type, t_object *object);
+void		obj_lstfree(t_obj_lst **lst);
+
+/* light_list.c */
+int			light_lstadd(t_light_lst **lights, t_light *light);
+void		light_lstfree(t_light_lst **lst);
 
 /* errorinizer.c */
 void		putstr_error(char *err);
 void		print_help(void);
 
 /* ambient.c */
-t_ambient	*build_ambient(char **tbl);
+int			build_ambient(char **tbl, t_ambient **obj);
 
 /* camera.c */
-t_camera	*build_camera(char **tbl);
+int			build_camera(char **tbl, t_camera **obj);
 
 /* light.c */
 t_light		*build_light(char **tbl);
@@ -193,10 +211,9 @@ t_plane		*build_plane(char **tbl);
 t_cylinder	*build_cylinder(char **tbl);
 
 /* parser.c */
-int			sub_parser_1(char **tbl, t_list **lst);
-t_list		*sub_parser_2(char **tbl, t_list **lst, int type);
-int			parser(char *path, t_list **lst);
-void		ft_print_objects(t_list **lst);
+int			parser(char *path, t_space *space);
+void		print_space(t_space *space);
+
 /* ================================================= */
 
 #endif

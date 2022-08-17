@@ -3,107 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/15 02:31:06 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/17 22:59:17 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_list	*sub_parser_2(char **tbl, t_list **lst, int type)
+int	sub_parser(char **tbl, t_space *space)
 {
-	t_list	*elem;
+	int	err;
 
-	if (type == AMBIENT && !(elem = ft_lstnew(AMBIENT, build_ambient(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	else if (type == CAMERA && !(elem =ft_lstnew(CAMERA, build_camera(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	else if (type == LIGHT && !(elem = ft_lstnew(LIGHT, build_light(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	else if (type == SPHERE && !(elem = ft_lstnew(SPHERE, build_sphere(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	else if (type == PLANE && !(elem = ft_lstnew(PLANE, build_plane(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	else if (type == CYLINDER && !(elem = ft_lstnew(CYLINDER, build_cylinder(tbl))))
-		return (free_lst_tbl(lst, tbl), NULL);
-	return (elem);
+	if (!ft_strncmp(tbl[0], "A", 2))
+		err = build_ambient(tbl, &space->ambient);
+	else if (!ft_strncmp(tbl[0], "C", 2))
+		err = build_camera(tbl, &space->camera);
+	else if (!ft_strncmp(tbl[0], "L", 2))
+		err = light_lstadd(&space->lights, build_light(tbl));
+	else if (!ft_strncmp(tbl[0], "sp", 3))
+		err = obj_lstadd(&space->objects, SPHERE, \
+							(t_object *)build_sphere(tbl));
+	else if (!ft_strncmp(tbl[0], "pl", 3))
+		err = obj_lstadd(&space->objects, PLANE, \
+							(t_object *)build_plane(tbl));
+	else if (!ft_strncmp(tbl[0], "cy", 3))
+		err = obj_lstadd(&space->objects, CYLINDER, \
+							(t_object *)build_cylinder(tbl));
+	else
+		err = 1;
+	return (err);
 }
 
-int	sub_parser_1(char **tbl, t_list **lst)
+int	parser(char *path, t_space *space)
 {
-		if (!ft_strncmp(tbl[0], "A", 2) && sub_parser_2(tbl, lst, AMBIENT))
-			return (ft_lstadd_back(lst, ft_lstnew(AMBIENT, build_ambient(tbl))), 0);
-		else if (!ft_strncmp(tbl[0], "C", 2) && sub_parser_2(tbl, lst, CAMERA))
-			return (ft_lstadd_back(lst, ft_lstnew(CAMERA, build_camera(tbl))), 0);
-		else if (!ft_strncmp(tbl[0], "L", 2) && sub_parser_2(tbl, lst, LIGHT))
-			return (ft_lstadd_back(lst, ft_lstnew(LIGHT, build_light(tbl))), 0);
-		else if (!ft_strncmp(tbl[0], "sp", 3) && sub_parser_2(tbl, lst, SPHERE))
-			return (ft_lstadd_back(lst, ft_lstnew(SPHERE, build_sphere(tbl))), 0);
-		else if (!ft_strncmp(tbl[0], "pl", 3) && sub_parser_2(tbl, lst, PLANE))
-			return (ft_lstadd_back(lst, ft_lstnew(PLANE, build_plane(tbl))), 0);
-		else if (!ft_strncmp(tbl[0], "cy", 3) && sub_parser_2(tbl, lst, CYLINDER))
-			return (ft_lstadd_back(lst, ft_lstnew(CYLINDER, build_cylinder(tbl))), 0);
-		return (1);
-}
-
-int	parser(char *path, t_list **lst)
-{
+	int		err;
 	int		fd;
 	char	*str;
 	char	**tbl;
 
+	space->ambient = NULL;
+	space->camera = NULL;
+	space->lights = NULL;
+	space->objects = NULL;
 	fd = open(path, O_RDONLY);
 	if (!fd)
 		return (1);
+	err = 0;
 	str = get_next_line(fd);
-	while (str)
+	while (str && !err)
 	{
 		tbl = ft_split(str, ' ');
-		if (sub_parser_1(tbl, lst))
-			return (1);
+		err = sub_parser(tbl, space);
 		ft_freetbl(tbl, -1);
 		free(str);
-		str = get_next_line(fd); //r u sure that this last lign is not to free?
+		if (err)
+			break ;
+		str = get_next_line(fd);
 	}
 	close(fd);
-	return (0);
+	return (err);
 }
 
-void	ft_print_objects(t_list **lst)
+void	print_space(t_space *space)
 {
-	t_list		*elem;
-	t_object	*obj;
-
-	elem = *lst;
-	while (elem)
+	t_obj_lst		*o;
+	t_light_lst		*l;
+	t_object		*obj;
+	
+	printf("##### AMBIENT\t=> brightness(%.1f)\t\t\t\t\t\t\t\trgb(%zu,%zu,%zu) \n", space->ambient->lighting_ratio, space->ambient->r, space->ambient->g, space->ambient->b);
+	printf("-<[0] CAMERA\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tfov(%zu) \n", space->camera->x, space->camera->y, space->camera->z, space->camera->vec_x, space->camera->vec_y, space->camera->vec_z, space->camera->fov);
+	l = space->lights;
+	while (l)
 	{
-		obj = (t_object *)(elem->content);
-		if (elem->type == AMBIENT)
-			printf("AMBIENT\t\t=> %f %zu,%zu,%zu \n", \
-				obj->a.lighting_ratio, obj->a.r, obj->a.g, obj->a.b);
-		else if (elem->type == CAMERA)
-			printf("CAMERA\t\t=> %f,%f,%f %f,%f,%f %zu \n", \
-			obj->c.x, obj->c.y, obj->c.z, obj->c.vec_x, obj->c.vec_y, \
-			obj->c.vec_z, obj->c.fov);
-		else if (elem->type == LIGHT)
-			printf("LIGHT\t\t=> %f,%f,%f %f %zu,%zu,%zu \n", \
-			obj->l.x, obj->l.y, obj->l.z, obj->l.brightness_ratio, obj->l.r, \
-			obj->l.g, obj->l.b);
-		else if (elem->type == SPHERE)
-			printf("SPHERE\t\t=> %f,%f,%f %f %zu,%zu,%zu \n", \
-			obj->sp.x, obj->sp.y, obj->sp.z, obj->sp.diameter, obj->sp.r, \
-			obj->sp.g, obj->sp.b);
-		else if (elem->type == PLANE)
-			printf("PLANE\t\t=> %f,%f,%f %f,%f,%f %zu,%zu,%zu \n", \
-			obj->pl.x, obj->pl.y, obj->pl.z, obj->pl.vec_x, obj->pl.vec_y, \
-			obj->pl.vec_z, obj->pl.r, obj->pl.g, obj->pl.b);
-		else if (elem->type == CYLINDER)
-			printf("CYLINDER\t=> %f,%f,%f %f,%f,%f %f %f %zu,%zu,%zu \n", \
-			obj->cy.x, obj->cy.y, obj->cy.z, obj->cy.vec_x, obj->cy.vec_y, \
-			obj->cy.vec_z, obj->cy.diameter, obj->cy.height, obj->cy.r, \
-			obj->cy.g, obj->cy.b);
-		elem = elem->next;
+		printf("((*)) LIGHT\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tbrightness(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", l->light->x, l->light->y, l->light->z, l->light->brightness_ratio, l->light->r, l->light->g, l->light->b);
+		l = l->next;
+	}
+	o = space->objects;
+	while (o)
+	{
+		obj = (t_object *)(o->content);
+		if (o->type == SPHERE)
+			printf("  o   SPHERE\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tradius(%.1f)\t\trgb(%zu,%zu,%zu) \n", obj->sp.x, obj->sp.y, obj->sp.z, obj->sp.diameter, obj->sp.r, obj->sp.g, obj->sp.b);
+		else if (o->type == PLANE)
+			printf(" [X]  PLANE\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\t\t\t\t\trgb(%zu,%zu,%zu) \n", obj->pl.x, obj->pl.y, obj->pl.z, obj->pl.vec_x, obj->pl.vec_y, obj->pl.vec_z, obj->pl.r, obj->pl.g, obj->pl.b);
+		else if (o->type == CYLINDER)
+			printf(" o=o  CYLINDER\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tdiameter(%.1f) height(%.1f)\trgb(%zu,%zu,%zu) \n", obj->cy.x, obj->cy.y, obj->cy.z, obj->cy.vec_x, obj->cy.vec_y, obj->cy.vec_z, obj->cy.diameter, obj->cy.height, obj->cy.r, obj->cy.g, obj->cy.b);
+		o = o->next;
 	}
 }

@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   object_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/15 02:25:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/17 21:48:37 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_list	*ft_lstnew(int type, void *content)
+t_obj_lst	*obj_lstnew(int type, void *content)
 {
-	t_list	*elem;
+	t_obj_lst	*elem;
 
 	if (!content)
 		return (NULL);
-	elem = malloc(sizeof(t_list));
+	elem = malloc(sizeof(t_obj_lst));
 	if (!elem)
 		return (NULL);
 	elem->type = type;
@@ -27,7 +27,7 @@ t_list	*ft_lstnew(int type, void *content)
 	return (elem);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+t_obj_lst	*obj_lstlast(t_obj_lst *lst)
 {
 	if (!lst)
 		return (0);
@@ -36,36 +36,42 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	obj_lstadd(t_obj_lst **lst, int type, t_object *object)
 {
-	t_list	*last;
+	t_obj_lst	*new;
+	t_obj_lst	*last;
 
+	if (object == NULL)
+		return (1);
+	new = obj_lstnew(type, object);
+	if (!new)
+		return (1);
 	if (lst && *lst)
 	{
-		last = ft_lstlast(*lst);
+		last = obj_lstlast(*lst);
 		last->next = new;
 	}
 	else
 		*lst = new;
+	return (0);
 }
 
-void	free_lst_tbl(t_list **lst, char **tbl)
+void	obj_lstfree(t_obj_lst **lst)
 {
-	t_list	*tmp;
+	t_obj_lst	*elem;
+	t_obj_lst	*next;
 
-	ft_freetbl(tbl, -1);
-	if (lst)
+	if (lst && *lst)
 	{
-		if (*lst)
+		elem = *lst;
+		while (elem)
 		{
-			while (*lst)
-			{
-				tmp = *lst;
-				*lst = (*lst)->next;
-				free (tmp);
-			}
+			next = elem->next;
+			if (elem->content)
+				free(elem->content);
+			free(elem);
+			elem = next;
 		}
-		free(lst);
 		lst = NULL;
 	}
 }

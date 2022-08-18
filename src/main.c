@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/17 23:02:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/18 15:29:03 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **av)
 	if (parser(path, &space))
 		return (putstr_error(ERROR_PARSING), 1);
 	print_space(&space);
+	mlx_render(&space);
 	space_free(&space);
 	return (0);
 }

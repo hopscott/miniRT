@@ -6,28 +6,13 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 18:10:04 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/18 18:57:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /* https://www.scratchapixel.com/code.php?id=10&origin=/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes */
-
-// bool trace(const Vec3f &orig, const Vec3f &dir, const std::vector<std::unique_ptr<Object>> &objects, float &tNear, const Object *&hitObject) 
-// { 
-//     tNear = kInfinity; 
-//     std::vector<std::unique_ptr<Object>>::const_iterator iter = objects.begin(); 
-//     for (; iter != objects.end(); ++iter) { 
-//         float t = kInfinity; 
-//         if ((*iter)->intersect(orig, dir, t) && t < tNear) { 
-//             hitObject = iter->get(); 
-//             tNear = t; 
-//         } 
-//     } 
- 
-//     return (hitObject != nullptr); 
-// } 
 
 // Vec3f castRay( 
 //     const Vec3f &orig, const Vec3f &dir, 
@@ -48,20 +33,17 @@
 //         float pattern = (fmodf(tex.x * scale, 1) > 0.5) ^ (fmodf(tex.y * scale, 1) > 0.5); 
 //         hitColor = std::max(0.f, Nhit.dotProduct(-dir)) * mix(hitObject->color, hitObject->color * 0.8, pattern); 
 //     } 
- 
 //     return hitColor; 
 // } 
 
-int	intersects_sphere(t_vec3 *origin, t_vec3 *direction, t_sphere *sphere)
-{
+int	intersects_sphere(t_vec3 *origin, t_vec3 *direction, t_sphere *sphere) {
 	(void)origin;
 	(void)direction;
 	(void)sphere;
 	return (1);
 }
 
-t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
-{
+t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects) {
 	double		t;
 	double		tmin;
 	t_obj_lst	*nearest;
@@ -96,8 +78,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 	return (nearest);
 }
 
-t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
-{
+t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space) {
 	t_obj_lst		*olst;
 	t_object		*obj;
 	t_vec3			*rgb;
@@ -105,12 +86,14 @@ t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
 
 	// light = nearest_hit_light(origin, direction, space->lights);
 	olst = nearest_hit_object(origin, direction, &space->objects);
-	printf("nearest obj -> %d\n", olst->type);
 	if (olst)
 	{
 		obj = (t_object *)(olst->content);
 		if (olst->type == SPHERE)
+		{
+			printf("nearest obj SPHERE -> xyz(%.1f, %.1f, %.1f)\n", obj->sp.x, obj->sp.y, obj->sp.z);
 			rgb = vec3_init(obj->sp.r, obj->sp.g, obj->sp.b);
+		}
 		else if (olst->type == PLANE)
 			;
 		else if (olst->type == CYLINDER)
@@ -123,8 +106,7 @@ t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
 	return (rgb);
 }
 
-unsigned int	rgb_colour(t_vec3 *rgb)
-{
+unsigned int	rgb_colour(t_vec3 *rgb) {
 	unsigned int	r;
 	unsigned int	g;
 	unsigned int	b;
@@ -152,6 +134,31 @@ unsigned int	rgb_colour(t_vec3 *rgb)
 // 	blue = c0->b * (1 - p) + c1->b * p;
 // 	return (rgb_colour(red, green, blue));
 // }
+
+// void	*routine(void *arg)
+// {
+// 	py = -1;
+// 	while (++py < height)
+// 	{
+// 		px = -1;
+// 		while (++px < width)
+// 		{
+// 			x = ((px + 0.5) / width);
+// 			y = ((py + 0.5) / height);
+// 			vec = vec3_init(x, y, -1);
+// 			direction = vec3_matrix_multiply(mat, vec, 1);
+// 			free(vec);
+// 			rgb = cast_ray(origin, direction, space);
+// 			free(direction);
+// 			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
+// 			printf("[%d][%d] => %X\n", px, py, rgb_colour(rgb));
+// 			// vec3_print(rgb);
+// 			free(rgb);
+// 		}
+// 	}
+// }
+
+// void	space_render_threading()
 
 void	space_render(t_data *data, int width, int height, t_space *space)
 {

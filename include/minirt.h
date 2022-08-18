@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 18:57:43 by swillis          ###   ########.fr       */
+/*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
+/*   Updated: 2022/08/18 19:00:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,12 @@ void		space_render(t_data *data, int width, int height, t_space *space);
 /* mlx_render.c */
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
+/* sphere.c */
+void		calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c);
+double		get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2]);
+double		get_short_dist(double discriminant, double a, double b);
+t_vec3		*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t);
+t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* ================================================= */
 
 #endif

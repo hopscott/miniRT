@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/17 22:37:12 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/18 17:57:35 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+# define WIDTH 800
+# define HEIGHT 600
+
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
 # define HELP_MSG "usage: ./miniRT scene_file.rt\n"
 # define ERROR_PARSING "Parsing error\n"
 
-/* type of objects in linked list */
+/* types of objects in linked list */
 
 enum {
 	ERROR		= -1,
@@ -41,10 +44,10 @@ enum {
 
 typedef struct s_obj_lst
 {
-	int				type;
-	void			*content;
+	int					type;
+	void				*content;
 	struct s_obj_lst	*next;
-}			t_obj_lst;
+}	t_obj_lst;
 
 /* identifier: A								 	*/
 /* ambient lighting ratio in range [0.0,1.0]: 0.2	*/
@@ -176,6 +179,27 @@ typedef struct s_space {
 	t_obj_lst	*objects;
 }	t_space;
 
+/* MLX */
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;	/* UNINITIALISED /!\ */
+	int		height; /* UNINITIALISED /!\ */
+}	t_data;
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	t_data	data;
+	t_space	*space;
+}	t_vars;
+
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
@@ -213,7 +237,30 @@ t_cylinder	*build_cylinder(char **tbl);
 /* parser.c */
 int			parser(char *path, t_space *space);
 void		print_space(t_space *space);
+/* ================================================= */
 
+typedef struct s_mat44 {
+	double	a[4];
+	double	b[4];
+	double	c[4];
+	double	d[4];
+}			t_mat44;
+
+/* ************************************************* */
+/* ***************** FUNCTIONS ********************* */
+/* ************************************************* */
+/* =================== CAMERA ====================== */
+/* matrix.c */
+t_mat44		*camera_lookat(t_camera *cam);
+t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
+
+/* rays.c */
+void		space_render(t_data *data, int width, int height, t_space *space);
+/* ================================================= */
+/* =================== VISUALS ====================== */
+/* mlx_render.c */
+void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
+void		mlx_render(t_space *space);
 /* ================================================= */
 
 #endif

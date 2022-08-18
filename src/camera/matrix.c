@@ -6,11 +6,11 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/16 19:53:01 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/18 15:47:06 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera.h"
+#include "minirt.h"
 
 /* https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/lookat-function */
 

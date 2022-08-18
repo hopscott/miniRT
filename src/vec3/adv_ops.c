@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/17 23:43:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/18 15:51:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_vec3	*vec3_unit(t_vec3 *vec1)
 double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2)
 {
 	t_vec3	*sub;
-	t_vec3	*res;
+	double	res;
 	
 	sub = vec3_subtract(vec1, vec2);
 	res = vec3_len(sub);

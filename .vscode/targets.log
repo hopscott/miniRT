@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Thu Aug 18 16:37:58 2022
+# Make data base, printed on Fri Aug 19 17:03:55 2022
 
 # Variables
 
@@ -22,13 +23,14 @@ DESKTOP_SESSION = ubuntu
 XDG_SESSION_CLASS = user
 # environment
 XDG_SESSION_TYPE = x11
+# environment
+VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
 XAUTHORITY = /mnt/nfs/homes/swillis/.Xauthority
- 
 # environment
 GDMSESSION = ubuntu
 # environment
@@ -46,7 +48,7 @@ _ = /usr/bin/code
 # makefile (from 'Makefile', line 32)
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
 # environment
-JOURNAL_STREAM = 9:1754933
+JOURNAL_STREAM = 9:59897
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -65,16 +67,20 @@ MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 XDG_DATA_DIRS = /usr/share/gnome:/usr/share/ubuntu:/mnt/nfs/homes/swillis/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/40596/bus
+# environment
+VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 67)
 OBJS := src/parsing/parser.o src/parsing/object_list.o src/parsing/light_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/camera/matrix.o src/camera/rays.o src/visuals/mlx_render.o src/main.o
 # environment
-MANAGERPID = 270980
+MANAGERPID = 4193
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/40596/vscode-ipc-5ae260b9-0839-44f9-95ae-bd91c24214ee.sock
 # environment
 VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session3
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_40596_ZjxPO2
+KRB5CCNAME = FILE:/tmp/krb5cc_40596_8xI77F
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -86,15 +92,17 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # makefile (from 'Makefile', line 22)
 BIN_DIR := .
 # environment
-SESSION_MANAGER = local/e1r6p20.clusters.42paris.fr:@/tmp/.ICE-unix/271512,unix/e1r6p20.clusters.42paris.fr:/tmp/.ICE-unix/271512
+SESSION_MANAGER = local/e1r6p2.clusters.42paris.fr:@/tmp/.ICE-unix/4724,unix/e1r6p2.clusters.42paris.fr:/tmp/.ICE-unix/4724
 # environment
 XDG_RUNTIME_DIR = /run/user/40596
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
+VSCODE_LOG_STACK = false
+# environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 58732ef4eaab4726b26b9a5f664019da
+INVOCATION_ID = f2a8a97167e74df6885cd59308a9d649
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # default
@@ -110,17 +118,19 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/40596/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 275726
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5500
 # automatic
 %F = $(notdir $%)
 # environment
 DISPLAY = :0
 # environment
+VSCODE_PIPE_LOGGING = true
+# environment
 PWD = /sgoinfre/goinfre/Perso/swillis/miniRT
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 271476
+SSH_AGENT_PID = 4688
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 20)
@@ -134,11 +144,11 @@ HOME = /mnt/nfs/homes/swillis
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/swillis/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/swillis/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 LOGNAME = swillis
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # makefile (from 'Makefile', line 36)
 HEADERS := include/libft.h 
 # environment
@@ -196,7 +206,7 @@ TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/40596/vscode-f6bb8478-1.69.2-main.sock
+VSCODE_IPC_HOOK = /run/user/40596/vscode-f6bb8478-1.68.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -250,11 +260,11 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/40596/docker.sock
 # environment
-VSCODE_PID = 277157
+VSCODE_PID = 6382
 # environment
-TERMINATOR_UUID = urn:uuid:58cf8709-faec-4e31-8ab0-1d9d642e6004
+TERMINATOR_UUID = urn:uuid:ea676016-ce44-41de-826f-9ca1c2a55a65
 # variable set hash-table stats:
-# Load=121/1024=12%, Rehash=0, Collisions=24/175=14%
+# Load=126/1024=12%, Rehash=0, Collisions=24/180=13%
 
 # Pattern-specific Variable Values
 
@@ -262,15 +272,15 @@ TERMINATOR_UUID = urn:uuid:58cf8709-faec-4e31-8ab0-1d9d642e6004
 
 # Directories
 
-# src/camera (device 58, inode 4846001): 6 files, no impossibilities so far.
-# include (device 58, inode 4845708): 4 files, no impossibilities so far.
-# . (device 58, inode 4845589): 13 files, no impossibilities.
-# src/vec3 (device 58, inode 4845995): 7 files, no impossibilities so far.
-# src/visuals (device 58, inode 39451438): 3 files, no impossibilities so far.
-# src (device 58, inode 4845982): 5 files, no impossibilities so far.
-# src/parsing (device 58, inode 4845985): 22 files, no impossibilities so far.
+# src/camera (device 54, inode 4846001): 6 files, no impossibilities so far.
+# include (device 54, inode 4845708): 4 files, no impossibilities so far.
+# . (device 54, inode 4845589): 14 files, no impossibilities.
+# src/vec3 (device 54, inode 4845995): 7 files, no impossibilities so far.
+# src/visuals (device 54, inode 39451438): 3 files, no impossibilities so far.
+# src (device 54, inode 4845982): 6 files, no impossibilities so far.
+# src/parsing (device 54, inode 4845985): 22 files, no impossibilities so far.
 
-# 60 files, no impossibilities in 7 directories.
+# 62 files, no impossibilities in 7 directories.
 
 # Implicit Rules
 
@@ -278,6 +288,7 @@ TERMINATOR_UUID = urn:uuid:58cf8709-faec-4e31-8ab0-1d9d642e6004
 #  recipe to execute (from 'Makefile', line 63):
 	$(CC) -c $(CFLAGS) -o $@ $<
 
+ 
 # 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
@@ -285,7 +296,7 @@ TERMINATOR_UUID = urn:uuid:58cf8709-faec-4e31-8ab0-1d9d642e6004
 src/visuals/mlx_render.o: src/visuals/mlx_render.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/visuals/mlx_render'
-#  Last modified 2022-08-18 16:37:51.603347655
+#  Last modified 2022-08-18 20:06:52.854956191
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -294,7 +305,7 @@ src/visuals/mlx_render.o: src/visuals/mlx_render.c include/libft.h
 src/vec3/basic_ops.o: src/vec3/basic_ops.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/vec3/basic_ops'
-#  Last modified 2022-08-18 16:37:51.235361527
+#  Last modified 2022-08-18 20:06:52.43897164
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -310,7 +321,6 @@ src/parsing/light.c:
 # Not a target:
 src/parsing/ambient.c:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-08-17 22:36:25.517061052
 #  File has been updated.
 #  Successfully updated.
@@ -345,7 +355,7 @@ src/vec3/init.c:
 src/main.o: src/main.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/main'
-#  Last modified 2022-08-18 16:37:51.683344639
+#  Last modified 2022-08-18 20:06:52.938953071
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -361,7 +371,7 @@ src/parsing/camera.c:
 src/parsing/errorinizer.o: src/parsing/errorinizer.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/errorinizer'
-#  Last modified 2022-08-18 16:37:50.587385953
+#  Last modified 2022-08-18 20:06:51.774996301
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -370,7 +380,7 @@ src/parsing/errorinizer.o: src/parsing/errorinizer.c include/libft.h
 # Not a target:
 src/camera/rays.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-18 16:25:11.94396494
+#  Last modified 2022-08-18 19:02:18.095304748
 #  File has been updated.
 #  Successfully updated.
 
@@ -383,7 +393,7 @@ src/parsing/sphere.c:
 
 miniRT: src/parsing/parser.o src/parsing/object_list.o src/parsing/light_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/camera/matrix.o src/camera/rays.o src/visuals/mlx_render.o src/main.o lib/libft/libft.a
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-18 16:37:52.727305285
+#  Last modified 2022-08-18 20:06:54.138908504
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 79):
@@ -413,7 +423,7 @@ Makefile:
 src/parsing/cylinder.o: src/parsing/cylinder.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/cylinder'
-#  Last modified 2022-08-18 16:37:51.083367256
+#  Last modified 2022-08-18 20:06:52.270977879
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -422,7 +432,7 @@ src/parsing/cylinder.o: src/parsing/cylinder.c include/libft.h
 src/parsing/light_list.o: src/parsing/light_list.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/light_list'
-#  Last modified 2022-08-18 16:37:50.515388667
+#  Last modified 2022-08-18 20:06:51.706998826
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -437,7 +447,7 @@ miniRT.a: miniRT
 # Not a target:
 src/visuals/mlx_render.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-18 16:11:30.882846288
+#  Last modified 2022-08-18 19:01:04.982032015
 #  File has been updated.
 #  Successfully updated.
 
@@ -451,7 +461,7 @@ src/vec3/basic_ops.c:
 src/camera/matrix.o: src/camera/matrix.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/camera/matrix'
-#  Last modified 2022-08-18 16:37:51.411354892
+#  Last modified 2022-08-18 20:06:52.626964658
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -460,7 +470,7 @@ src/camera/matrix.o: src/camera/matrix.c include/libft.h
 src/vec3/adv_ops.o: src/vec3/adv_ops.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/vec3/adv_ops'
-#  Last modified 2022-08-18 16:37:51.315358511
+#  Last modified 2022-08-18 20:06:52.518968669
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -527,7 +537,7 @@ src/parsing/light_list.c:
 src/parsing/light.o: src/parsing/light.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/light'
-#  Last modified 2022-08-18 16:37:50.831376755
+#  Last modified 2022-08-18 20:06:52.030986793
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -536,7 +546,7 @@ src/parsing/light.o: src/parsing/light.c include/libft.h
 src/parsing/ambient.o: src/parsing/ambient.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/ambient'
-#  Last modified 2022-08-18 16:37:50.667382937
+#  Last modified 2022-08-18 20:06:51.850993478
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -545,7 +555,7 @@ src/parsing/ambient.o: src/parsing/ambient.c include/libft.h
 src/parsing/parser.o: src/parsing/parser.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/parser'
-#  Last modified 2022-08-18 16:37:50.339395301
+#  Last modified 2022-08-18 20:06:51.543004917
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -554,8 +564,9 @@ src/parsing/parser.o: src/parsing/parser.c include/libft.h
 src/vec3/init.o: src/vec3/init.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/vec3/init'
-#  Last modified 2022-08-18 16:37:51.155364542
+#  Last modified 2022-08-18 20:06:52.350974909
 #  File has been updated.
+ 
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
 	$(CC) -c $(CFLAGS) -o $@ $<
@@ -570,7 +581,7 @@ src/camera/matrix.c:
 src/parsing/camera.o: src/parsing/camera.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/camera'
-#  Last modified 2022-08-18 16:37:50.75537962
+#  Last modified 2022-08-18 20:06:51.93899021
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -585,17 +596,16 @@ src/vec3/adv_ops.c:
 
 lib/libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-18 16:37:52.187325641
+#  Last modified 2022-08-18 20:06:53.542930639
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 74):
 	make -C lib/libft -f Makefile
 
 src/camera/rays.o: src/camera/rays.c include/libft.h
- 
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/camera/rays'
-#  Last modified 2022-08-18 16:37:51.515350972
+#  Last modified 2022-08-18 20:06:52.754959904
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -611,7 +621,7 @@ include/libft.h:
 src/parsing/sphere.o: src/parsing/sphere.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/sphere'
-#  Last modified 2022-08-18 16:37:50.90737389
+#  Last modified 2022-08-18 20:06:52.10698397
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -620,7 +630,7 @@ src/parsing/sphere.o: src/parsing/sphere.c include/libft.h
 src/parsing/plane.o: src/parsing/plane.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/plane'
-#  Last modified 2022-08-18 16:37:50.991370724
+#  Last modified 2022-08-18 20:06:52.190980851
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -629,7 +639,7 @@ src/parsing/plane.o: src/parsing/plane.c include/libft.h
 src/parsing/object_list.o: src/parsing/object_list.c include/libft.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parsing/object_list'
-#  Last modified 2022-08-18 16:37:50.427391984
+#  Last modified 2022-08-18 20:06:51.627001798
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 63):
@@ -643,12 +653,12 @@ src/parsing/object_list.o: src/parsing/object_list.c include/libft.h
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 117 / storage = 1631 B / avg = 13 B
-# current buf: size = 8162 B / used = 1631 B / count = 117 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 119 / storage = 1649 B / avg = 13 B
+# current buf: size = 8162 B / used = 1649 B / count = 119 / avg = 13 B
 
-# strcache performance: lookups = 206 / hit rate = 43%
+# strcache performance: lookups = 208 / hit rate = 42%
 # hash-table stats:
-# Load=117/8192=1%, Rehash=0, Collisions=10/206=5%
-# Finished Make data base on Thu Aug 18 16:37:58 2022
+# Load=119/8192=1%, Rehash=0, Collisions=10/208=5%
+# Finished Make data base on Fri Aug 19 17:03:55 2022
 
  

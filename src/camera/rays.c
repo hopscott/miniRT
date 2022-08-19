@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/19 19:01:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/19 19:06:34 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,20 +200,11 @@ void	print_progress(int i, int total)
 	char	*str1;
 	char	*str2;
 
-	if (i < 11)
+	if ((i > 1) && (i % (total / 10) == 0))
 	{
 		str1 = ft_strdup("##########");
 		str2 = ft_strdup("          ");
-		printf("\e[?25l\r[%s%s]", &str1[10], &str2[0]);
-		fflush(stdout);
-		free(str1);
-		free(str2);
-	}
-	else if (i % (total / 10) == 0)
-	{
-		str1 = ft_strdup("##########");
-		str2 = ft_strdup("          ");
-		printf("\e[?25l\r[%s%s]", &str1[10 - i % (total / 10)], &str2[i % (total / 10) - 1]);
+		printf("\e[?25l\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
 		fflush(stdout);
 		free(str1);
 		free(str2);
@@ -255,9 +246,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 			rgb = cast_ray(origin, direction, space);
 			free(direction);
 			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
-			printf("\r[%d][%d] => %X", px, py, rgb_colour(rgb));
-			// printf("> %i / %i\n", py, height);
-			// print_progress(py, height);
+			print_progress(py, height);
 			free(rgb);
 		}
 	}

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/08/17 21:51:26 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/18 16:36:51 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/vec3/basic_ops.c\
 			$(SRC_DIR)/vec3/adv_ops.c\
 			$(SRC_DIR)/camera/matrix.c\
+			$(SRC_DIR)/camera/rays.c\
+			$(SRC_DIR)/visuals/mlx_render.c\
 			$(SRC_DIR)/main.c\
 
 # Make all ========================================

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 22:52:44 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:03:18 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,16 @@ static int	ft_atoi(char *str)
 	return (nbr);
 }
 
+static int	ft_strlen(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str && str[len])
+		len++;
+	return (len);
+}
+
 double	ft_atod(char *str)
 {
 	int		i;
@@ -70,7 +80,10 @@ double	ft_atod(char *str)
 		i++;
 	while (str[i] && ft_isnum(str[i]))
 		i++;
-	fractional = ft_atoi(&str[++i]);
+	fractional = 0;
+	i++;
+	if (i < ft_strlen(str))
+		fractional = ft_atoi(&str[i]);
 	if (fractional == 0)
 		return ((double)integral);
 	nbr = (double)integral + ((double)fractional / 10);

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 19:00:15 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/25 12:34:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <math.h>
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -268,5 +269,9 @@ double		get_short_dist(double discriminant, double a, double b);
 t_vec3		*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t);
 t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* ================================================= */
+/* =================== INTERSECTION ====================== */
+/* sphere_intersection.c */
+double		sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
+
 
 #endif

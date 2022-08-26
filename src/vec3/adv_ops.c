@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   adv_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 15:51:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:35:16 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ double	vec3_len(t_vec3 *vec)
 	return (sqrt(vec3_lensq(vec)));
 }
 
-t_vec3	*vec3_unit(t_vec3 *vec1)
+t_vec3	*vec3_unit(t_vec3 *vec1, int to_free)
 {
 	t_vec3	*vec;
 	double	a;
@@ -50,6 +50,8 @@ t_vec3	*vec3_unit(t_vec3 *vec1)
 	b = vec1->e[1] / len;
 	c = vec1->e[2] / len;
 	vec = vec3_init(a, b, c);
+	if (to_free)
+		free(vec1);
 	return (vec);
 }
 
@@ -57,7 +59,7 @@ double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2)
 {
 	t_vec3	*sub;
 	double	res;
-	
+
 	sub = vec3_subtract(vec1, vec2);
 	res = vec3_len(sub);
 	free(sub);

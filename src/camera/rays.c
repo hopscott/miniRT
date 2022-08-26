@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/19 19:06:34 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/25 15:20:19 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,6 @@ int	plane_intersection(t_vec3 *origin, t_vec3 *direction, t_plane *plane)
 	return (t);
 }
 
-int	sphere_intersection(t_vec3 *origin, t_vec3 *direction, t_sphere *sphere)
-{
-	(void)origin;
-	(void)direction;
-	(void)sphere;
-	return (1);
-}
-
 t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
 {
 	double		t;
@@ -68,6 +60,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 	t_obj_lst	*nearest;
 	t_obj_lst	*elem;
 	t_object	*obj;
+	//	t_vec3		*vec;
 
 	(void)direction;
 	tmin = INFINITY;
@@ -76,19 +69,15 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 	while (elem)
 	{
 		obj = (t_object *)(elem->content);
-		// if ((elem->type == SPHERE) && (sphere_intersection(origin, direction, &obj->sp)))
-		// {
-		// 	vec = vec3_init(obj->sp.x, obj->sp.y, obj->sp.z);
-		// 	t = vec3_distance_points(origin, vec);
-		// 	free(vec);
-		// 	if (t < tmin)
-		// 	{
-		// 		nearest = elem;
-		// 		tmin = t;
-		// 	}
-		// }
 		if (elem->type == SPHERE)
-			;
+		{
+			t = sphere_intersection(origin, direction, &obj->sp); 
+			if ((t >= 0) && (t < tmin))
+			{
+				nearest = elem;
+				tmin = t;
+			}
+		}
 		else if (elem->type == PLANE)
 		{
 			t = plane_intersection(origin, direction, &obj->pl);
@@ -132,8 +121,8 @@ t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
 	}
 	if (!olst)
 		rgb = vec3_init(space->ambient->r * space->ambient->lighting_ratio, \
-						space->ambient->g * space->ambient->lighting_ratio, \
-						space->ambient->b * space->ambient->lighting_ratio);
+				space->ambient->g * space->ambient->lighting_ratio, \
+				space->ambient->b * space->ambient->lighting_ratio);
 	return (rgb);
 }
 
@@ -192,7 +181,7 @@ unsigned int	rgb_colour(t_vec3 *rgb)
 
 double  deg2rad(double degree)
 {
-        return (degree * (M_PI / 180));
+	return (degree * (M_PI / 180));
 }
 
 void	print_progress(int i, int total)
@@ -204,7 +193,8 @@ void	print_progress(int i, int total)
 	{
 		str1 = ft_strdup("##########");
 		str2 = ft_strdup("          ");
-		printf("\e[?25l\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
+		//printf("\e[?25l\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
+		printf("\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
 		fflush(stdout);
 		free(str1);
 		free(str2);

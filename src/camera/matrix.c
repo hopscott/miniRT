@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 15:47:06 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:33:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,14 @@ t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *coord)
 	t_vec3	*right;
 	t_vec3	*up;
 	t_mat44	*mat;
+	t_vec3	*arbitrary;
+	t_vec3	*arbit_unit;
 
-	right = vec3_cross(vec3_unit(vec3_init(0, 1, 0)), fwd);
+	arbitrary = vec3_init(0, 1, 0); //if it fails then exit and free everything properly
+	arbit_unit = vec3_unit(arbitrary, 1); //if it fails then exit and free everything properly
+
+	right = vec3_cross(arbit_unit, fwd);
+	free(arbit_unit);
 	if (!right)
 		return (NULL);
 	up = vec3_cross(fwd, right);
@@ -113,7 +119,7 @@ t_mat44	*camera_lookat(t_camera *cam)
 	return (mat);
 }
 
-/* https://math.stackexchange.com/questions/89621/how-to-multiply-vector-3-with-4by4-matrix-more-precisely-position-transformat */
+/* src: https://math.stackexchange.com/questions/89621/how-to-multiply-vector-3-with-4by4-matrix-more-precisely-position-transformat */
 
 t_vec3	*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w)
 {

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/08/18 16:36:51 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/25 15:23:41 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ EXE := $(BIN_DIR)/miniRT
 
 CC := cc
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
+#CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
+CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 
 # Src files ======================================
 
@@ -51,6 +52,7 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/camera/matrix.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/visuals/mlx_render.c\
+			$(SRC_DIR)/intersection/sphere_intersection.c\
 			$(SRC_DIR)/main.c\
 
 # Make all ========================================

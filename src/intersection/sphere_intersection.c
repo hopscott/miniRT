@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/19 17:25:02 by swillis          ###   ########.fr       */
-=======
-/*   Updated: 2022/08/24 18:05:44 by omoudni          ###   ########.fr       */
->>>>>>> O
+/*   Updated: 2022/08/25 16:19:48 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +28,7 @@ double	get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2])
 	t_vec3	*s_center;
 	double	p_xyz[3];
 	double	c_xyz[3];
+	t_vec3	*vec_substr;
 
 	p_xyz[0] = r_or->e[0];
 	p_xyz[1] = r_or->e[1];
@@ -41,11 +38,15 @@ double	get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2])
 	c_xyz[1] = s_center->e[1];
 	c_xyz[2] = s_center->e[2];
 	abc[0] = vec3_dot(r_dir, r_dir);
-	abc[1] = 2 * vec3_dot(vec3_subtract(r_or, s_center), r_dir);
+	vec_substr = vec3_subtract(r_or, s_center); // if malloc fails free everything and exit
+	abc[1] = 2 * vec3_dot(vec_substr, r_dir);
+	free(vec_substr);
 	calc_c_dscr(p_xyz, c_xyz, sp, &(abc[2]));
 	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
 	(*ab)[0] = vec3_dot(r_dir, r_dir);
-	(*ab)[1] = 2 * vec3_dot(vec3_subtract(r_or, s_center), r_dir);
+	vec_substr = vec3_subtract(r_or, s_center); // if malloc fails free everything and exit
+	(*ab)[1] = 2 * vec3_dot(vec_substr, r_dir);
+	free(vec_substr);
 	free(s_center);
 	return (discriminant);
 }
@@ -78,6 +79,21 @@ t_vec3	*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t)
 	return (ret);
 }
 
+double	sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
+{
+	double	ab[2];
+	double	discriminant;
+	double	t;
+
+	discriminant = get_dscr(r_or, r_dir, sp, &ab);
+	if (discriminant < 0)
+		return (-1);
+	t = get_short_dist(discriminant, ab[0], ab[1]);
+	return (t);
+}
+
+/*
+Function that directly finds the point of intersection, The one above was derived from it:
 t_vec3	*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
 {
 	double	ab[2];
@@ -90,9 +106,8 @@ t_vec3	*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
 	t = get_short_dist(discriminant, ab[0], ab[1]);
 	return (hit_point(r_or, r_dir, t));
 }
-/*
 
-main for testing the function
+//main for testing the function
 
 int	main(int argc, char **argv)
 {

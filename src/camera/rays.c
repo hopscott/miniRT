@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 15:20:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/29 21:53:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@
 //     return hitColor; 
 // } 
 
-int	plane_intersection(t_vec3 *origin, t_vec3 *direction, t_plane *plane)
-{
-	double	t;
-	t_vec3	*p0;
-	t_vec3	*n;
-	t_vec3	*vec;
-
-	p0 = vec3_init(plane->x, plane->y, plane->z);
-	n = vec3_init(plane->vec_x, plane->vec_y, plane->vec_z);
-	vec = vec3_subtract(p0, origin);
-	t = vec3_dot(vec, n) / vec3_dot(direction, n);
-	free(p0);
-	free(n);
-	free(vec);
-	return (t);
-}
-
 t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
 {
 	double		t;
@@ -60,9 +43,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 	t_obj_lst	*nearest;
 	t_obj_lst	*elem;
 	t_object	*obj;
-	//	t_vec3		*vec;
 
-	(void)direction;
 	tmin = INFINITY;
 	nearest = NULL;
 	elem = *objects;
@@ -189,12 +170,11 @@ void	print_progress(int i, int total)
 	char	*str1;
 	char	*str2;
 
-	if ((i > 1) && (i % (total / 10) == 0))
+	if ((i > 0) && (i % (total / 10) == 0))
 	{
 		str1 = ft_strdup("##########");
 		str2 = ft_strdup("          ");
-		//printf("\e[?25l\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
-		printf("\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) - 1]);
+		printf("\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) + 1]);
 		fflush(stdout);
 		free(str1);
 		free(str2);

@@ -1,9 +1,25 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/parser.o src/parsing/parser.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/object_list.o src/parsing/object_list.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/light_list.o src/parsing/light_list.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/errorinizer.o src/parsing/errorinizer.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/ambient.o src/parsing/ambient.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/camera.o src/parsing/camera.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/light.o src/parsing/light.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/sphere.o src/parsing/sphere.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/plane.o src/parsing/plane.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/cylinder.o src/parsing/cylinder.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/init.o src/vec3/init.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/basic_ops.o src/vec3/basic_ops.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/adv_ops.o src/vec3/adv_ops.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/matrix.o src/camera/matrix.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/rays.o src/camera/rays.c
- 
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visuals/mlx_render.o src/visuals/mlx_render.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/plane_intersection.o src/intersection/plane_intersection.c
- 
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/sphere_intersection.o src/intersection/sphere_intersection.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/main.o src/main.c
+make -C lib/libft -f Makefile
 cc -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g src/parsing/parser.o src/parsing/object_list.o src/parsing/light_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/camera/matrix.o src/camera/rays.o src/visuals/mlx_render.o src/intersection/plane_intersection.o src/intersection/sphere_intersection.o src/main.o lib/libft/libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o ./miniRT
 make: Leaving directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
  

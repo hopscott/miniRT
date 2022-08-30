@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/25 16:19:48 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/31 01:04:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,15 @@ t_vec3	*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t)
 	return (ret);
 }
 
-double	sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
+void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)
 {
 	double	ab[2];
 	double	discriminant;
-	double	t;
 
-	discriminant = get_dscr(r_or, r_dir, sp, &ab);
+	discriminant = get_dscr(ray->origin, ray->direction, sp, &ab);
 	if (discriminant < 0)
 		return (-1);
-	t = get_short_dist(discriminant, ab[0], ab[1]);
-	return (t);
+	hit->t = get_short_dist(discriminant, ab[0], ab[1]);
 }
 
 /*

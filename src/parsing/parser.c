@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 12:51:40 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/31 00:43:16 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	sub_parser(char **tbl, t_space *space)
 	else if (!ft_strncmp(tbl[0], "C", 2))
 		err = build_camera(tbl, &space->camera);
 	else if (!ft_strncmp(tbl[0], "L", 2))
-		err = light_lstadd(&space->lights, build_light(tbl));
+		err = obj_lstadd(&space->objects, LIGHT, \
+							(t_object *)build_light(tbl));
 	else if (!ft_strncmp(tbl[0], "sp", 3))
 		err = obj_lstadd(&space->objects, SPHERE, \
 							(t_object *)build_sphere(tbl));
@@ -45,7 +46,6 @@ int	parser(char *path, t_space *space)
 
 	space->ambient = NULL;
 	space->camera = NULL;
-	space->lights = NULL;
 	space->objects = NULL;
 	fd = open(path, O_RDONLY);
 	if (!fd)
@@ -72,6 +72,8 @@ void	print_space(t_space *space)
 	t_light_lst		*l;
 	t_object		*obj;
 
+
+	printf("\n~~~~ Space Layout ~~~~\n\n");
 	printf("##### AMBIENT\t=> brightness(%.1f)\t\t\t\t\t\t\t\trgb(%zu,%zu,%zu) \n", space->ambient->lighting_ratio, space->ambient->r, space->ambient->g, space->ambient->b);
 	printf("-<[0] CAMERA\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tfov(%zu) \n", space->camera->x, space->camera->y, space->camera->z, space->camera->vec_x, space->camera->vec_y, space->camera->vec_z, space->camera->fov);
 	l = space->lights;

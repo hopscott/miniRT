@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/29 21:48:17 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 01:10:25 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_ambient
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	t;
 }			t_ambient;
 
 /* identifier: C 												*/
@@ -77,6 +78,7 @@ typedef struct s_camera
 	double	vec_y;
 	double	vec_z;
 	size_t	fov;
+	size_t	t;
 }			t_camera;
 
 /* identifier: L 												*/
@@ -93,6 +95,7 @@ typedef struct s_light
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	t;
 }			t_light;
 
 /* identifier: sp											*/
@@ -109,6 +112,7 @@ typedef struct s_sphere
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	t;
 }			t_sphere;
 
 /* identifier: pl										*/
@@ -128,6 +132,7 @@ typedef struct s_plane
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	t;
 }			t_plane;
 
 /* identifier: cy										*/
@@ -151,6 +156,7 @@ typedef struct s_cylinder
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	t;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -162,23 +168,42 @@ typedef union u_object {
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
+	size_t	t;
 }				t_object;
-
-/*	Light list structure	*/
-
-typedef struct s_light_lst {
-	t_light				*light;
-	struct s_light_lst	*next;
-}	t_light_lst;
 
 /*	Space structure	*/
 
 typedef struct s_space {
 	t_camera	*camera;
 	t_ambient	*ambient;
-	t_light_lst	*lights;
 	t_obj_lst	*objects;
 }	t_space;
+
+/*	Param structure	*/
+
+typedef struct s_param {
+	double		scale;
+	double		aspect_ratio;
+	double		px;
+	double		py;
+	size_t		colour;
+}	t_param;
+
+/*	Ray structure	*/
+
+typedef struct s_ray {
+	t_vec3	*origin;
+	t_vec3	*direction;
+}	t_ray;
+
+/*	Hit structure	*/
+
+typedef struct s_hit {
+	double		t;
+	t_obj_lst	*nearest;
+	t_ray		*secondary;
+	t_vec3		*rgb;
+}	t_hit;
 
 /* MLX */
 
@@ -189,8 +214,6 @@ typedef struct s_data
 	int		bpp;
 	int		line_length;
 	int		endian;
-	int		width;	/* UNINITIALISED /!\ */
-	int		height; /* UNINITIALISED /!\ */
 }	t_data;
 
 typedef struct s_vars

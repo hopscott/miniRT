@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/29 21:53:53 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 01:24:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,191 +36,90 @@
 //     return hitColor; 
 // } 
 
-t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
+void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 {
-	double		t;
 	double		tmin;
-	t_obj_lst	*nearest;
-	t_obj_lst	*elem;
 	t_object	*obj;
 
 	tmin = INFINITY;
-	nearest = NULL;
-	elem = *objects;
 	while (elem)
 	{
 		obj = (t_object *)(elem->content);
-		if (elem->type == SPHERE)
-		{
-			t = sphere_intersection(origin, direction, &obj->sp); 
-			if ((t >= 0) && (t < tmin))
-			{
-				nearest = elem;
-				tmin = t;
-			}
-		}
+		if (elem->type == LIGHT)
+			light_intersection(ray, &obj->l, hit);
+		else if (elem->type == SPHERE)
+			sphere_intersection(ray, &obj->sp, hit);
 		else if (elem->type == PLANE)
-		{
-			t = plane_intersection(origin, direction, &obj->pl);
-			if ((t >= 0) && (t < tmin))
-			{
-				nearest = elem;
-				tmin = t;
-			}
-		}
+			plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
 			;
+		if ((hit->t >= 0) && (hit->t < tmin))
+		{
+			hit->nearest = elem;
+			tmin = hit->t;
+		}
 		elem = elem->next;
 	}
-	return (nearest);
+	hit->t = tmin;
+	return (hit);
 }
 
-t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
+t_vec3	*secondary_ray_origin(t_ray *ray, double t)
 {
-	t_obj_lst		*olst;
-	t_object		*obj;
-	t_vec3			*rgb;
-	// t_light			*light;
+	t_vec3	*dist;
+	t_vec3	*phit;
 
-	// light = nearest_hit_light(origin, direction, space->lights);
-	olst = nearest_hit_object(origin, direction, &space->objects);
-	if (olst)
+	dist = vec3_multiply(ray->direction, t);
+	phit = vec3_add(ray->origin, dist);
+	free(dist);
+	return (phit);
+}
+
+size_t	cast_ray(t_ray *ray, t_space *space)
+{
+	t_object	*obj;
+	t_vec3		*vec;
+	t_hit		hit;
+	t_ray		sec;
+	size_t		colour;
+
+	hit.nearest = NULL;
+	hit.secondary = &sec;
+	nearest_hit_object(ray, space->objects, &hit);
+	if (hit.nearest)
 	{
-		obj = (t_object *)(olst->content);
-		if (olst->type == SPHERE)
+		hit.secondary->origin = secondary_ray_origin(ray, t);
+		obj = (t_object *)(hit.nearest->content);
+		if (hit.nearest->type == LIGHT)
+		{
+			vec = vec3_init(obj->l->r, obj->l->g, obj->l->b);
+			hit.rgb = vec3_multiply(vec, obj->l->brightness_ratio);
+			free(vec);
+		}
+		if (hit.nearest->type == SPHERE)
 		{
 			// printf("nearest obj = SPHERE => xyz(%.1f, %.1f, %.1f)\n", obj->sp.x, obj->sp.y, obj->sp.z);
-			rgb = vec3_init(obj->sp.r, obj->sp.g, obj->sp.b);
+			hit.rgb = vec3_init(obj->sp.r, obj->sp.g, obj->sp.b);
 		}
-		else if (olst->type == PLANE)
+		else if (hit.nearest->type == PLANE)
 		{
+			hit.secondary->direction = plane_secondary_ray_direction(ray, t);
+			nearest_hit_object(hit.secondary, space->objects, &hit);
 			// printf("nearest obj = PLANE => xyz(%.1f, %.1f, %.1f)\n", obj->pl.x, obj->pl.y, obj->pl.z);
-			rgb = vec3_init(obj->pl.r, obj->pl.g, obj->pl.b);	
+			hit.rgb = vec3_init(obj->pl.r, obj->pl.g, obj->pl.b);
+			free(hit.secondary->direction);
 		}
-		else if (olst->type == CYLINDER)
+		else if (hit.nearest->type == CYLINDER)
 			;
+		free(hit.secondary->origin);
 	}
-	if (!olst)
-		rgb = vec3_init(space->ambient->r * space->ambient->lighting_ratio, \
-				space->ambient->g * space->ambient->lighting_ratio, \
-				space->ambient->b * space->ambient->lighting_ratio);
-	return (rgb);
-}
-
-unsigned int	rgb_colour(t_vec3 *rgb) 
-{
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
-
-	r = (unsigned int)rgb->e[0];
-	if (r > 255)
-		r = 255;
-	g = (unsigned int)rgb->e[1];
-	if (g > 255)
-		g = 255;
-	b = (unsigned int)rgb->e[2];
-	if (b > 255)
-		b = 255;
-	return ((r << 16) + (g << 8) + b);
-}
-
-// unsigned int	perc_colour(t_colour *c0, t_colour *c1, double p)
-// {
-// 	unsigned int	red;
-// 	unsigned int	green;
-// 	unsigned int	blue;
-
-// 	red = c0->r * (1 - p) + c1->r * p;
-// 	green = c0->g * (1 - p) + c1->g * p;
-// 	blue = c0->b * (1 - p) + c1->b * p;
-// 	return (rgb_colour(red, green, blue));
-// }
-
-// void	*routine(void *arg)
-// {
-// 	py = -1;
-// 	while (++py < height)
-// 	{
-// 		px = -1;
-// 		while (++px < width)
-// 		{
-// 			x = ((px + 0.5) / width);
-// 			y = ((py + 0.5) / height);
-// 			vec = vec3_init(x, y, -1);
-// 			direction = vec3_matrix_multiply(mat, vec, 1);
-// 			free(vec);
-// 			rgb = cast_ray(origin, direction, space);
-// 			free(direction);
-// 			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
-// 			printf("[%d][%d] => %X\n", px, py, rgb_colour(rgb));
-// 			// vec3_print(rgb);
-// 			free(rgb);
-// 		}
-// 	}
-// }
-
-double  deg2rad(double degree)
-{
-	return (degree * (M_PI / 180));
-}
-
-void	print_progress(int i, int total)
-{
-	char	*str1;
-	char	*str2;
-
-	if ((i > 0) && (i % (total / 10) == 0))
+	else
 	{
-		str1 = ft_strdup("##########");
-		str2 = ft_strdup("          ");
-		printf("\r[%s%s]", &str1[10 - (i / (total / 10))], &str2[(i / (total / 10)) + 1]);
-		fflush(stdout);
-		free(str1);
-		free(str2);
+		vec = vec3_init(space->ambient->r, space->ambient->g, space->ambient->b);
+		hit.rgb = vec3_multiply(vec, space->ambient->lighting_ratio);
+		free(vec);
 	}
-}
-
-void	space_render(t_data *data, int width, int height, t_space *space)
-{
-	int		px;
-	int		py;
-	double	x;
-	double	y;
-	t_mat44	*mat;
-	t_vec3	*origin;
-	t_vec3	*direction;
-	t_vec3	*vec;
-	t_vec3	*rgb;
-	double	scale;
-	double	aspect_ratio;
-
-	printf("===== Running =====\n");
-	scale = tan(deg2rad(space->camera->fov / 2));
-	aspect_ratio = (double)width / (double)height;
-	mat = camera_lookat(space->camera);
-	vec = vec3_init(0, 0, 0);
-	origin = vec3_matrix_multiply(mat, vec, 0);
-	free(vec);
-	py = -1;
-	while (++py < height)
-	{
-		px = -1;
-		while (++px < width)
-		{
-			x = (2 * (px + 0.5) / width - 1) * scale * aspect_ratio;
-			y = (1 - 2 * (py + 0.5) / height) * scale;
-			vec = vec3_init(x, y, -1);
-			direction = vec3_matrix_multiply(mat, vec, 1);
-			free(vec);
-			rgb = cast_ray(origin, direction, space);
-			free(direction);
-			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
-			print_progress(py, height);
-			free(rgb);
-		}
-	}
-	free(mat);
-	free(origin);
-	printf("\n===== Finished =====\n");
+	colour = rgb_colour(hit.rgb);
+	free(hit.rgb);
+	return (colour);
 }

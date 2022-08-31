@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/30 23:12:45 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 18:33:19 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_progress(int i, int total)
 
 	if (i == 0)
 		printf("\n====== Loading =======\n");
-	else if (i % (total / 20) == 0)
+	if (i % (total / 20) == 0)
 	{
 		str1 = ft_strdup("####################");
 		str2 = ft_strdup("                    ");
@@ -34,23 +34,23 @@ void	print_progress(int i, int total)
 		free(str1);
 		free(str2);
 	}
-	else if (i == total)
+	else if (i == total - 1)
 		printf("\n======================\n");
 }
 
-unsigned int	rgb_colour(t_vec3 *rgb)
+size_t	rgb_colour(t_vec3 *rgb)
 {
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	size_t	r;
+	size_t	g;
+	size_t	b;
 
-	r = (unsigned int)rgb->e[0];
+	r = (size_t)rgb->e[0];
 	if (r > 255)
 		r = 255;
-	g = (unsigned int)rgb->e[1];
+	g = (size_t)rgb->e[1];
 	if (g > 255)
 		g = 255;
-	b = (unsigned int)rgb->e[2];
+	b = (size_t)rgb->e[2];
 	if (b > 255)
 		b = 255;
 	return ((r << 16) + (g << 8) + b);

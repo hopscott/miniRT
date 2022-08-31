@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/31 01:05:55 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 17:29:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection */
 
-t_ray	*plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
+void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 {
 	t_vec3	*p0;
 	t_vec3	*n;
@@ -23,7 +23,7 @@ t_ray	*plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 	p0 = vec3_init(plane->x, plane->y, plane->z);
 	n = vec3_init(plane->vec_x, plane->vec_y, plane->vec_z);
 	vec = vec3_subtract(p0, ray->origin);
-	plane->t = vec3_dot(vec, n) / vec3_dot(ray->direction, n);
+	hit->t = vec3_dot(vec, n) / vec3_dot(ray->direction, n);
 	free(p0);
 	free(n);
 	free(vec);

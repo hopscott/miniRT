@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/08/29 21:48:32 by swillis          ###   ########.fr        #
+#    Updated: 2022/08/31 17:27:41 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ HEADERS := 	$(INC_DIR)/libft.h\
 
 SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/object_list.c\
-			$(SRC_DIR)/parsing/light_list.c\
 			$(SRC_DIR)/parsing/errorinizer.c\
 			$(SRC_DIR)/parsing/ambient.c\
 			$(SRC_DIR)/parsing/camera.c\
@@ -51,10 +50,13 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/vec3/adv_ops.c\
 			$(SRC_DIR)/camera/matrix.c\
 			$(SRC_DIR)/camera/rays.c\
-			$(SRC_DIR)/visuals/mlx_render.c\
+			$(SRC_DIR)/intersection/light_intersection.c\
 			$(SRC_DIR)/intersection/plane_intersection.c\
 			$(SRC_DIR)/intersection/sphere_intersection.c\
+			$(SRC_DIR)/visuals/mlx_render.c\
+			$(SRC_DIR)/visuals/space_render.c\
 			$(SRC_DIR)/main.c\
+			$(SRC_DIR)/utils.c\
 
 # Make all ========================================
 

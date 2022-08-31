@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 01:10:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 17:30:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_ambient
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	t;
 }			t_ambient;
 
 /* identifier: C 												*/
@@ -78,7 +77,6 @@ typedef struct s_camera
 	double	vec_y;
 	double	vec_z;
 	size_t	fov;
-	size_t	t;
 }			t_camera;
 
 /* identifier: L 												*/
@@ -95,7 +93,6 @@ typedef struct s_light
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	t;
 }			t_light;
 
 /* identifier: sp											*/
@@ -112,7 +109,6 @@ typedef struct s_sphere
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	t;
 }			t_sphere;
 
 /* identifier: pl										*/
@@ -132,7 +128,6 @@ typedef struct s_plane
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	t;
 }			t_plane;
 
 /* identifier: cy										*/
@@ -156,7 +151,6 @@ typedef struct s_cylinder
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	t;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -168,7 +162,6 @@ typedef union u_object {
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
-	size_t	t;
 }				t_object;
 
 /*	Space structure	*/
@@ -232,10 +225,6 @@ typedef struct s_vars
 int			obj_lstadd(t_obj_lst **lst, int type, t_object *object);
 void		obj_lstfree(t_obj_lst **lst);
 
-/* light_list.c */
-int			light_lstadd(t_light_lst **lights, t_light *light);
-void		light_lstfree(t_light_lst **lst);
-
 /* errorinizer.c */
 void		putstr_error(char *err);
 void		print_help(void);
@@ -274,29 +263,49 @@ typedef struct s_mat44 {
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
 /* =================== CAMERA ====================== */
+
 /* matrix.c */
 t_mat44		*camera_lookat(t_camera *cam);
 t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
 
 /* rays.c */
-void		space_render(t_data *data, int width, int height, t_space *space);
-/* ================================================= */
+size_t	cast_ray(t_ray *ray, t_space *space);
+
 /* =================== VISUALS ====================== */
+
 /* mlx_render.c */
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
+
 /* sphere.c */
 void		calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c);
 double		get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2]);
 double		get_short_dist(double discriminant, double a, double b);
 t_vec3		*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t);
 t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
-/* ================================================= */
-/* =================== INTERSECTION ====================== */
-/* sphere_intersection.c */
-double		sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
-/* plane_intersection.c */
-double		plane_intersection(t_vec3 *origin, t_vec3 *direction, t_plane *plane);
 
+/* =================== INTERSECTION ====================== */
+
+/* light_intersection.c */
+void		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
+
+/* sphere_intersection.c */
+void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
+
+/* plane_intersection.c */
+void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
+t_vec3		*plane_secondary_ray_direction(t_vec3 *direction, t_vec3 *normal);
+
+/* =================== VISUALS ====================== */
+
+/* space_render.c */
+void		space_render(t_data *data, int width, int height, t_space *space);
+
+/* =================== MAIN ====================== */
+
+/* utils.c */
+double		deg2rad(double degree);
+void		print_progress(int i, int total);
+size_t		rgb_colour(t_vec3 *rgb);
 
 #endif

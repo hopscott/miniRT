@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 01:24:20 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 18:32:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		elem = elem->next;
 	}
 	hit->t = tmin;
-	return (hit);
 }
 
 t_vec3	*secondary_ray_origin(t_ray *ray, double t)
@@ -88,26 +87,24 @@ size_t	cast_ray(t_ray *ray, t_space *space)
 	nearest_hit_object(ray, space->objects, &hit);
 	if (hit.nearest)
 	{
-		hit.secondary->origin = secondary_ray_origin(ray, t);
+		hit.secondary->origin = secondary_ray_origin(ray, hit.t);
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
 		{
-			vec = vec3_init(obj->l->r, obj->l->g, obj->l->b);
-			hit.rgb = vec3_multiply(vec, obj->l->brightness_ratio);
+			vec = vec3_init(obj->l.r, obj->l.g, obj->l.b);
+			hit.rgb = vec3_multiply(vec, obj->l.brightness_ratio);
 			free(vec);
 		}
 		if (hit.nearest->type == SPHERE)
 		{
-			// printf("nearest obj = SPHERE => xyz(%.1f, %.1f, %.1f)\n", obj->sp.x, obj->sp.y, obj->sp.z);
 			hit.rgb = vec3_init(obj->sp.r, obj->sp.g, obj->sp.b);
 		}
 		else if (hit.nearest->type == PLANE)
 		{
-			hit.secondary->direction = plane_secondary_ray_direction(ray, t);
-			nearest_hit_object(hit.secondary, space->objects, &hit);
-			// printf("nearest obj = PLANE => xyz(%.1f, %.1f, %.1f)\n", obj->pl.x, obj->pl.y, obj->pl.z);
+			// hit.secondary->direction = plane_secondary_ray_direction(ray, t);
+			// nearest_hit_object(hit.secondary, space->objects, &hit);
 			hit.rgb = vec3_init(obj->pl.r, obj->pl.g, obj->pl.b);
-			free(hit.secondary->direction);
+			// free(hit.secondary->direction);
 		}
 		else if (hit.nearest->type == CYLINDER)
 			;

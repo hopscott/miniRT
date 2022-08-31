@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/31 01:04:32 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 17:30:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)
 
 	discriminant = get_dscr(ray->origin, ray->direction, sp, &ab);
 	if (discriminant < 0)
-		return (-1);
-	hit->t = get_short_dist(discriminant, ab[0], ab[1]);
+		hit->t = -1;
+	else
+		hit->t = get_short_dist(discriminant, ab[0], ab[1]);
 }
 
 /*

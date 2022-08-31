@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 00:43:16 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 17:26:23 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,18 @@ int	parser(char *path, t_space *space)
 void	print_space(t_space *space)
 {
 	t_obj_lst		*o;
-	t_light_lst		*l;
 	t_object		*obj;
-
 
 	printf("\n~~~~ Space Layout ~~~~\n\n");
 	printf("##### AMBIENT\t=> brightness(%.1f)\t\t\t\t\t\t\t\trgb(%zu,%zu,%zu) \n", space->ambient->lighting_ratio, space->ambient->r, space->ambient->g, space->ambient->b);
 	printf("-<[0] CAMERA\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tfov(%zu) \n", space->camera->x, space->camera->y, space->camera->z, space->camera->vec_x, space->camera->vec_y, space->camera->vec_z, space->camera->fov);
-	l = space->lights;
-	while (l)
-	{
-		printf("((*)) LIGHT\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tbrightness(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", l->light->x, l->light->y, l->light->z, l->light->brightness_ratio, l->light->r, l->light->g, l->light->b);
-		l = l->next;
-	}
 	o = space->objects;
 	while (o)
 	{
 		obj = (t_object *)(o->content);
-		if (o->type == SPHERE)
+		if (o->type == LIGHT)
+			printf("((*)) LIGHT\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tbrightness(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->l.x, obj->l.y, obj->l.z, obj->l.brightness_ratio, obj->l.r, obj->l.g, obj->l.b);
+		else if (o->type == SPHERE)
 			printf("  o   SPHERE\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tdiameter(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->sp.x, obj->sp.y, obj->sp.z, obj->sp.diameter, obj->sp.r, obj->sp.g, obj->sp.b);
 		else if (o->type == PLANE)
 			printf(" [X]  PLANE\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\t\t\t\t\trgb(%zu,%zu,%zu) \n", obj->pl.x, obj->pl.y, obj->pl.z, obj->pl.vec_x, obj->pl.vec_y, obj->pl.vec_z, obj->pl.r, obj->pl.g, obj->pl.b);

@@ -6,13 +6,13 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 00:16:12 by swillis          ###   ########.fr       */
+/*   Updated: 2022/08/31 18:32:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3	*set_direction(t_param param, t_mat44 *mat)
+t_vec3	*set_direction(t_param param, int width, int height, t_mat44 *mat)
 {
 	double	x;
 	double	y;
@@ -56,12 +56,12 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 		param.px = -1;
 		while (++param.px < width)
 		{
-			ray.direction = set_direction(param, mat);
-			colour = cast_ray(&ray, space);
+			ray.direction = set_direction(param, width, height, mat);
+			param.colour = cast_ray(&ray, space);
 			free(ray.direction);
 			my_mlx_pixel_put(data, param.px, param.py, param.colour);
-			print_progress(param.py, height);
 		}
+		print_progress(param.py, height);
 	}
 	free(mat);
 	free(ray.origin);

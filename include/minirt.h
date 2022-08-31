@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 12:34:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/31 00:59:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "vec2.h"
 # include "mlx.h"
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -22,8 +23,11 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+// # define WIDTH 800
+// # define HEIGHT 600
+
+#define WIDTH 40
+#define	HEIGHT 30
 
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
 # define HELP_MSG "usage: ./miniRT scene_file.rt\n"
@@ -272,6 +276,6 @@ t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* =================== INTERSECTION ====================== */
 /* sphere_intersection.c */
 double		sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
-
+double		cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl);
 
 #endif

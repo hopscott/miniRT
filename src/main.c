@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/18 15:29:03 by swillis          ###   ########.fr       */
+/*   Created: 2022/09/01 21:12:36 by omoudni           #+#    #+#             */
+/*   Updated: 2022/09/01 21:18:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,4 @@ int	main(int ac, char **av)
 	space_free(&space);
 	return (0);
 }
+

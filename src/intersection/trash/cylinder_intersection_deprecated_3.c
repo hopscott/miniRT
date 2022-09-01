@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/01 21:13:23 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/01 18:44:41 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,55 +53,7 @@ double	find_smallest_dist(double discr, double a, double b)
 
 //c: (point)cylinder's center; h: (distance)height; ch: (vector)between c and hi
 //cy_orient: (vector)cy_direct_vector_unit
-//
 double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
-{
-	t_vec3	*l0;
-	t_vec3	*c0;
-	t_vec3	*dl;
-	t_vec3	*dc;
-	t_vec3	*new_dc;
-	t_vec3	*new_dc_2;
-	t_vec3	*cy_orient;
-	double	r;
-	t_vec3	*e;
-	double	e_utils;
-	t_vec3	*f;
-	double	f_utils;
-	t_vec3	*l0c0;
-	double	a;
-	double	b;
-	double	c;
-	double	discr;
-	double	dist;
-	
-	r = cy->diameter / 2;
-	c0 = vec3_init(cy->x, cy->y, cy->z);
-	cy_orient = vec3_init(cy->vec_x, cy->vec_y, cy->vec_z);
-	l0 = r_or; 
-	dl = r_dir;
-	dc = vec_from_or_vec_len(c0, cy_orient, cy->height);
-	l0c0 = vec3_subtract(l0, c0);
-	e_utils = vec3_dot(dl, dc) / vec3_dot(dc, dc);
-	f_utils = vec3_dot(l0c0, dc) / vec3_dot(dc, dc);
-	new_dc = vec3_init(e_utils * dc->e[0], e_utils * dc->e[1], e_utils * dc->e[2]);
-	new_dc_2 = vec3_init(f_utils * dc->e[0], f_utils * dc->e[1], f_utils * dc->e[2]);
-	e = vec3_subtract(dl, new_dc);
-	f = vec3_subtract(l0c0, new_dc_2);
-	a = vec3_dot(e, e);
-	b = 2 * vec3_dot(e, f);
-	c = vec3_dot(f, f) - pow(r, 2);
-	discr = pow(b, 2) - 4 * a * c;
-	printf("discr: %f\n", discr);
-	if (discr <= 0)
-		return (-1);
-	dist = find_smallest_dist(discr, a, b);
-	return (dist);
-}
-
-//old version - to delete I think
-/*
-double	cy_intersection_1(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 {
 	t_vec3	*c;
 	t_vec3	*cy_orient;
@@ -133,31 +85,3 @@ double	cy_intersection_1(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	dist = find_smallest_dist(discr, a, b);
 	return (dist);
 }
-*/
-
-
-// main to test
-/*
- *
-int	main()
-{
-	t_vec3	*r_or;
-	t_vec3	*dir;
-	t_cylinder	cy;
-	double		dist;
-
-	r_or = vec3_init(0, 0, 3);
-	dir = vec3_init(0, 1, -1);
-	cy.x = 0;
-	cy.y = 0;
-	cy.z = 0;
-	cy.diameter = 2;
-	cy.height = 3;
-	cy.vec_x = 0;
-	cy.vec_y = 1;
-	cy.vec_z = 0;
-	dist = cy_intersection(r_or, dir, &cy);
-	printf("dist: %f\n", dist);
-	return (0);
-}
-*/

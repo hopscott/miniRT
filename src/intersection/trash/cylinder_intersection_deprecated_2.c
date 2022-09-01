@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 16:38:57 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/31 02:10:26 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/08/31 02:14:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ double cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl)
 	double	tp;
 	t_vec3	cyl_center;
 //	t_vec3	*cp;
-	t_vec3	*pc;
+	t_vec3	*cp;
 	double	alpha;
 	double	tc;
 	double	ti;
@@ -37,7 +37,7 @@ double cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl)
 	cyl_center.e[2] = cyl->z;
 	cp = vec3_subtract(orig, &cyl_center);
 	rd_magn = vec3_lensq(&dir_2d);
-	cp_magn = vec3_lensq(c);
+	cp_magn = vec3_lensq(cp);
 //	printf("\nor_x: %f, or_y: %f, or_z:%f\n", orig->e[0], orig->e[1], orig->e[2]);
 //	printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",cyl_center.e[0],cyl_center.e[1], cyl_center.e[2]);
 //	printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",cyl->x,cyl->y, cyl->z);
@@ -53,7 +53,7 @@ double cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl)
 	ti = sqrt(pow(cyl->diameter / 2, 2) - pow(tc, 2));
 	printf("ti: %f\n", ti);
 	ip = tp - ti;
-	cos_beta = vec3_dot(dir, pc) / (vec3_lensq(dir) * vec3_lensq(pc));
+	cos_beta = vec3_dot(dir, cp) / (vec3_lensq(dir) * cp_magn);
 	printf("cos_beta: %f\n", cos_beta);
 	printf("ip: %f\n", ip);
 

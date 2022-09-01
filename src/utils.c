@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 18:33:19 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/01 22:47:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ size_t	rgb_colour(t_vec3 *rgb)
 	return ((r << 16) + (g << 8) + b);
 }
 
+t_vec3	*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2)
+{
+	t_vec3	*rgb;
+	size_t	r;
+	size_t	g;
+	size_t	b;
+
+	r = (size_t)rgb1->e[0] * (size_t)rgb2->e[0] / 255;
+	g = (size_t)rgb1->e[1] * (size_t)rgb2->e[1] / 255;
+	b = (size_t)rgb1->e[2] * (size_t)rgb2->e[2] / 255;
+	rgb = vec3_init(r, g, b);
+	return (rgb);
+}
+
 // unsigned int	perc_colour(t_colour *c0, t_colour *c1, double p)
 // {
 // 	unsigned int	red;
@@ -88,5 +102,30 @@ size_t	rgb_colour(t_vec3 *rgb)
 // 			// vec3_print(rgb);
 // 			free(rgb);
 // 		}
+// 	}
+// }
+
+// void	object_space_to_camera_space(t_list **lst)
+// {
+// 	t_list		*elem;
+// 	t_object	*obj;
+
+// 	elem = *lst;
+// 	while (elem)
+// 	{
+// 		obj = (t_object *)(elem->content);
+// 		if (elem->type == AMBIENT)
+// 			continue ;
+// 		else if (elem->type == CAMERA)
+// 			continue ;
+// 		else if (elem->type == LIGHT)
+// 			continue ;
+// 		else if (elem->type == SPHERE)
+// 			continue ;
+// 		else if (elem->type == PLANE)
+// 			continue ;
+// 		else if (elem->type == CYLINDER)
+// 			continue ;
+// 		elem = elem->next;
 // 	}
 // }

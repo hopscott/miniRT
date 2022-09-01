@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 18:32:32 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 01:06:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 			plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
 			;
-		if ((hit->t >= 0) && (hit->t < tmin))
+		if ((hit->t >= 0.000001) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
 			tmin = hit->t;
@@ -74,37 +74,76 @@ t_vec3	*secondary_ray_origin(t_ray *ray, double t)
 	return (phit);
 }
 
+// PHONG REFLECTION
+// We use the Phong illumation model int the default case. The phong model is composed of a diffuse and a specular reflection component. 
+//                 Vec3f lightAmt = 0, specularColor = 0; 
+//                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ? 
+//                     hitPoint + N * options.bias : 
+//                     hitPoint - N * options.bias; 
+// Loop over all lights in the scene and sum their contribution up We also apply the lambert cosine law here though we haven't explained yet what this means. 
+//                 for (uint32_t i = 0; i < lights.size(); ++i) { 
+//                     Vec3f lightDir = lights[i]->position - hitPoint; 
+//                     // square of the distance between hitPoint and the light
+//                     float lightDistance2 = dotProduct(lightDir, lightDir); 
+//                     lightDir = normalize(lightDir); 
+//                     float LdotN = std::max(0.f, dotProduct(lightDir, N)); 
+//                     Object *shadowHitObject = nullptr; 
+//                     float tNearShadow = kInfinity; 
+//                     // is the point in shadow, and is the nearest occluding object closer to the object than the light itself?
+//                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) && 
+//                         tNearShadow * tNearShadow < lightDistance2; 
+//                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN; 
+//                     Vec3f reflectionDirection = reflect(-lightDir, N); 
+//                     specularColor += powf(std::max(0.f, -dotProduct(reflectionDirection, dir)), hitObject->specularExponent) * lights[i]->intensity; 
+//                 } 
+//                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks; 
+//                 break; 
+
 size_t	cast_ray(t_ray *ray, t_space *space)
 {
 	t_object	*obj;
-	t_vec3		*vec;
+	t_vec3		*normal;
 	t_hit		hit;
-	t_ray		sec;
+	t_ray		secray;
+	t_hit		sechit;
+	t_light		*light;
 	size_t		colour;
 
 	hit.nearest = NULL;
-	hit.secondary = &sec;
+	hit.secondary = &secray;
 	nearest_hit_object(ray, space->objects, &hit);
 	if (hit.nearest)
 	{
+		sechit.nearest = NULL;
 		hit.secondary->origin = secondary_ray_origin(ray, hit.t);
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
 		{
-			vec = vec3_init(obj->l.r, obj->l.g, obj->l.b);
-			hit.rgb = vec3_multiply(vec, obj->l.brightness_ratio);
-			free(vec);
+			hit.rgb = vec3_multiply(vec3_init(obj->l.r, obj->l.g, obj->l.b), obj->l.brightness_ratio);
 		}
 		if (hit.nearest->type == SPHERE)
 		{
-			hit.rgb = vec3_init(obj->sp.r, obj->sp.g, obj->sp.b);
+			hit.rgb = rgb_multiply(vec3_init(obj->sp.r, obj->sp.g, obj->sp.b), vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio));
 		}
 		else if (hit.nearest->type == PLANE)
 		{
-			// hit.secondary->direction = plane_secondary_ray_direction(ray, t);
-			// nearest_hit_object(hit.secondary, space->objects, &hit);
-			hit.rgb = vec3_init(obj->pl.r, obj->pl.g, obj->pl.b);
-			// free(hit.secondary->direction);
+			normal = vec3_init(obj->pl.vec_x, obj->pl.vec_y, obj->pl.vec_z);
+			hit.secondary->direction = plane_secondary_ray_direction(ray->direction, normal);
+			nearest_hit_object(hit.secondary, space->objects, &sechit);
+			if (sechit.nearest == NULL)
+			{
+				hit.rgb = rgb_multiply(vec3_init(obj->pl.r, obj->pl.g, obj->pl.b), vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio));
+			}
+			else if (sechit.nearest->type == LIGHT)
+			{
+				light = (t_light *)(sechit.nearest->content);
+				hit.rgb = rgb_multiply(vec3_init(obj->pl.r, obj->pl.g, obj->pl.b), vec3_multiply(vec3_init(light->r, light->g, light->b), light->brightness_ratio));
+			}
+			else
+			{
+				hit.rgb = vec3_init(0, 0, 0);
+			}
+			free(hit.secondary->direction);
 		}
 		else if (hit.nearest->type == CYLINDER)
 			;
@@ -112,9 +151,7 @@ size_t	cast_ray(t_ray *ray, t_space *space)
 	}
 	else
 	{
-		vec = vec3_init(space->ambient->r, space->ambient->g, space->ambient->b);
-		hit.rgb = vec3_multiply(vec, space->ambient->lighting_ratio);
-		free(vec);
+		hit.rgb = vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio);
 	}
 	colour = rgb_colour(hit.rgb);
 	free(hit.rgb);

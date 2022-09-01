@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 17:30:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/01 22:48:11 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,5 +307,6 @@ void		space_render(t_data *data, int width, int height, t_space *space);
 double		deg2rad(double degree);
 void		print_progress(int i, int total);
 size_t		rgb_colour(t_vec3 *rgb);
+t_vec3		*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2);
 
 #endif

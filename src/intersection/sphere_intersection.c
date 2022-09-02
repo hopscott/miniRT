@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/01 12:07:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/02 18:54:10 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,19 @@ t_vec3	*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
 	double	ab[2];
 	double	discriminant;
 	double	t;
-
 	discriminant = get_dscr(r_or, r_dir, sp, &ab);
 	if (discriminant < 0)
 		return (NULL);
 	t = get_short_dist(discriminant, ab[0], ab[1]);
 	return (hit_point(r_or, r_dir, t));
 }
-
 //main for testing the function
-
 int	main(int argc, char **argv)
 {
 	t_vec3		r_origin;
 	t_vec3		r_direction;
 	t_sphere	sphere;
 	t_vec3		*hit_pt;
-
 	r_origin.e[0] = 0;
 	r_origin.e[1] = 0;
 	r_origin.e[2] = -5;

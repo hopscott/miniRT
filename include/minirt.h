@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 16:28:07 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/02 18:49:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <stdio.h>
 # include <math.h>
 
-// # define WIDTH 800
-// # define HEIGHT 600
+# define WIDTH 800
+# define HEIGHT 600
 
-#define WIDTH 40
-#define	HEIGHT 30
+//#define WIDTH 40
+//#define	HEIGHT 30
 
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
 # define HELP_MSG "usage: ./miniRT scene_file.rt\n"

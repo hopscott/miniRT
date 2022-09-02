@@ -44,6 +44,7 @@ light_lstfree	parsing/light_list.c	/^void	light_lstfree(t_light_lst **lst)$/;"	f
 light_lstlast	parsing/light_list.c	/^t_light_lst	*light_lstlast(t_light_lst *elem)$/;"	f	typeref:typename:t_light_lst *
 light_lstnew	parsing/light_list.c	/^t_light_lst	*light_lstnew(t_light *light)$/;"	f	typeref:typename:t_light_lst *
 main	main.c	/^int	main(int ac, char **av)$/;"	f	typeref:typename:int
+main	main_3.c	/^int	main()$/;"	f	typeref:typename:int
 mat44_init	camera/matrix.c	/^t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)$/;"	f	typeref:typename:t_mat44 *
 mlx_render	visuals/mlx_render.c	/^void	mlx_render(t_space *space)$/;"	f	typeref:typename:void
 my_mlx_pixel_put	visuals/mlx_render.c	/^void	my_mlx_pixel_put(t_data *data, int px, int py, int color)$/;"	f	typeref:typename:void

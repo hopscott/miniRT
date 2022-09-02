@@ -6,9 +6,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Sep  1 12:06:08 2022
+# Make data base, printed on Fri Sep  2 18:20:56 2022
 
 # Variables
+ 
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
@@ -37,6 +38,8 @@ CURDIR := /mnt/nfs/homes/omoudni/miniRT
 # makefile
 SHELL = /bin/sh
 # environment
+GDM_LANG = en
+# environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
@@ -45,7 +48,7 @@ _ = /usr/bin/code
 # makefile (from 'Makefile', line 33)
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 # environment
-JOURNAL_STREAM = 9:9729537
+JOURNAL_STREAM = 9:775115
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -67,13 +70,13 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # makefile (from 'Makefile', line 70)
 OBJS := src/parsing/parser.o src/parsing/object_list.o src/parsing/light_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/camera/matrix.o src/camera/rays.o src/visuals/mlx_render.o src/intersection/sphere_intersection.o src/intersection/cylinder_intersection.o src/main.o
 # environment
-MANAGERPID = 1521960
+MANAGERPID = 117495
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/miniRT
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session25
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session2
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_izX5S6
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_8hdtjr
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -85,7 +88,7 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # makefile (from 'Makefile', line 22)
 BIN_DIR := .
 # environment
-SESSION_MANAGER = local/e1r7p4.clusters.42paris.fr:@/tmp/.ICE-unix/1522397,unix/e1r7p4.clusters.42paris.fr:/tmp/.ICE-unix/1522397
+SESSION_MANAGER = local/e1r12p2.clusters.42paris.fr:@/tmp/.ICE-unix/118021,unix/e1r12p2.clusters.42paris.fr:/tmp/.ICE-unix/118021
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -93,7 +96,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 0ad6466fabd040a198a0fb9d10335fa9
+INVOCATION_ID = 8181febeedfe4b8c81543a55b1d8ce17
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # default
@@ -109,7 +112,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/101608/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 1531438
+GIO_LAUNCHED_DESKTOP_FILE_PID = 133959
 # automatic
 %F = $(notdir $%)
 # environment
@@ -119,7 +122,7 @@ PWD = /mnt/nfs/homes/omoudni/miniRT
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1522358
+SSH_AGENT_PID = 117985
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 20)
@@ -193,6 +196,8 @@ TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # automatic
 *F = $(notdir $*)
 # environment
+LANGUAGE = en
+# environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
 VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.69.2-main.sock
@@ -249,11 +254,11 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 1531661
+VSCODE_PID = 134176
 # environment
-TERMINATOR_UUID = urn:uuid:775ca209-eb19-4d06-9ea9-0085da1a430f
+TERMINATOR_UUID = urn:uuid:7eb79cc8-bc57-4460-ad71-4bb520172e0f
 # variable set hash-table stats:
-# Load=121/1024=12%, Rehash=0, Collisions=24/183=13%
+# Load=123/1024=12%, Rehash=0, Collisions=24/185=13%
 
 # Pattern-specific Variable Values
 
@@ -262,10 +267,10 @@ TERMINATOR_UUID = urn:uuid:775ca209-eb19-4d06-9ea9-0085da1a430f
 # Directories
 
 # include (device 59, inode 194865738): 5 files, no impossibilities so far.
-# . (device 59, inode 194826351): 23 files, no impossibilities.
+# . (device 59, inode 194826351): 21 files, no impossibilities.
 # src/parsing (device 59, inode 195115032): 8 files, no impossibilities so far.
 
-# 36 files, no impossibilities in 3 directories.
+# 34 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -343,7 +348,7 @@ miniRT: src/parsing/parser.o src/parsing/object_list.o src/parsing/light_list.o 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-30 16:39:52.922477033
+#  Last modified 2022-09-01 16:35:43.947143778
 #  File has been updated.
 #  Successfully updated.
 
@@ -512,12 +517,12 @@ src/parsing/object_list.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 69 / storage = 943 B / avg = 13 B
-# current buf: size = 8162 B / used = 943 B / count = 69 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 67 / storage = 939 B / avg = 14 B
+# current buf: size = 8162 B / used = 939 B / count = 67 / avg = 14 B
 
-# strcache performance: lookups = 100 / hit rate = 31%
+# strcache performance: lookups = 98 / hit rate = 31%
 # hash-table stats:
-# Load=69/8192=1%, Rehash=0, Collisions=3/100=3%
-# Finished Make data base on Thu Sep  1 12:06:08 2022
+# Load=67/8192=1%, Rehash=0, Collisions=3/98=3%
+# Finished Make data base on Fri Sep  2 18:20:56 2022
 
  

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/03 01:25:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/02 22:25:44 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,16 @@ double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)
 	return (ret);
 }
 
-double	find_smallest_dist(double discr, double a, double b, double max, double r_dir_unit_len)
+double	find_smallest_dist(double discr, double a, double b)
 {
 	double	dist1;
 	double	dist2;
 
-	dist1 = ((- b + discr) / (2 * a)) * r_dir_unit_len;
-	dist2 = ((- b - discr) / (2 * a)) * r_dir_unit_len;
-//	printf("dist_1: %f\n", dist1);
-//	printf("dist_2: %f\n", dist2);
+	dist1 = (- b + discr) / (2 * a);
+	dist2 = (- b - discr) / (2 * a);
+	printf("dist_1: %f\n", dist1);
+	printf("dist_2: %f\n", dist2);
 	if (dist1 < dist2)
-	{
-		if (dist1 > max)
-			return (dist2);
-		return (dist1);
-	}
-	if (dist2 > max)
 		return (dist1);
 	return (dist2);
 }
@@ -73,11 +67,9 @@ double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	double	c;
 	double	r;
 	double	delta;
-	double	dist;
-	double	max;
 	
 	r = cy->diameter / 2;
-	c0 = vec3_init(cy->x,cy->y ,cy->z);
+	c0 = vec3_init(cy->x, cy->y, cy->z);
 	cy_orient = vec3_init(cy->vec_x, cy->vec_y, cy->vec_z);
 	r_dir_unit = vec3_unit(r_dir, 0);
 	pdp = vec3_subtract(cy_orient, c0);
@@ -89,9 +81,7 @@ double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	delta = sqrt((b * b) - 4 * a * c);
 	if (delta < 0)
 		return (-1);
-	max = sqrt(pow(cy->height / 2, 2) + pow(r, 2));
-	dist = find_smallest_dist(delta, a, b, max,vec3_len(r_dir_unit));
-	return (dist);
+	return (find_smallest_dist(delta, a, b) * vec3_len(r_dir));
 }
 
 //old version - to delete I think

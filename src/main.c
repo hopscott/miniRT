@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 17:31:53 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:26:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	space_free(t_space *space)
 {
 	free(space->ambient);
 	free(space->camera);
+	free(space->lights);
 	obj_lstfree(&space->objects);
 }
 

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/31 17:29:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 18:05:04 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,13 @@ void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 	free(vec);
 }
 
-/* https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector */
-
-t_vec3	*plane_secondary_ray_direction(t_vec3 *direction, t_vec3 *normal)
+t_vec3	*plane_surface_normal(t_plane *plane, t_vec3 *direction)
 {
-	double	dot;
-	t_vec3	*vec;
-	t_vec3	*reflection;
+	t_vec3	*tmp;
+	t_vec3	*normal;
 
-	dot = vec3_dot(direction, normal);
-	vec = vec3_multiply(normal, (2 * dot));
-	reflection = vec3_subtract(direction, vec);
-	free(vec);
-	return (reflection);
+	tmp = vec3_subtract(phit, sphere->xyz);
+	normal = vec3_unit(tmp);
+	free(tmp);
+	return (normal);
 }

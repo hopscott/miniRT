@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/17 21:48:37 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:38:31 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,26 @@ int	obj_lstadd(t_obj_lst **lst, int type, t_object *object)
 	return (0);
 }
 
+void	obj_lstfree_sub(t_obj_lst *elem)
+{
+	t_object	*obj;
+
+	obj = (t_object *)(elem->content);
+	if (elem->type == AMBIENT)
+		free(obj->a.rgb);
+	else if (elem->type == CAMERA)
+		vec3_free_multi(obj->c.xyz, obj->c.norm, NULL);
+	else if (elem->type == LIGHT)
+		vec3_free_multi(obj->l.xyz, obj->l.rgb, NULL);
+	else if (elem->type == SPHERE)
+		vec3_free_multi(obj->sp.xyz, obj->sp.rgb, NULL);
+	else if (elem->type == PLANE)
+		vec3_free_multi(obj->pl.xyz, obj->pl.norm, obj->pl.rgb);
+	else if (elem->type == CYLINDER)
+		vec3_free_multi(obj->cy.xyz, obj->cy.norm, obj->cy.rgb);
+	free(elem->content);
+}
+
 void	obj_lstfree(t_obj_lst **lst)
 {
 	t_obj_lst	*elem;
@@ -68,7 +88,7 @@ void	obj_lstfree(t_obj_lst **lst)
 		{
 			next = elem->next;
 			if (elem->content)
-				free(elem->content);
+				obj_lstfree_sub(elem);
 			free(elem);
 			elem = next;
 		}

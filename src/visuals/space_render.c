@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 22:55:02 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:22:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,38 @@ t_vec3	*set_origin(t_mat44 *mat)
 	return (origin);
 }
 
+void	space_set_lights(t_space *space, t_obj_lst *elem)
+{
+	int	i;
+
+	space->n_lights = 0;
+	while (elem)
+	{
+		if (elem->type == LIGHT)
+			space->n_lights++;
+		elem = elem->next;
+	}
+	space->lights = malloc(sizeof(t_light *) * (space->n_lights + 1));
+	if (!space->lights)
+		return ;
+	i = 0;
+	elem = space->objects;
+	while (elem)
+	{
+		if (elem->type == LIGHT)
+			space->lights[i++] = (t_light *)elem->content;
+		elem = elem->next;
+	}
+	space->lights[i] = NULL;
+}
+
 void	space_render(t_data *data, int width, int height, t_space *space)
 {
 	t_param	param;
 	t_mat44	*mat;
 	t_ray	ray;
 
+	space_set_lights(space, space->objects);
 	mat = camera_lookat(space->camera);
 	if (!mat)
 		return ;

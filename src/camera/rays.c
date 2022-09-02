@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 01:06:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 22:29:09 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 	double		tmin;
 	t_object	*obj;
 
+	hit->nearest = NULL;
 	tmin = INFINITY;
 	while (elem)
 	{
@@ -63,24 +64,26 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 	hit->t = tmin;
 }
 
-t_vec3	*secondary_ray_origin(t_ray *ray, double t)
+t_vec3	*ray_to_point(t_ray *ray, double t)
 {
 	t_vec3	*dist;
-	t_vec3	*phit;
+	t_vec3	*xyz;
 
 	dist = vec3_multiply(ray->direction, t);
-	phit = vec3_add(ray->origin, dist);
+	xyz = vec3_add(ray->origin, dist);
 	free(dist);
-	return (phit);
+	return (xyz);
 }
 
 // PHONG REFLECTION
-// We use the Phong illumation model int the default case. The phong model is composed of a diffuse and a specular reflection component. 
+// We use the Phong illumation model int the default case. 
+// The phong model is composed of a diffuse and a specular reflection component. 
 //                 Vec3f lightAmt = 0, specularColor = 0; 
 //                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ? 
 //                     hitPoint + N * options.bias : 
 //                     hitPoint - N * options.bias; 
-// Loop over all lights in the scene and sum their contribution up We also apply the lambert cosine law here though we haven't explained yet what this means. 
+// Loop over all lights in the scene and sum their contribution up 
+// We also apply the lambert cosine law here though we haven't explained yet what this means. 
 //                 for (uint32_t i = 0; i < lights.size(); ++i) { 
 //                     Vec3f lightDir = lights[i]->position - hitPoint; 
 //                     // square of the distance between hitPoint and the light
@@ -89,7 +92,8 @@ t_vec3	*secondary_ray_origin(t_ray *ray, double t)
 //                     float LdotN = std::max(0.f, dotProduct(lightDir, N)); 
 //                     Object *shadowHitObject = nullptr; 
 //                     float tNearShadow = kInfinity; 
-//                     // is the point in shadow, and is the nearest occluding object closer to the object than the light itself?
+//                     // is the point in shadow, 
+//					   // and is the nearest occluding object closer to the object than the light itself?
 //                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) && 
 //                         tNearShadow * tNearShadow < lightDistance2; 
 //                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN; 
@@ -99,60 +103,106 @@ t_vec3	*secondary_ray_origin(t_ray *ray, double t)
 //                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks; 
 //                 break; 
 
+/* https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector */
+
+t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)
+{
+	double	dot;
+	t_vec3	*vec;
+	t_vec3	*reflection;
+
+	dot = vec3_dot(direction, normal);
+	vec = vec3_multiply(normal, (2 * dot));
+	reflection = vec3_subtract(direction, vec);
+	free(vec);
+	return (reflection);
+}
+
+void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+{
+	t_vec3		*rgb;
+	t_vec3		*normal;
+	t_vec3		*tmp;
+	t_vec3		*tmp2;
+	t_vec3		*amb;
+	t_vec3		*spec;
+	t_vec3		*reflection_dir;
+	t_ray		lray;
+	t_hit		lhit;
+	t_object	*lobj;
+	t_light		*light;
+	int			i;
+
+	rgb = NULL;
+	normal = NULL;
+	if (hit->nearest->type == SPHERE)
+	{
+		rgb = obj->sp.rgb;
+		normal = sphere_surface_normal(obj->sp, hit->phit);
+	}
+	else if (hit->nearest->type == PLANE)
+	{
+		rgb = obj->pl.rgb;
+		normal = obj->pl.norm;
+	}
+	else if (hit->nearest->type == CYLINDER)
+		;
+	amb = vec3_init(0, 0, 0);
+	i = -1;
+	while (++i < space->n_lights)
+	{
+		light = space->lights[i];
+		lray->origin = light->xyz;
+		tmp = vec3_subtract(hit->phit, light->xyz);
+		lray->direction = vec3_unit(tmp);
+		free(tmp);
+		nearest_hit_object(&lray, space->objects, &lhit);
+		lobj = (t_object *)(lhit.nearest->content);
+		if (lobj == obj)
+		{
+			tmp = vec3_multiply(light->rgb, vec3_dot(lray->direction, normal));
+			tmp2 = vec3_add(amb, tmp);
+			vec3_free_multi(tmp, amb);
+			amb = tmp2;
+		}
+		reflection_dir = reflection_vector(lray->direction, normal);
+		hit.rgb
+	}
+}
+
+		// hit->secondary->direction = secondary_ray_direction(ray->direction, obj->pl.norm);
+		// nearest_hit_object(hit->secondary, space->objects, &sechit);
+		// if (sechit.nearest == NULL)
+		// 	hit->rgb = rgb_multiply(obj->pl.rgb, space->ambient->rgb);
+		// else if (sechit.nearest->type == LIGHT)
+		// {
+		// 	light = (t_light *)(sechit.nearest->content);
+		// 	tmp = rgb_multiply(obj->pl.rgb, light->rgb);
+		// 	hit->rgb = rgb_multiply(tmp, space->ambient->rgb);
+		// }
+		// free(hit->secondary->direction);
+
 size_t	cast_ray(t_ray *ray, t_space *space)
 {
-	t_object	*obj;
-	t_vec3		*normal;
 	t_hit		hit;
-	t_ray		secray;
-	t_hit		sechit;
-	t_light		*light;
+	t_object	*obj;
 	size_t		colour;
 
-	hit.nearest = NULL;
-	hit.secondary = &secray;
 	nearest_hit_object(ray, space->objects, &hit);
 	if (hit.nearest)
 	{
-		sechit.nearest = NULL;
-		hit.secondary->origin = secondary_ray_origin(ray, hit.t);
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
+			hit.rgb = vec3_copy(obj->l.rgb);
+		else
 		{
-			hit.rgb = vec3_multiply(vec3_init(obj->l.r, obj->l.g, obj->l.b), obj->l.brightness_ratio);
+			hit.phit = ray_to_point(ray, hit.t);
+			shading(space, ray, &hit, obj);
+			free(hit.phit);
 		}
-		if (hit.nearest->type == SPHERE)
-		{
-			hit.rgb = rgb_multiply(vec3_init(obj->sp.r, obj->sp.g, obj->sp.b), vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio));
-		}
-		else if (hit.nearest->type == PLANE)
-		{
-			normal = vec3_init(obj->pl.vec_x, obj->pl.vec_y, obj->pl.vec_z);
-			hit.secondary->direction = plane_secondary_ray_direction(ray->direction, normal);
-			nearest_hit_object(hit.secondary, space->objects, &sechit);
-			if (sechit.nearest == NULL)
-			{
-				hit.rgb = rgb_multiply(vec3_init(obj->pl.r, obj->pl.g, obj->pl.b), vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio));
-			}
-			else if (sechit.nearest->type == LIGHT)
-			{
-				light = (t_light *)(sechit.nearest->content);
-				hit.rgb = rgb_multiply(vec3_init(obj->pl.r, obj->pl.g, obj->pl.b), vec3_multiply(vec3_init(light->r, light->g, light->b), light->brightness_ratio));
-			}
-			else
-			{
-				hit.rgb = vec3_init(0, 0, 0);
-			}
-			free(hit.secondary->direction);
-		}
-		else if (hit.nearest->type == CYLINDER)
-			;
-		free(hit.secondary->origin);
 	}
 	else
-	{
-		hit.rgb = vec3_multiply(vec3_init(space->ambient->r, space->ambient->g, space->ambient->b), space->ambient->lighting_ratio);
-	}
+		hit.rgb = vec3_copy(space->ambient->rgb);
 	colour = rgb_colour(hit.rgb);
 	free(hit.rgb);
 	return (colour);

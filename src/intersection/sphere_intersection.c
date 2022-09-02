@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/08/31 17:30:54 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:52:13 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,17 @@ void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)
 		hit->t = -1;
 	else
 		hit->t = get_short_dist(discriminant, ab[0], ab[1]);
+}
+
+t_vec3	*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit)
+{
+	t_vec3	*tmp;
+	t_vec3	*normal;
+
+	tmp = vec3_subtract(phit, sphere->xyz);
+	normal = vec3_unit(tmp);
+	free(tmp);
+	return (normal);
 }
 
 /*

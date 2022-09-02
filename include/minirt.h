@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 22:48:11 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:58:30 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_ambient
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	t_vec3	*rgb;
 }			t_ambient;
 
 /* identifier: C 												*/
@@ -73,9 +74,11 @@ typedef struct s_camera
 	double	x;
 	double	y;
 	double	z;
+	t_vec3	*xyz;
 	double	vec_x;
 	double	vec_y;
 	double	vec_z;
+	t_vec3	*norm;
 	size_t	fov;
 }			t_camera;
 
@@ -89,10 +92,12 @@ typedef struct s_light
 	double	x;
 	double	y;
 	double	z;
-	double	brightness_ratio;
+	t_vec3	*xyz;
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	double	brightness_ratio;
+	t_vec3	*rgb;
 }			t_light;
 
 /* identifier: sp											*/
@@ -105,10 +110,12 @@ typedef struct s_sphere
 	double	x;
 	double	y;
 	double	z;
+	t_vec3	*xyz;
 	double	diameter;
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	t_vec3	*rgb;
 }			t_sphere;
 
 /* identifier: pl										*/
@@ -122,12 +129,15 @@ typedef struct s_plane
 	double	x;
 	double	y;
 	double	z;
+	t_vec3	*xyz;
 	double	vec_x;
 	double	vec_y;
 	double	vec_z;
+	t_vec3	*norm;
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	t_vec3	*rgb;
 }			t_plane;
 
 /* identifier: cy										*/
@@ -143,14 +153,17 @@ typedef struct s_cylinder
 	double	x;
 	double	y;
 	double	z;
+	t_vec3	*xyz;
 	double	vec_x;
 	double	vec_y;
 	double	vec_z;
+	t_vec3	*norm;
 	double	diameter;
 	double	height;
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	t_vec3	*rgb;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -170,6 +183,8 @@ typedef struct s_space {
 	t_camera	*camera;
 	t_ambient	*ambient;
 	t_obj_lst	*objects;
+	size_t		n_lights;
+	t_light		**lights;
 }	t_space;
 
 /*	Param structure	*/
@@ -194,7 +209,7 @@ typedef struct s_ray {
 typedef struct s_hit {
 	double		t;
 	t_obj_lst	*nearest;
-	t_ray		*secondary;
+	t_vec3		*phit;
 	t_vec3		*rgb;
 }	t_hit;
 
@@ -291,10 +306,10 @@ void		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
 void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
+t_vec3		*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit);
 
 /* plane_intersection.c */
 void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
-t_vec3		*plane_secondary_ray_direction(t_vec3 *direction, t_vec3 *normal);
 
 /* =================== VISUALS ====================== */
 

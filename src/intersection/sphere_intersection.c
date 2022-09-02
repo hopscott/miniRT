@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/02 17:52:13 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 23:33:00 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ t_vec3	*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit)
 	t_vec3	*normal;
 
 	tmp = vec3_subtract(phit, sphere->xyz);
-	normal = vec3_unit(tmp);
-	free(tmp);
+	normal = vec3_unit(tmp, 1);
 	return (normal);
 }
 

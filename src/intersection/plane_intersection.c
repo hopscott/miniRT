@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/02 18:05:04 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 01:01:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,34 @@ void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 	free(vec);
 }
 
-t_vec3	*plane_surface_normal(t_plane *plane, t_vec3 *direction)
-{
-	t_vec3	*tmp;
-	t_vec3	*normal;
+/* https://math.stackexchange.com/questions/4402134/determining-plane-intersection-with-a-ray */
 
-	tmp = vec3_subtract(phit, sphere->xyz);
-	normal = vec3_unit(tmp);
-	free(tmp);
-	return (normal);
+t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)
+{
+	double	a;
+	double	b;
+	t_vec3	*p0;
+	t_vec3	*n;
+	t_vec3	*vec;
+
+	p0 = vec3_init(plane->x, plane->y, plane->z);
+	n = vec3_init(plane->vec_x, plane->vec_y, plane->vec_z);
+	vec = vec3_subtract(p0, ray->origin);
+	a = vec3_dot(vec, n);
+	b = vec3_dot(ray->direction, n);
+	vec3_free_multi(p0, n, vec);
+	if (a < 0)
+	{
+		if (b < 0)
+			return (vec3_multiply(plane->norm, -1));
+		else
+			return (vec3_copy(plane->norm));
+	}
+	else
+	{
+		if (b < 0)
+			return (vec3_copy(plane->norm));
+		else
+			return (vec3_multiply(plane->norm, -1));
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 22:17:34 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 23:35:35 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ t_vec3	*vec3_copy(t_vec3 *vec)
 
 	new = vec3_init(vec->e[0], vec->e[1], vec->e[2]);
 	return (new);
+}
+
+void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new)
+{
+	t_vec3	*tmp;
+
+	tmp = vec3_add((*vec), new);
+	free((*vec));
+	*vec = tmp;
 }
 
 /*

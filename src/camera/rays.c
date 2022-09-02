@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 22:29:09 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 01:30:13 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	t_vec3		*rgb;
 	t_vec3		*normal;
 	t_vec3		*tmp;
-	t_vec3		*tmp2;
 	t_vec3		*amb;
 	t_vec3		*spec;
 	t_vec3		*reflection_dir;
@@ -131,56 +130,53 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	t_hit		lhit;
 	t_object	*lobj;
 	t_light		*light;
-	int			i;
+	size_t		i;
 
 	rgb = NULL;
 	normal = NULL;
 	if (hit->nearest->type == SPHERE)
 	{
 		rgb = obj->sp.rgb;
-		normal = sphere_surface_normal(obj->sp, hit->phit);
+		normal = sphere_surface_normal(&obj->sp, hit->phit);
 	}
 	else if (hit->nearest->type == PLANE)
 	{
 		rgb = obj->pl.rgb;
-		normal = obj->pl.norm;
+		normal = plane_surface_normal(&obj->pl, ray);
 	}
 	else if (hit->nearest->type == CYLINDER)
 		;
-	amb = vec3_init(0, 0, 0);
-	i = -1;
-	while (++i < space->n_lights)
+	amb = vec3_copy(space->ambient->rgb);
+	spec = vec3_init(0, 0, 0);
+	i = 0;
+	while (i < space->n_lights)
 	{
-		light = space->lights[i];
-		lray->origin = light->xyz;
+		light = space->lights[i++];
+		lray.origin = light->xyz;
 		tmp = vec3_subtract(hit->phit, light->xyz);
-		lray->direction = vec3_unit(tmp);
-		free(tmp);
+		lray.direction = vec3_unit(tmp, 1);
 		nearest_hit_object(&lray, space->objects, &lhit);
-		lobj = (t_object *)(lhit.nearest->content);
-		if (lobj == obj)
+		if (lhit.nearest)
 		{
-			tmp = vec3_multiply(light->rgb, vec3_dot(lray->direction, normal));
-			tmp2 = vec3_add(amb, tmp);
-			vec3_free_multi(tmp, amb);
-			amb = tmp2;
+			lobj = (t_object *)(lhit.nearest->content);
+			if (lobj == obj)
+			{
+				tmp = vec3_multiply(light->rgb, vec3_dot(lray.direction, normal));
+				vec3_add_to_self(&amb, tmp);
+				free(tmp);
+			}
 		}
-		reflection_dir = reflection_vector(lray->direction, normal);
-		hit.rgb
+		reflection_dir = reflection_vector(lray.direction, normal);
+		tmp = vec3_multiply(light->rgb, -vec3_dot(reflection_dir, ray->direction));
+		vec3_add_to_self(&spec, tmp);
+		free(tmp);
+		free(reflection_dir);
 	}
+	tmp = rgb_multiply(rgb, amb);
+	hit->rgb = vec3_add(tmp, spec);
+	vec3_free_multi(amb, spec, tmp);
+	free(normal);
 }
-
-		// hit->secondary->direction = secondary_ray_direction(ray->direction, obj->pl.norm);
-		// nearest_hit_object(hit->secondary, space->objects, &sechit);
-		// if (sechit.nearest == NULL)
-		// 	hit->rgb = rgb_multiply(obj->pl.rgb, space->ambient->rgb);
-		// else if (sechit.nearest->type == LIGHT)
-		// {
-		// 	light = (t_light *)(sechit.nearest->content);
-		// 	tmp = rgb_multiply(obj->pl.rgb, light->rgb);
-		// 	hit->rgb = rgb_multiply(tmp, space->ambient->rgb);
-		// }
-		// free(hit->secondary->direction);
 
 size_t	cast_ray(t_ray *ray, t_space *space)
 {

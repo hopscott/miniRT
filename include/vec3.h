@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 22:17:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 23:35:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_vec3	*vec3_init(double a, double b, double c);
 void	vec3_print(t_vec3 *vec);
 void	vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3);
 t_vec3	*vec3_copy(t_vec3 *vec);
+void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new);
 
 /* basic_ops.c */
 t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2);

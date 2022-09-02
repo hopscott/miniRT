@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 17:58:30 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 01:01:25 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,7 @@ t_vec3		*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit);
 
 /* plane_intersection.c */
 void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
+t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
 
 /* =================== VISUALS ====================== */
 

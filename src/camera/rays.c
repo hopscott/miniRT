@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 19:43:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 21:04:44 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ char	obj_to_char(t_obj_lst *elem)
 		else if (elem->type == CYLINDER)
 			return ('%');
 	}
-	return ('#');
+	return ('.');
 }
 
 size_t	cast_ray(t_ray *ray, t_space *space, char *c)

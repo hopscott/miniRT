@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 20:09:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:41:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,30 @@ void	print_screen(char screen[HEIGHT][WIDTH])
 	int	y;	
 	int	x;
 
-	printf(" \t");
-	x = -1;
-	while (++x < WIDTH)
-		printf("%d", x);
-	printf("\n");
+	printf("    ");
 	x = -1;
 	while (++x < WIDTH + 2)
-		printf("-");
-	printf("\n");
+		if (x % 10 == 0)
+			printf("_");
+	printf("_\n");
 	y = -1;
 	while (++y < HEIGHT)
 	{
 		x = -1;
-		printf("%d\t|", y);
-		printf("|");
+		if (y % 20 == 0)
+			printf("%4d|", y);
 		while (++x < WIDTH)
-			printf("%c", screen[y][x]);
-		printf("|\n");
+			if ((x % 10 == 0) && (y % 20 == 0))
+				printf("%c", screen[y][x]);
+		if (y % 20 == 0)
+			printf("|\n");
 	}
+	printf("    ");
 	x = -1;
 	while (++x < WIDTH + 2)
-		printf("-");
-	printf("\n");
+		if (x % 10 == 0)
+			printf("_");
+	printf("_\n");
 }
 
 void	space_render(t_data *data, int width, int height, t_space *space)

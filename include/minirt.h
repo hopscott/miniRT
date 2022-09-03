@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 19:48:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:30:50 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WIDTH 80
-# define HEIGHT 60
+# define WIDTH 800
+# define HEIGHT 600
 
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
 # define HELP_MSG "usage: ./miniRT scene_file.rt\n"

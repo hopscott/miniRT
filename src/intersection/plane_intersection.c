@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/03 01:01:15 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:55:50 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)
 {
 	double	a;
 	double	b;
-	t_vec3	*p0;
-	t_vec3	*n;
 	t_vec3	*vec;
 
-	p0 = vec3_init(plane->x, plane->y, plane->z);
-	n = vec3_init(plane->vec_x, plane->vec_y, plane->vec_z);
-	vec = vec3_subtract(p0, ray->origin);
-	a = vec3_dot(vec, n);
-	b = vec3_dot(ray->direction, n);
-	vec3_free_multi(p0, n, vec);
+	vec = vec3_subtract(plane->xyz, ray->origin);
+	a = vec3_dot(vec, plane->norm);
+	b = vec3_dot(ray->direction, plane->norm);
+	free(vec);
 	if (a < 0)
 	{
 		if (b < 0)

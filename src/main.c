@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 01:57:15 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 18:05:52 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 void	space_free(t_space *space)
 {
 	obj_lstfree(&space->objects);
-	// vec3_free_multi(space->ambient->rgb, space->camera, NULL);
-	// free();
-	free(space->ambient);
+	vec3_free_multi(space->camera->xyz, space->camera->norm, space->ambient->rgb);
 	free(space->camera);
+	free(space->ambient);
 	free(space->lights);
 }
 

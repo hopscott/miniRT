@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 00:45:33 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:09:57 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,42 @@ void	space_set_lights(t_space *space, t_obj_lst *elem)
 	space->lights[i] = NULL;
 }
 
+void	print_screen(char screen[HEIGHT][WIDTH])
+{
+	int	y;	
+	int	x;
+
+	printf(" \t");
+	x = -1;
+	while (++x < WIDTH)
+		printf("%d", x);
+	printf("\n");
+	x = -1;
+	while (++x < WIDTH + 2)
+		printf("-");
+	printf("\n");
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		printf("%d\t|", y);
+		printf("|");
+		while (++x < WIDTH)
+			printf("%c", screen[y][x]);
+		printf("|\n");
+	}
+	x = -1;
+	while (++x < WIDTH + 2)
+		printf("-");
+	printf("\n");
+}
+
 void	space_render(t_data *data, int width, int height, t_space *space)
 {
 	t_param	param;
 	t_mat44	*mat;
 	t_ray	ray;
+	char	screen[HEIGHT][WIDTH];
 
 	space_set_lights(space, space->objects);
 	mat = camera_lookat(space->camera);
@@ -83,12 +114,13 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 		while (++param.px < width)
 		{
 			ray.direction = set_direction(param, width, height, mat);
-			param.colour = cast_ray(&ray, space);
+			param.colour = cast_ray(&ray, space, &screen[(int)param.py][(int)param.px]);
 			free(ray.direction);
 			my_mlx_pixel_put(data, param.px, param.py, param.colour);
 		}
 		print_progress(param.py, height);
 	}
+	print_screen(screen);
 	free(mat);
 	free(ray.origin);
 }

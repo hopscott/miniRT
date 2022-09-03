@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 01:30:13 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 19:43:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)
 	return (reflection);
 }
 
-void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+void	shading_v1(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 {
 	t_vec3		*rgb;
 	t_vec3		*normal;
@@ -178,7 +178,107 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	free(normal);
 }
 
-size_t	cast_ray(t_ray *ray, t_space *space)
+void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+{
+	t_vec3		*rgb;
+	t_vec3		*normal;
+	t_vec3		*ambient;
+	t_vec3		*diffuse;
+	t_vec3		*specular;
+	double		albedo;
+	t_vec3		*tmp;
+	t_vec3		*reflection_dir;
+	t_ray		lray;
+	t_hit		lhit;
+	t_object	*lobj;
+	t_light		*light;
+	size_t		i;
+
+	// init rgb + normal
+	rgb = NULL;
+	normal = NULL;
+	if (hit->nearest->type == SPHERE)
+	{
+		rgb = obj->sp.rgb;
+		normal = sphere_surface_normal(&obj->sp, hit->phit);
+	}
+	else if (hit->nearest->type == PLANE)
+	{
+		rgb = obj->pl.rgb;
+		normal = plane_surface_normal(&obj->pl, ray);
+	}
+	else if (hit->nearest->type == CYLINDER)
+		;
+	
+	// setup ambient
+	ambient = rgb_multiply(rgb, space->ambient->rgb);
+	// setup diffuse
+	diffuse = vec3_init(0, 0, 0);
+	// setup specular
+	specular = vec3_init(0, 0, 0);
+
+	// loop over each light
+	i = 0;
+	while (i < space->n_lights)
+	{
+		light = space->lights[i++];
+
+		// build lray
+		lray.origin = light->xyz;
+		tmp = vec3_subtract(hit->phit, light->xyz);
+		lray.direction = vec3_unit(tmp, 1);
+
+		// find if lray hits object directly or not
+		nearest_hit_object(&lray, space->objects, &lhit);
+		if (lhit.nearest)
+		{
+			lobj = (t_object *)(lhit.nearest->content);
+			if (lobj == obj)
+			{
+				// calculate lambertian reflectance - diffuse => https://en.wikipedia.org/wiki/Lambertian_reflectance
+				// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading
+				albedo = 0.18;
+				tmp = vec3_multiply(light->rgb, vec3_dot(lray.direction, normal) * albedo / M_PI);
+				vec3_add_to_self(&diffuse, tmp);
+				free(tmp);
+
+				// calculate specular reflectance
+				reflection_dir = reflection_vector(lray.direction, normal);
+				tmp = vec3_multiply(light->rgb, -vec3_dot(reflection_dir, ray->direction));
+				vec3_add_to_self(&specular, tmp);
+				free(tmp);
+				free(reflection_dir);
+			}
+		}
+	}
+	tmp = rgb_multiply(rgb, diffuse);
+	free(diffuse);
+	diffuse = vec3_copy(tmp);
+	free(tmp);
+	tmp = vec3_add(ambient, diffuse);
+	hit->rgb = vec3_add(tmp, specular);
+	free(tmp);
+	vec3_free_multi(ambient, diffuse, specular);
+	free(normal);
+}
+
+char	obj_to_char(t_obj_lst *elem)
+{
+	if (elem)
+	{
+		if (elem->type == LIGHT)
+			return ('@');
+		else if (elem->type == SPHERE)
+			return ('o');
+		else if (elem->type == PLANE)
+			return ('-');
+		else if (elem->type == CYLINDER)
+			return ('%');
+	}
+	return ('#');
+}
+
+size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 {
 	t_hit		hit;
 	t_object	*obj;
@@ -199,6 +299,7 @@ size_t	cast_ray(t_ray *ray, t_space *space)
 	}
 	else
 		hit.rgb = vec3_copy(space->ambient->rgb);
+	*c = obj_to_char(hit.nearest);
 	colour = rgb_colour(hit.rgb);
 	free(hit.rgb);
 	return (colour);

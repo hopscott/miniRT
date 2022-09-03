@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 01:01:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/03 19:48:42 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 80
+# define HEIGHT 60
 
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
 # define HELP_MSG "usage: ./miniRT scene_file.rt\n"
@@ -284,7 +284,7 @@ t_mat44		*camera_lookat(t_camera *cam);
 t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
 
 /* rays.c */
-size_t	cast_ray(t_ray *ray, t_space *space);
+size_t		cast_ray(t_ray *ray, t_space *space, char *c);
 
 /* =================== VISUALS ====================== */
 

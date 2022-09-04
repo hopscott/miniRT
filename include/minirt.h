@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 18:49:07 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/04 02:45:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
+# include <stdint.h>
 
 # define WIDTH 800
 # define HEIGHT 600

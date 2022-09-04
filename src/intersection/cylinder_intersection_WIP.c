@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/03 01:03:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:49:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,22 @@ double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)
 	return (ret);
 }
 
-double	find_smallest_dist(double discr, double a, double b)
+double	find_smallest_dist(double discr, double a, double b, double max, double r_dir_unit_len)
 {
 	double	dist1;
 	double	dist2;
 
-	dist1 = (- b + discr) / (2 * a);
-	dist2 = (- b - discr) / (2 * a);
-	printf("dist_1: %f\n", dist1);
-	printf("dist_2: %f\n", dist2);
+	dist1 = ((- b + discr) / (2 * a)) * r_dir_unit_len;
+	dist2 = ((- b - discr) / (2 * a)) * r_dir_unit_len;
+//	printf("dist_1: %f\n", dist1);
+//	printf("dist_2: %f\n", dist2);
 	if (dist1 < dist2)
+	{
+		if (dist1 > max)
+			return (dist2);
+		return (dist1);
+	}
+	if (dist2 > max)
 		return (dist1);
 	return (dist2);
 }
@@ -56,31 +62,36 @@ double	find_smallest_dist(double discr, double a, double b)
 //
 double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 {
+	t_vec3	*pdp;
+	t_vec3	*eyexpdp;
+	t_vec3	*rdxpdp;
 	t_vec3	*c0;
 	t_vec3	*cy_orient;
 	t_vec3	*r_dir_unit;
-	t_vec3	*c_to_o;
-	t_vec3	*new_ray;
 	double	a;
 	double	b;
 	double	c;
 	double	r;
 	double	delta;
+	double	dist;
+	double	max;
 	
 	r = cy->diameter / 2;
-	c0 = vec3_init(cy->x, cy->y, cy->z);
+	c0 = vec3_init(cy->x - r_or->e[0], cy->y - r_or->e[1] ,cy->z - r_or->e[2]);
 	cy_orient = vec3_init(cy->vec_x, cy->vec_y, cy->vec_z);
 	r_dir_unit = vec3_unit(r_dir, 0);
-	c_to_o = vec3_subtract(r_or, c0);
-	new_ray = vec3_cross(r_or, cy_orient);
-	a = vec3_dot(new_ray, new_ray);
-	b = 2 * vec3_dot(new_ray, vec3_cross(c_to_o, cy_orient));
-	c = vec3_dot(vec3_cross(c_to_o, cy_orient), vec3_cross(c_to_o, cy_orient)) - pow(r, 2);
-	delta = pow(b, 2) - 4 * a * c;
-	printf("%f\n", delta);
+	pdp = vec3_subtract(cy_orient, c0);
+	eyexpdp = vec3_cross(vec3_subtract(r_or, c0), pdp);
+	rdxpdp = vec3_cross(r_dir, pdp);
+	a = vec3_dot(rdxpdp, rdxpdp);
+	b = 2 * vec3_dot(rdxpdp, eyexpdp);
+	c = vec3_dot(eyexpdp, eyexpdp) - (r * r * vec3_dot(pdp, pdp));
+	delta = sqrt((b * b) - 4 * a * c);
 	if (delta < 0)
 		return (-1);
-	return (find_smallest_dist(delta, a, b) * vec3_len(r_dir));
+	max = sqrt(pow(cy->height / 2, 2) + pow(r, 2));
+	dist = find_smallest_dist(delta, a, b, max,vec3_len(r_dir_unit));
+	return (dist);
 }
 
 //old version - to delete I think

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 16:33:48 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/04 02:10:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 			//printf("\nor_x: %f, or_y: %f, or_z:%f\n", origin->e[0], origin->e[1], origin->e[2]);
 //			printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",(obj->cy).x,(obj->cy).y, (obj->cy).z);
 			t = cy_intersection(origin, direction, &obj->cy);
+			printf("t: %f\n", t);
 //			if (t > -1)
 //				printf("\nI found a cylinder. here is the t to it: %f\n", t);
 			nearest_ho_utils(&nearest, elem, &tmin, t);
@@ -236,6 +237,8 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 	mat = camera_lookat(space->camera);
 	vec = vec3_init(0, 0, 0);
 	origin = vec3_matrix_multiply(mat, vec, 0);
+	printf("origin.x: %f, origin.y: %f, origin.z: %f\n", origin->e[0], origin->e[1], origin->e[2]);
+//	exit(0);
 	//printf("\nor_x: %f, or_y: %f, or_z:%f\n", origin->e[0], origin->e[1], origin->e[2]);
 	free(vec);
 	py = -1;

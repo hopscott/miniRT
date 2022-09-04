@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/05 00:58:03 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/05 01:35:15 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		{	
 			//printf("\nor_x: %f, or_y: %f, or_z:%f\n", origin->e[0], origin->e[1], origin->e[2]);
 //			printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",(obj->cy).x,(obj->cy).y, (obj->cy).z);
-			t = cy_intersection(mat, origin, direction, &obj->cy);
+			hit->t = cy_intersection(origin, direction, &obj->cy);
 			printf("t: %f\n", t);
 //			if (t > -1)
 //				printf("\nI found a cylinder. here is the t to it: %f\n", t);

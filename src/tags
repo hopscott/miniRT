@@ -1,77 +1,108 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/omoudni/miniRT/src/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
+!_TAG_PROGRAM_VERSION	5.9.0	//
 build_ambient	parsing/ambient.c	/^int	build_ambient(char **tbl, t_ambient **obj)$/;"	f	typeref:typename:int
 build_camera	parsing/camera.c	/^int	build_camera(char **tbl, t_camera **obj)$/;"	f	typeref:typename:int
 build_cylinder	parsing/cylinder.c	/^t_cylinder	*build_cylinder(char **tbl)$/;"	f	typeref:typename:t_cylinder *
+build_cylinder_vecs	parsing/cylinder.c	/^void	build_cylinder_vecs(t_cylinder **obj)$/;"	f	typeref:typename:void
 build_light	parsing/light.c	/^t_light	*build_light(char **tbl)$/;"	f	typeref:typename:t_light *
+build_light_vecs	parsing/light.c	/^void	build_light_vecs(t_light **obj)$/;"	f	typeref:typename:void
 build_plane	parsing/plane.c	/^t_plane	*build_plane(char **tbl)$/;"	f	typeref:typename:t_plane *
+build_plane_vecs	parsing/plane.c	/^void	build_plane_vecs(t_plane **obj)$/;"	f	typeref:typename:void
 build_sphere	parsing/sphere.c	/^t_sphere	*build_sphere(char **tbl)$/;"	f	typeref:typename:t_sphere *
 calc_c_dscr	intersection/sphere_intersection.c	/^void	calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c)$/;"	f	typeref:typename:void
 camera_lookat	camera/matrix.c	/^t_mat44	*camera_lookat(t_camera *cam)$/;"	f	typeref:typename:t_mat44 *
 camera_lookat_utils	camera/matrix.c	/^t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *coord)$/;"	f	typeref:typename:t_mat44 *
-cast_ray	camera/rays.c	/^t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)$/;"	f	typeref:typename:t_vec3 *
+cast_ray	camera/rays.c	/^size_t	cast_ray(t_ray *ray, t_space *space, char *c)$/;"	f	typeref:typename:size_t
 check_det	intersection/trash/cylinder_intersection_deprecated.c	/^int check_det(double *det1, double a, double b, double c)$/;"	f	typeref:typename:int
 clear_window	visuals/mlx_render.c	/^void	clear_window(t_vars *vars)$/;"	f	typeref:typename:void
-cy_intersection	intersection/cylinder_intersection.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/cylinder_intersection.c	/^double	cy_intersection(t_mat44 *mat, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/cylinder_intersection_WIP.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
 cy_intersection	intersection/trash/cylinder_intersection_deprecated_3.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/trash/cylinder_intersection_deprecated_4.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/trash/cylinder_intersection_deprecated_5.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/trash/cylinder_intersection_deprecated_6.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
 cylinder_intersection	intersection/trash/cylinder_intersection_deprecated.c	/^double cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl)$/;"	f	typeref:typename:double
 cylinder_intersection	intersection/trash/cylinder_intersection_deprecated_2.c	/^double cylinder_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl)$/;"	f	typeref:typename:double
-deg2rad	camera/rays.c	/^double  deg2rad(double degree)$/;"	f	typeref:typename:double
+deg2rad	utils.c	/^double	deg2rad(double degree)$/;"	f	typeref:typename:double
 destroy	visuals/mlx_render.c	/^int	destroy(t_vars *vars)$/;"	f	typeref:typename:int
 dist	intersection/trash/cylinder_intersection_deprecated.c	/^double dist(double x1, double y1, double x2, double y2)$/;"	f	typeref:typename:double
 dist_line_cer	intersection/trash/cylinder_intersection_deprecated.c	/^double dist_line_cer(t_vec2 orig, t_vec2 dir, t_cercle cercle)$/;"	f	typeref:typename:double
 find_ab	intersection/trash/cylinder_intersection_deprecated.c	/^void find_ab(double (*ab)[2], t_vec2 orig, t_vec2 dir)$/;"	f	typeref:typename:void
 find_abc	intersection/cylinder_intersection.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
+find_abc	intersection/cylinder_intersection_WIP.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
 find_abc	intersection/trash/cylinder_intersection_deprecated_3.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
+find_abc	intersection/trash/cylinder_intersection_deprecated_4.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
+find_abc	intersection/trash/cylinder_intersection_deprecated_5.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
+find_abc	intersection/trash/cylinder_intersection_deprecated_6.c	/^double	*find_abc(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, t_vec3 *ch_unit)$/;"	f	typeref:typename:double *
 find_dis_1	intersection/trash/cylinder_intersection_deprecated.c	/^double find_dis_1(double x1x2[2], t_vec2 orig, double ab[2])$/;"	f	typeref:typename:double
 find_dis_2	intersection/trash/cylinder_intersection_deprecated.c	/^double find_dis_2(double x, t_vec2 orig, double ab[2])$/;"	f	typeref:typename:double
 find_quadratic_coef	intersection/trash/cylinder_intersection_deprecated.c	/^void find_quadratic_coef(double (*cde)[3], double ab[2], t_cercle cercle)$/;"	f	typeref:typename:void
-find_smallest_dist	intersection/cylinder_intersection.c	/^double	find_smallest_dist(double discr, double a, double b)$/;"	f	typeref:typename:double
+find_smallest_dist	intersection/cylinder_intersection.c	/^double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double discr, double a, d/;"	f	typeref:typename:double
+find_smallest_dist	intersection/cylinder_intersection_WIP.c	/^double	find_smallest_dist(double discr, double a, double b, double max, double r_dir_unit_len)$/;"	f	typeref:typename:double
 find_smallest_dist	intersection/trash/cylinder_intersection_deprecated_3.c	/^double	find_smallest_dist(double discr, double a, double b)$/;"	f	typeref:typename:double
+find_smallest_dist	intersection/trash/cylinder_intersection_deprecated_4.c	/^double	find_smallest_dist(double discr, double a, double b)$/;"	f	typeref:typename:double
+find_smallest_dist	intersection/trash/cylinder_intersection_deprecated_5.c	/^double	find_smallest_dist(double discr, double a, double b)$/;"	f	typeref:typename:double
+find_smallest_dist	intersection/trash/cylinder_intersection_deprecated_6.c	/^double	find_smallest_dist(double discr, double a, double b)$/;"	f	typeref:typename:double
 get_dscr	intersection/sphere_intersection.c	/^double	get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2])$/;"	f	typeref:typename:double
 get_short_dist	intersection/sphere_intersection.c	/^double	get_short_dist(double discriminant, double a, double b)$/;"	f	typeref:typename:double
 get_x	intersection/trash/cylinder_intersection_deprecated.c	/^double get_x(double a, double b)$/;"	f	typeref:typename:double
 get_xs	intersection/trash/cylinder_intersection_deprecated.c	/^void get_xs(double (*x1x2)[2], double det, double a, double b)$/;"	f	typeref:typename:void
 hit_point	intersection/sphere_intersection.c	/^t_vec3	*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t)$/;"	f	typeref:typename:t_vec3 *
 keypress	visuals/mlx_render.c	/^int	keypress(int key, t_vars *vars)$/;"	f	typeref:typename:int
-light_lstadd	parsing/light_list.c	/^int	light_lstadd(t_light_lst **lights, t_light *light)$/;"	f	typeref:typename:int
-light_lstfree	parsing/light_list.c	/^void	light_lstfree(t_light_lst **lst)$/;"	f	typeref:typename:void
-light_lstlast	parsing/light_list.c	/^t_light_lst	*light_lstlast(t_light_lst *elem)$/;"	f	typeref:typename:t_light_lst *
-light_lstnew	parsing/light_list.c	/^t_light_lst	*light_lstnew(t_light *light)$/;"	f	typeref:typename:t_light_lst *
+light_intersection	intersection/light_intersection.c	/^void	light_intersection(t_ray *ray, t_light *light, t_hit *hit)$/;"	f	typeref:typename:void
 main	main.c	/^int	main(int ac, char **av)$/;"	f	typeref:typename:int
-main	main_3.c	/^int	main()$/;"	f	typeref:typename:int
+main	main_test.c	/^int	main()$/;"	f	typeref:typename:int
 mat44_init	camera/matrix.c	/^t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)$/;"	f	typeref:typename:t_mat44 *
 mlx_render	visuals/mlx_render.c	/^void	mlx_render(t_space *space)$/;"	f	typeref:typename:void
 my_mlx_pixel_put	visuals/mlx_render.c	/^void	my_mlx_pixel_put(t_data *data, int px, int py, int color)$/;"	f	typeref:typename:void
-nearest_hit_object	camera/rays.c	/^t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)$/;"	f	typeref:typename:t_obj_lst *
-nearest_ho_utils	camera/rays.c	/^void	nearest_ho_utils(t_obj_lst **nearest, t_obj_lst *elem, double *tmin, double t)$/;"	f	typeref:typename:void
+nearest_hit_object	camera/rays.c	/^void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)$/;"	f	typeref:typename:void
+new_dist	intersection/cylinder_intersection.c	/^uint8_t	new_dist(double dist, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:uint8_t
 obj_lstadd	parsing/object_list.c	/^int	obj_lstadd(t_obj_lst **lst, int type, t_object *object)$/;"	f	typeref:typename:int
 obj_lstfree	parsing/object_list.c	/^void	obj_lstfree(t_obj_lst **lst)$/;"	f	typeref:typename:void
+obj_lstfree_sub	parsing/object_list.c	/^void	obj_lstfree_sub(t_obj_lst *elem)$/;"	f	typeref:typename:void
 obj_lstlast	parsing/object_list.c	/^t_obj_lst	*obj_lstlast(t_obj_lst *lst)$/;"	f	typeref:typename:t_obj_lst *
 obj_lstnew	parsing/object_list.c	/^t_obj_lst	*obj_lstnew(int type, void *content)$/;"	f	typeref:typename:t_obj_lst *
-object_space_to_camera_space	projection.c	/^void	object_space_to_camera_space(t_list **lst)$/;"	f	typeref:typename:void
+obj_to_char	camera/rays.c	/^char	obj_to_char(t_obj_lst *elem)$/;"	f	typeref:typename:char
 parser	parsing/parser.c	/^int	parser(char *path, t_space *space)$/;"	f	typeref:typename:int
-plane_intersection	camera/rays.c	/^int	plane_intersection(t_vec3 *origin, t_vec3 *direction, t_plane *plane)$/;"	f	typeref:typename:int
+plane_intersection	intersection/plane_intersection.c	/^void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)$/;"	f	typeref:typename:void
+plane_surface_normal	intersection/plane_intersection.c	/^t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)$/;"	f	typeref:typename:t_vec3 *
 print_help	parsing/errorinizer.c	/^void	print_help(void)$/;"	f	typeref:typename:void
-print_progress	camera/rays.c	/^void	print_progress(int i, int total)$/;"	f	typeref:typename:void
+print_progress	utils.c	/^void	print_progress(int i, int total)$/;"	f	typeref:typename:void
+print_screen	visuals/space_render.c	/^void	print_screen(char screen[HEIGHT][WIDTH])$/;"	f	typeref:typename:void
 print_space	parsing/parser.c	/^void	print_space(t_space *space)$/;"	f	typeref:typename:void
 putstr_error	parsing/errorinizer.c	/^void	putstr_error(char *err)$/;"	f	typeref:typename:void
+ray_to_point	camera/rays.c	/^t_vec3	*ray_to_point(t_ray *ray, double t)$/;"	f	typeref:typename:t_vec3 *
+reflection_vector	camera/rays.c	/^t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)$/;"	f	typeref:typename:t_vec3 *
 render_frame	visuals/mlx_render.c	/^int	render_frame(t_vars *vars)$/;"	f	typeref:typename:int
-rgb_colour	camera/rays.c	/^unsigned int	rgb_colour(t_vec3 *rgb)$/;"	f	typeref:typename:unsigned int
+rgb_colour	utils.c	/^size_t	rgb_colour(t_vec3 *rgb)$/;"	f	typeref:typename:size_t
+rgb_multiply	utils.c	/^t_vec3	*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2)$/;"	f	typeref:typename:t_vec3 *
+set_direction	visuals/space_render.c	/^t_vec3	*set_direction(t_param param, int width, int height, t_mat44 *mat)$/;"	f	typeref:typename:t_vec3 *
+set_origin	visuals/space_render.c	/^t_vec3	*set_origin(t_mat44 *mat)$/;"	f	typeref:typename:t_vec3 *
+shading	camera/rays.c	/^char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)$/;"	f	typeref:typename:char
+shading_v1	camera/rays.c	/^void	shading_v1(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)$/;"	f	typeref:typename:void
 space_free	main.c	/^void	space_free(t_space *space)$/;"	f	typeref:typename:void
-space_render	camera/rays.c	/^void	space_render(t_data *data, int width, int height, t_space *space)$/;"	f	typeref:typename:void
-sphere_intersection	intersection/sphere_intersection.c	/^double	sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)$/;"	f	typeref:typename:double
+space_render	visuals/space_render.c	/^void	space_render(t_data *data, int width, int height, t_space *space)$/;"	f	typeref:typename:void
+space_set_lights	visuals/space_render.c	/^void	space_set_lights(t_space *space, t_obj_lst *elem)$/;"	f	typeref:typename:void
+sphere_intersection	intersection/sphere_intersection.c	/^void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)$/;"	f	typeref:typename:void
+sphere_surface_normal	intersection/sphere_intersection.c	/^t_vec3	*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit)$/;"	f	typeref:typename:t_vec3 *
 sub_parser	parsing/parser.c	/^int	sub_parser(char **tbl, t_space *space)$/;"	f	typeref:typename:int
 vec3_add	vec3/basic_ops.c	/^t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *
+vec3_add_to_self	vec3/init.c	/^void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new)$/;"	f	typeref:typename:void
+vec3_copy	vec3/init.c	/^t_vec3	*vec3_copy(t_vec3 *vec)$/;"	f	typeref:typename:t_vec3 *
 vec3_cross	vec3/basic_ops.c	/^t_vec3	*vec3_cross(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *
 vec3_distance_points	vec3/adv_ops.c	/^double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:double
 vec3_divide	vec3/basic_ops.c	/^t_vec3	*vec3_divide(t_vec3 *vec1, double n)$/;"	f	typeref:typename:t_vec3 *
 vec3_dot	vec3/adv_ops.c	/^double	vec3_dot(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:double
+vec3_free_multi	vec3/init.c	/^void	vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3)$/;"	f	typeref:typename:void
 vec3_init	vec3/init.c	/^t_vec3	*vec3_init(double a, double b, double c)$/;"	f	typeref:typename:t_vec3 *
 vec3_len	vec3/adv_ops.c	/^double	vec3_len(t_vec3 *vec)$/;"	f	typeref:typename:double
 vec3_lensq	vec3/adv_ops.c	/^double	vec3_lensq(t_vec3 *vec)$/;"	f	typeref:typename:double

@@ -6,11 +6,21 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/17 21:06:30 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:08:16 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	build_light_vecs(t_light **obj)
+{
+	t_vec3	*tmp;
+
+	(*obj)->xyz = vec3_init((*obj)->z, (*obj)->y, (*obj)->z);
+	tmp = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
+	(*obj)->rgb = vec3_multiply(tmp, (*obj)->brightness_ratio);
+	free(tmp);
+}
 
 t_light	*build_light(char **tbl)
 {
@@ -32,5 +42,6 @@ t_light	*build_light(char **tbl)
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
+	build_light_vecs(&obj);
 	return (obj);
 }

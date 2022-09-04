@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/04 04:06:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/04 23:43:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ uint8_t	new_dist(double dist, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	cy_center_middle = vec_from_or_vec_len(cy_center, cy_orient, cy->height / 2);
 	dist_p_center = vec3_distance_points(cy_point, cy_center_middle);
 	dist_max = sqrt(pow(cy->height / 2, 2) + pow(radius, 2));
-	if (dist_p_center <= dist_max)
+	if (dist_p_center < dist_max)
 		return (1);
 	return (0);
 }
@@ -64,9 +64,11 @@ double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double di
 {
 	double	dist1;
 	double	dist2;
+//	t_vec3	r_dir_unit;
 
-	dist1 = ((- b + discr) / (2 * a));
-	dist2 = ((- b - discr) / (2 * a));
+	dist1 = (((- b + sqrt(discr)) / (2 * a)));
+	dist2 = ((- b - sqrt(discr)) / (2 * a));
+//	r_dir_unit = vec3_unit(r_dir, 0);
 	//	printf("dist_1: %f\n", dist1);
 	//	printf("dist_2: %f\n", dist2);
 	if (dist1 < dist2)
@@ -88,10 +90,11 @@ double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double di
 //c: (point)cylinder's center; h: (distance)height; ch: (vector)between c and hi
 //cy_orient: (vector)cy_direct_vector_unit
 //
-double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
+double	cy_intersection(t_mat44 *mat, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 {
 	t_vec3	*center;
 	t_vec3	*center_inv;
+	t_vec3	*cy_orient_bef;
 	t_vec3	*cy_orient;
 	t_vec3	*rot_r_or;
 	t_vec3	*rot_r_dir;
@@ -103,11 +106,12 @@ double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	double	smallest_dist;
 
 	radius = cy->diameter / 2;
-	center = vec3_init(cy->x - r_or->e[0], cy->y - r_or->e[1],cy->z - r_or->e[2]);
+	center = vec3_init(cy->x, cy->y,cy->z);
 	center_inv = vec3_multiply(center, -1);
-	cy_orient = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
-	rot_r_dir = vec3_cross(r_dir, cy_orient);
-	rot_r_or = vec3_cross(center_inv, cy_orient);
+	cy_orient_bef = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
+	cy_orient = cy_orient_bef;
+	rot_r_dir = vec3_cross(cy_orient, r_dir);
+	rot_r_or = vec3_cross(cy_orient, center_inv);
 	a = vec3_dot(rot_r_dir, rot_r_dir);
 	b = 2 * vec3_dot(rot_r_dir, rot_r_or);
 	c = vec3_dot(rot_r_or, rot_r_or) - pow(radius, 2);

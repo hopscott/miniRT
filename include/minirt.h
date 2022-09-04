@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/04 02:45:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/04 21:11:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,6 @@ t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* =================== INTERSECTION ====================== */
 /* sphere_intersection.c */
 double		sphere_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
-double		cy_intersection(t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl);
+double		cy_intersection(t_mat44 *mat, t_vec3 *orig, t_vec3 *dir, t_cylinder *cyl);
 
 #endif

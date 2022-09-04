@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/04 02:10:46 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/04 21:14:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	nearest_ho_utils(t_obj_lst **nearest, t_obj_lst *elem, double *tmin, double
 			}
 }
 
-t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
+t_obj_lst	*nearest_hit_object(t_mat44 *mat, t_vec3 *origin, t_vec3 *direction, t_obj_lst **objects)
 {
 	double		t;
 	double		tmin;
@@ -93,7 +93,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 		{	
 			//printf("\nor_x: %f, or_y: %f, or_z:%f\n", origin->e[0], origin->e[1], origin->e[2]);
 //			printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",(obj->cy).x,(obj->cy).y, (obj->cy).z);
-			t = cy_intersection(origin, direction, &obj->cy);
+			t = cy_intersection(mat, origin, direction, &obj->cy);
 			printf("t: %f\n", t);
 //			if (t > -1)
 //				printf("\nI found a cylinder. here is the t to it: %f\n", t);
@@ -105,7 +105,7 @@ t_obj_lst	*nearest_hit_object(t_vec3 *origin, t_vec3 *direction, t_obj_lst **obj
 	return (nearest);
 }
 
-t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
+t_vec3	*cast_ray(t_mat44 *mat, t_vec3 *origin, t_vec3 *direction, t_space *space)
 {
 	t_obj_lst		*olst;
 	t_object		*obj;
@@ -113,7 +113,7 @@ t_vec3	*cast_ray(t_vec3 *origin, t_vec3 *direction, t_space *space)
 	// t_light			*light;
 
 	// light = nearest_hit_light(origin, direction, space->lights);
-	olst = nearest_hit_object(origin, direction, &space->objects);
+	olst = nearest_hit_object(mat, origin, direction, &space->objects);
 	if (olst)
 	{
 		obj = (t_object *)(olst->content);
@@ -253,9 +253,9 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 			x = (2 * (px + 0.5) / width - 1) * scale * aspect_ratio;
 			y = (1 - 2 * (py + 0.5) / height) * scale;
 			vec = vec3_init(x, y, -1);
-			direction = vec3_matrix_multiply(mat, vec, 1);
+			direction = vec3_matrix_multiply(mat, vec, -1);
 			free(vec);
-			rgb = cast_ray(origin, direction, space);
+			rgb = cast_ray(mat, origin, direction, space);
 			free(direction);
 			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
 			print_progress(py, height);

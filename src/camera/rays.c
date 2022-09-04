@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 21:04:44 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/05 00:58:03 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	shading_v1(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	free(normal);
 }
 
-void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 {
 	t_vec3		*rgb;
 	t_vec3		*normal;
@@ -187,12 +187,17 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	t_vec3		*specular;
 	double		albedo;
 	t_vec3		*tmp;
-	t_vec3		*reflection_dir;
 	t_ray		lray;
 	t_hit		lhit;
 	t_object	*lobj;
 	t_light		*light;
 	size_t		i;
+	t_vec3 		*r;
+	t_vec3 		*v;
+	double		kd;
+	double		ks;
+	int			n;
+	char 		c;
 
 	// init rgb + normal
 	rgb = NULL;
@@ -218,6 +223,7 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	specular = vec3_init(0, 0, 0);
 
 	// loop over each light
+	c = 'x';
 	i = 0;
 	while (i < space->n_lights)
 	{
@@ -238,28 +244,50 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 				// calculate lambertian reflectance - diffuse => https://en.wikipedia.org/wiki/Lambertian_reflectance
 				// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading
 				albedo = 0.18;
-				tmp = vec3_multiply(light->rgb, vec3_dot(lray.direction, normal) * albedo / M_PI);
+				
+				tmp = vec3_multiply(light->rgb, light->brightness_ratio * vec3_dot(lray.direction, normal) * albedo / M_PI);
 				vec3_add_to_self(&diffuse, tmp);
 				free(tmp);
 
+				if ((vec3_dot(lray.direction, normal) * albedo / M_PI) > 0.00001)
+					c = 'o';
+
 				// calculate specular reflectance
-				reflection_dir = reflection_vector(lray.direction, normal);
-				tmp = vec3_multiply(light->rgb, -vec3_dot(reflection_dir, ray->direction));
+				// https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF/phong-illumination-models-brdf
+				n = 250;
+
+				tmp = vec3_multiply(normal, 2 * (vec3_dot(normal, lray.direction)));
+				r = vec3_subtract(tmp, lray.direction);
+				v = vec3_multiply(lray.direction, -1);
+				tmp = vec3_multiply(light->rgb, light->brightness_ratio * pow(vec3_dot(v, r), n));
 				vec3_add_to_self(&specular, tmp);
-				free(tmp);
-				free(reflection_dir);
+				vec3_free_multi(r, v, tmp);
+
+				if ((pow(vec3_dot(v, ray->direction), n)) > 0.2)
+					c = '*';
 			}
 		}
 	}
-	tmp = rgb_multiply(rgb, diffuse);
+	
+	kd = 0.8;
+	tmp = vec3_multiply(diffuse, kd);
 	free(diffuse);
-	diffuse = vec3_copy(tmp);
+	diffuse = rgb_multiply(rgb, tmp);
+	// diffuse = vec3_copy(tmp);
 	free(tmp);
+
+	ks = 0.15;
+	tmp = vec3_multiply(specular, ks);
+	free(specular);
+	specular = vec3_copy(tmp);
+	free(tmp);
+
 	tmp = vec3_add(ambient, diffuse);
 	hit->rgb = vec3_add(tmp, specular);
 	free(tmp);
 	vec3_free_multi(ambient, diffuse, specular);
 	free(normal);
+	return (c);
 }
 
 char	obj_to_char(t_obj_lst *elem)
@@ -293,13 +321,16 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 		else
 		{
 			hit.phit = ray_to_point(ray, hit.t);
-			shading(space, ray, &hit, obj);
+			*c = shading(space, ray, &hit, obj);
 			free(hit.phit);
 		}
 	}
 	else
+	{
 		hit.rgb = vec3_copy(space->ambient->rgb);
-	*c = obj_to_char(hit.nearest);
+		*c = '.';
+	}
+	// *c = obj_to_char(hit.nearest);
 	colour = rgb_colour(hit.rgb);
 	free(hit.rgb);
 	return (colour);

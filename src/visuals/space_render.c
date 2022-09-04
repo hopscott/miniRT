@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 20:41:32 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/05 00:50:26 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec3	*set_origin(t_mat44 *mat)
 	t_vec3	*origin;
 
 	vec = vec3_init(0, 0, 0);
-	origin = vec3_matrix_multiply(mat, vec, 0);
+	origin = vec3_matrix_multiply(mat, vec, -1);
 	free(vec);
 	return (origin);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/05 22:16:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/06 00:57:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	center = vec3_init(cy->x - ray->origin->e[0], cy->y - ray->origin->e[1] ,cy->z - ray->origin->e[2]);
 	center_inv = vec3_multiply(center, -1);
 	cy_orient_bef = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
+//printf("rx: %f, ry: %f, rz: %f\n",cy->vec_x, cy->vec_y, cy->vec_z);
 	cy_orient = cy_orient_bef;
-	rot_r_dir = vec3_cross(cy_orient, ray->direction);
-	rot_r_or = vec3_cross(cy_orient, center_inv);
+	rot_r_dir = vec3_cross(ray->direction, cy_orient);
+	rot_r_or = vec3_cross(center_inv, cy_orient);
 	a = vec3_dot(rot_r_dir, rot_r_dir);
 	b = 2 * vec3_dot(rot_r_dir, rot_r_or);
 	c = vec3_dot(rot_r_or, rot_r_or) - pow(radius, 2);

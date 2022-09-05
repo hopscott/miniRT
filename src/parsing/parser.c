@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 00:45:29 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 00:48:54 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parser(char *path, t_space *space)
 	space->camera = NULL;
 	space->objects = NULL;
 	fd = open(path, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	err = 0;
 	str = get_next_line(fd);

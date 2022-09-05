@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/04 23:43:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/05 22:16:19 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double di
 //c: (point)cylinder's center; h: (distance)height; ch: (vector)between c and hi
 //cy_orient: (vector)cy_direct_vector_unit
 //
-double	cy_intersection(t_mat44 *mat, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
+//
+void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 {
 	t_vec3	*center;
 	t_vec3	*center_inv;
@@ -106,20 +107,20 @@ double	cy_intersection(t_mat44 *mat, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy
 	double	smallest_dist;
 
 	radius = cy->diameter / 2;
-	center = vec3_init(cy->x, cy->y,cy->z);
+	center = vec3_init(cy->x - ray->origin->e[0], cy->y - ray->origin->e[1] ,cy->z - ray->origin->e[2]);
 	center_inv = vec3_multiply(center, -1);
 	cy_orient_bef = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
 	cy_orient = cy_orient_bef;
-	rot_r_dir = vec3_cross(cy_orient, r_dir);
+	rot_r_dir = vec3_cross(cy_orient, ray->direction);
 	rot_r_or = vec3_cross(cy_orient, center_inv);
 	a = vec3_dot(rot_r_dir, rot_r_dir);
 	b = 2 * vec3_dot(rot_r_dir, rot_r_or);
 	c = vec3_dot(rot_r_or, rot_r_or) - pow(radius, 2);
 	discr = pow(b, 2) - 4 * a * c;
 	if (discr < 0)
-		return (-1);
-	smallest_dist = find_smallest_dist(r_or, r_dir, cy, discr, a, b);
-	return (smallest_dist);
+		hit->t = -1;
+	smallest_dist = find_smallest_dist(ray->origin, ray->direction, cy, discr, a, b);
+	hit->t = smallest_dist;
 }
 
 //old version - to delete I think

@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/04 22:57:40 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/05 21:54:25 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/intersection/light_intersection.c\
 			$(SRC_DIR)/intersection/plane_intersection.c\
 			$(SRC_DIR)/intersection/sphere_intersection.c\
+			$(SRC_DIR)/intersection/cylinder_intersection.c\
 			$(SRC_DIR)/visuals/mlx_render.c\
 			$(SRC_DIR)/visuals/space_render.c\
 			$(SRC_DIR)/main.c\

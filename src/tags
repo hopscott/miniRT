@@ -24,7 +24,7 @@ camera_lookat_utils	camera/matrix.c	/^t_mat44	*camera_lookat_utils(t_vec3 *fwd, 
 cast_ray	camera/rays.c	/^size_t	cast_ray(t_ray *ray, t_space *space, char *c)$/;"	f	typeref:typename:size_t
 check_det	intersection/trash/cylinder_intersection_deprecated.c	/^int check_det(double *det1, double a, double b, double c)$/;"	f	typeref:typename:int
 clear_window	visuals/mlx_render.c	/^void	clear_window(t_vars *vars)$/;"	f	typeref:typename:void
-cy_intersection	intersection/cylinder_intersection.c	/^double	cy_intersection(t_mat44 *mat, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
+cy_intersection	intersection/cylinder_intersection.c	/^void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)$/;"	f	typeref:typename:void
 cy_intersection	intersection/cylinder_intersection_WIP.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
 cy_intersection	intersection/trash/cylinder_intersection_deprecated_3.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double
 cy_intersection	intersection/trash/cylinder_intersection_deprecated_4.c	/^double	cy_intersection(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)$/;"	f	typeref:typename:double

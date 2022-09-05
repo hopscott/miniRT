@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/05 01:35:15 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/05 23:05:41 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		else if (elem->type == PLANE)
 			plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
-		{	
-			//printf("\nor_x: %f, or_y: %f, or_z:%f\n", origin->e[0], origin->e[1], origin->e[2]);
-//			printf("\ncyl_x: %f, cyl_y: %f, cyl_z:%f\n",(obj->cy).x,(obj->cy).y, (obj->cy).z);
-			hit->t = cy_intersection(origin, direction, &obj->cy);
-			printf("t: %f\n", t);
-//			if (t > -1)
-//				printf("\nI found a cylinder. here is the t to it: %f\n", t);
-			nearest_ho_utils(&nearest, elem, &tmin, t);
-		}
-			;
+			cy_intersection(ray, &obj->cy, hit);
 		if ((hit->t >= 0.000001) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
@@ -223,7 +214,6 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	}
 	else if (hit->nearest->type == CYLINDER)
 		;
-	
 	// setup ambient
 	ambient = rgb_multiply(rgb, space->ambient->rgb);
 	// setup diffuse
@@ -253,7 +243,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 				// calculate lambertian reflectance - diffuse => https://en.wikipedia.org/wiki/Lambertian_reflectance
 				// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading
 				albedo = 0.18;
-				
+
 				tmp = vec3_multiply(light->rgb, light->brightness_ratio * vec3_dot(lray.direction, normal) * albedo / M_PI);
 				vec3_add_to_self(&diffuse, tmp);
 				free(tmp);
@@ -277,7 +267,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 			}
 		}
 	}
-	
+
 	kd = 0.8;
 	tmp = vec3_multiply(diffuse, kd);
 	free(diffuse);
@@ -327,6 +317,8 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
 			hit.rgb = vec3_copy(obj->l.rgb);
+		else if (hit.nearest->type == CYLINDER)
+			hit.rgb = vec3_init(255, 0, 0);
 		else
 		{
 			hit.phit = ray_to_point(ray, hit.t);

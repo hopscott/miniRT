@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 16:59:22 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/05 20:17:14 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	build_camera(char **tbl, t_camera **obj)
 	(*obj)->vec_z = (double)ft_atod(vec[2]);
 	ft_freetbl(vec, -1);
 	(*obj)->fov = (size_t)ft_atoi(tbl[3]);
-	(*obj)->xyz = vec3_init((*obj)->z, (*obj)->y, (*obj)->z);
+	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
 	(*obj)->norm = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
 	return (0);
 }

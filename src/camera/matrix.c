@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/31 00:20:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/05 23:42:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,27 @@ t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)
 // 	return (mat);
 // }
 
-t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *coord)
+t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *arb)
 {
 	t_vec3	*right;
 	t_vec3	*up;
 	t_mat44	*mat;
-	t_vec3	*arbitrary;
-	t_vec3	*arbit_unit;
+	t_vec3	*coord;
+	t_vec3	*tmp;
 
-	arbitrary = vec3_init(0, 1, 0); //if it fails then exit and free everything properly
-	arbit_unit = vec3_unit(arbitrary, 1); //if it fails then exit and free everything properly
-
-	right = vec3_cross(arbit_unit, fwd);
-	free(arbit_unit);
+	tmp = vec3_cross(arb, fwd);
+	right = vec3_unit(tmp, 1);
 	if (!right)
 		return (NULL);
-	up = vec3_cross(fwd, right);
+
+	tmp = vec3_cross(fwd, right);
+	up = vec3_unit(tmp, 1);
 	if (!up)
 	{
 		free(right);
 		return (NULL);
 	}
+	coord = vec3_init((-1) * vec3_dot(right, old_coord), (-1) * vec3_dot(up, old_coord), (-1) *vec3_dot(fwd, old_coord));
 	mat = mat44_init(right, up, fwd, coord);
 	free(right);
 	free(up);
@@ -102,20 +102,17 @@ t_mat44	*camera_lookat(t_camera *cam)
 {
 	t_vec3	*fwd;
 	t_vec3	*coord;
+	t_vec3	*tmp;
+	t_vec3	*arb;
 	t_mat44	*mat;
 
-	fwd = vec3_init(cam->vec_x, cam->vec_y, cam->vec_z);
-	if (!fwd)
-		return (NULL);
-	coord = vec3_init(cam->x, cam->y, cam->z);
-	if (!coord)
-	{
-		free(fwd);
-		return (NULL);
-	}
-	mat = camera_lookat_utils(fwd, coord);
+	fwd = vec3_unit(cam->norm, 0);
+	coord = cam->xyz;
+	tmp = vec3_init(0, 1, 0);
+	arb = vec3_unit(tmp, 1);
+	mat = camera_lookat_utils(fwd, coord, arb);
 	free(fwd);
-	free(coord);
+	free(arb);
 	return (mat);
 }
 
@@ -137,5 +134,3 @@ t_vec3	*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w)
 	res = vec3_init(a, b, c);
 	return (res);
 }
-
-// t_vec3	*vec3_ccs_to_wcs(t_camera *camera)

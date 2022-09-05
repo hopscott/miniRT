@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/05 23:05:41 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/05 23:44:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,32 @@ t_vec3	*ray_to_point(t_ray *ray, double t)
 }
 
 // PHONG REFLECTION
-// We use the Phong illumation model int the default case. 
-// The phong model is composed of a diffuse and a specular reflection component. 
-//                 Vec3f lightAmt = 0, specularColor = 0; 
-//                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ? 
-//                     hitPoint + N * options.bias : 
-//                     hitPoint - N * options.bias; 
-// Loop over all lights in the scene and sum their contribution up 
-// We also apply the lambert cosine law here though we haven't explained yet what this means. 
-//                 for (uint32_t i = 0; i < lights.size(); ++i) { 
-//                     Vec3f lightDir = lights[i]->position - hitPoint; 
+// We use the Phong illumation model int the default case.
+// The phong model is composed of a diffuse and a specular reflection component.
+//                 Vec3f lightAmt = 0, specularColor = 0;
+//                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ?
+//                     hitPoint + N * options.bias :
+//                     hitPoint - N * options.bias;
+// Loop over all lights in the scene and sum their contribution up
+// We also apply the lambert cosine law here though we haven't explained yet what this means.
+//                 for (uint32_t i = 0; i < lights.size(); ++i) {
+//                     Vec3f lightDir = lights[i]->position - hitPoint;
 //                     // square of the distance between hitPoint and the light
-//                     float lightDistance2 = dotProduct(lightDir, lightDir); 
-//                     lightDir = normalize(lightDir); 
-//                     float LdotN = std::max(0.f, dotProduct(lightDir, N)); 
-//                     Object *shadowHitObject = nullptr; 
-//                     float tNearShadow = kInfinity; 
-//                     // is the point in shadow, 
+//                     float lightDistance2 = dotProduct(lightDir, lightDir);
+//                     lightDir = normalize(lightDir);
+//                     float LdotN = std::max(0.f, dotProduct(lightDir, N));
+//                     Object *shadowHitObject = nullptr;
+//                     float tNearShadow = kInfinity;
+//                     // is the point in shadow,
 //					   // and is the nearest occluding object closer to the object than the light itself?
-//                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) && 
-//                         tNearShadow * tNearShadow < lightDistance2; 
-//                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN; 
-//                     Vec3f reflectionDirection = reflect(-lightDir, N); 
-//                     specularColor += powf(std::max(0.f, -dotProduct(reflectionDirection, dir)), hitObject->specularExponent) * lights[i]->intensity; 
-//                 } 
-//                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks; 
-//                 break; 
+//                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) &&
+//                         tNearShadow * tNearShadow < lightDistance2;
+//                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN;
+//                     Vec3f reflectionDirection = reflect(-lightDir, N);
+//                     specularColor += powf(std::max(0.f, -dotProduct(reflectionDirection, dir)), hitObject->specularExponent) * lights[i]->intensity;
+//                 }
+//                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks;
+//                 break;
 
 /* https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector */
 
@@ -116,66 +116,6 @@ t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)
 	reflection = vec3_subtract(direction, vec);
 	free(vec);
 	return (reflection);
-}
-
-void	shading_v1(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
-{
-	t_vec3		*rgb;
-	t_vec3		*normal;
-	t_vec3		*tmp;
-	t_vec3		*amb;
-	t_vec3		*spec;
-	t_vec3		*reflection_dir;
-	t_ray		lray;
-	t_hit		lhit;
-	t_object	*lobj;
-	t_light		*light;
-	size_t		i;
-
-	rgb = NULL;
-	normal = NULL;
-	if (hit->nearest->type == SPHERE)
-	{
-		rgb = obj->sp.rgb;
-		normal = sphere_surface_normal(&obj->sp, hit->phit);
-	}
-	else if (hit->nearest->type == PLANE)
-	{
-		rgb = obj->pl.rgb;
-		normal = plane_surface_normal(&obj->pl, ray);
-	}
-	else if (hit->nearest->type == CYLINDER)
-		;
-	amb = vec3_copy(space->ambient->rgb);
-	spec = vec3_init(0, 0, 0);
-	i = 0;
-	while (i < space->n_lights)
-	{
-		light = space->lights[i++];
-		lray.origin = light->xyz;
-		tmp = vec3_subtract(hit->phit, light->xyz);
-		lray.direction = vec3_unit(tmp, 1);
-		nearest_hit_object(&lray, space->objects, &lhit);
-		if (lhit.nearest)
-		{
-			lobj = (t_object *)(lhit.nearest->content);
-			if (lobj == obj)
-			{
-				tmp = vec3_multiply(light->rgb, vec3_dot(lray.direction, normal));
-				vec3_add_to_self(&amb, tmp);
-				free(tmp);
-			}
-		}
-		reflection_dir = reflection_vector(lray.direction, normal);
-		tmp = vec3_multiply(light->rgb, -vec3_dot(reflection_dir, ray->direction));
-		vec3_add_to_self(&spec, tmp);
-		free(tmp);
-		free(reflection_dir);
-	}
-	tmp = rgb_multiply(rgb, amb);
-	hit->rgb = vec3_add(tmp, spec);
-	vec3_free_multi(amb, spec, tmp);
-	free(normal);
 }
 
 char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
@@ -215,14 +155,16 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	else if (hit->nearest->type == CYLINDER)
 		;
 	// setup ambient
-	ambient = rgb_multiply(rgb, space->ambient->rgb);
+	ambient = space->ambient->rgb;
 	// setup diffuse
 	diffuse = vec3_init(0, 0, 0);
+	kd = 0.8;
 	// setup specular
 	specular = vec3_init(0, 0, 0);
+	ks = 0.2;
 
 	// loop over each light
-	c = 'x';
+	c = '.';
 	i = 0;
 	while (i < space->n_lights)
 	{
@@ -248,43 +190,48 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 				vec3_add_to_self(&diffuse, tmp);
 				free(tmp);
 
-				if ((vec3_dot(lray.direction, normal) * albedo / M_PI) > 0.00001)
-					c = 'o';
-
 				// calculate specular reflectance
 				// https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF/phong-illumination-models-brdf
-				n = 250;
+				n = 2;
 
 				tmp = vec3_multiply(normal, 2 * (vec3_dot(normal, lray.direction)));
 				r = vec3_subtract(tmp, lray.direction);
 				v = vec3_multiply(lray.direction, -1);
 				tmp = vec3_multiply(light->rgb, light->brightness_ratio * pow(vec3_dot(v, r), n));
 				vec3_add_to_self(&specular, tmp);
-				vec3_free_multi(r, v, tmp);
 
-				if ((pow(vec3_dot(v, ray->direction), n)) > 0.2)
+				if ((pow(vec3_dot(v, r), n)) * ks > kd * (vec3_dot(lray.direction, normal) * albedo / M_PI))
 					c = '*';
+				else
+					c = 'o';
+				vec3_free_multi(r, v, tmp);
 			}
+			else
+				c = 'x';
 		}
 	}
 
-	kd = 0.8;
+	// https://www.scratchapixel.com/code.php?id=32&origin=/lessons/3d-basic-rendering/phong-shader-BRDF
+
+	// obj->rgb * diffuse * kd
 	tmp = vec3_multiply(diffuse, kd);
 	free(diffuse);
-	diffuse = rgb_multiply(rgb, tmp);
-	// diffuse = vec3_copy(tmp);
+	diffuse = vec3_copy(tmp);
 	free(tmp);
 
-	ks = 0.15;
+	// specular * ks
 	tmp = vec3_multiply(specular, ks);
 	free(specular);
 	specular = vec3_copy(tmp);
 	free(tmp);
 
+	// ambient + diffuse + specular
 	tmp = vec3_add(ambient, diffuse);
 	hit->rgb = vec3_add(tmp, specular);
-	free(tmp);
-	vec3_free_multi(ambient, diffuse, specular);
+	tmp = rgb_multiply(rgb, hit->rgb);
+	free(hit->rgb);
+	hit->rgb = vec3_copy(tmp);
+	vec3_free_multi(diffuse, specular, tmp);
 	free(normal);
 	return (c);
 }
@@ -331,7 +278,7 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 		hit.rgb = vec3_copy(space->ambient->rgb);
 		*c = '.';
 	}
-	// *c = obj_to_char(hit.nearest);
+	*c = obj_to_char(hit.nearest);
 	colour = rgb_colour(hit.rgb);
 	free(hit.rgb);
 	return (colour);

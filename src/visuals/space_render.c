@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/05 00:50:26 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/05 20:27:01 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,16 @@ t_vec3	*set_direction(t_param param, int width, int height, t_mat44 *mat)
 {
 	double	x;
 	double	y;
-	t_vec3	*vec;
+	t_vec3	*xyz;
+	t_vec3	*unit;
 	t_vec3	*direction;
 
 	x = (2 * (param.px + 0.5) / width - 1) * param.scale * param.aspect_ratio;
 	y = (1 - 2 * (param.py + 0.5) / height) * param.scale;
-	vec = vec3_init(x, y, -1);
-	direction = vec3_matrix_multiply(mat, vec, 1);
-	free(vec);
+	xyz = vec3_init(x, y, 1);
+	unit = vec3_unit(xyz, 1);
+	direction = vec3_matrix_multiply(mat, unit, 0);
 	return (direction);
-}
-
-t_vec3	*set_origin(t_mat44 *mat)
-{
-	t_vec3	*vec;
-	t_vec3	*origin;
-
-	vec = vec3_init(0, 0, 0);
-	origin = vec3_matrix_multiply(mat, vec, -1);
-	free(vec);
-	return (origin);
 }
 
 void	space_set_lights(t_space *space, t_obj_lst *elem)
@@ -107,7 +97,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 		return ;
 	param.scale = tan(deg2rad(space->camera->fov / 2));
 	param.aspect_ratio = (double)width / (double)height;
-	ray.origin = set_origin(mat);
+	ray.origin = space->camera->xyz;
 	param.py = -1;
 	while (++param.py < height)
 	{
@@ -123,5 +113,4 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 	}
 	print_screen(screen);
 	free(mat);
-	free(ray.origin);
 }

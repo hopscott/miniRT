@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 16:03:18 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/06 01:07:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,19 @@ double	ft_atod(char *str)
 	int		integral;
 	int		fractional;
 	double	nbr;
+	double	sign;
 
 	integral = ft_atoi(str);
 	i = 0;
+	sign = 1;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && (str[i] == '+' || str[i] == '-'))
+	{
+		if (integral == 0 && str[i] == '-') 
+			sign *= -1;
 		i++;
+	}
 	while (str[i] && ft_isnum(str[i]))
 		i++;
 	fractional = 0;
@@ -86,6 +92,6 @@ double	ft_atod(char *str)
 		fractional = ft_atoi(&str[i]);
 	if (fractional == 0)
 		return ((double)integral);
-	nbr = (double)integral + ((double)fractional / 10);
+	nbr = ((double)integral + ((double)fractional / 10)) * sign;
 	return (nbr);
 }

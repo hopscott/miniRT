@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 00:45:29 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 17:17:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,40 @@ int	sub_parser(char **tbl, t_space *space)
 		err = build_camera(tbl, &space->camera);
 	else if (!ft_strncmp(tbl[0], "L", 2))
 		err = obj_lstadd(&space->objects, LIGHT, \
-							(t_object *)build_light(tbl));
+				(t_object *)build_light(tbl));
 	else if (!ft_strncmp(tbl[0], "sp", 3))
 		err = obj_lstadd(&space->objects, SPHERE, \
-							(t_object *)build_sphere(tbl));
+				(t_object *)build_sphere(tbl));
 	else if (!ft_strncmp(tbl[0], "pl", 3))
 		err = obj_lstadd(&space->objects, PLANE, \
-							(t_object *)build_plane(tbl));
+				(t_object *)build_plane(tbl));
 	else if (!ft_strncmp(tbl[0], "cy", 3))
 		err = obj_lstadd(&space->objects, CYLINDER, \
-							(t_object *)build_cylinder(tbl));
+				(t_object *)build_cylinder(tbl));
 	else
 		err = 1;
 	return (err);
+}
+
+int	check_space_null(t_space *space)
+{
+	if (!space->ambient && !space->camera && !space->objects && !space->lights)
+		return (1);
+	return (0);
+}
+
+int	line_is_space(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+		i++;
+	if (i == len)
+		return (1);
+	return (0);
 }
 
 int	parser(char *path, t_space *space)
@@ -47,22 +68,29 @@ int	parser(char *path, t_space *space)
 	space->ambient = NULL;
 	space->camera = NULL;
 	space->objects = NULL;
+	space->lights = NULL;
 	fd = open(path, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	err = 0;
 	str = get_next_line(fd);
 	while (str && !err)
 	{
-		tbl = ft_split(str, ' ');
-		err = sub_parser(tbl, space);
-		ft_freetbl(tbl, -1);
-		free(str);
-		if (err)
-			break ;
+		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
+		{
+			printf("I entered here with this str: %s\n", str);
+			tbl = ft_split(str, ' ');
+			err = sub_parser(tbl, space);
+			ft_freetbl(tbl, -1);
+			free(str);
+			if (err)
+				break ;
+		}
 		str = get_next_line(fd);
 	}
 	close(fd);
+	if (check_space_null(space))
+		return (-1);
 	return (err);
 }
 

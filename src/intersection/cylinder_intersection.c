@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/06 00:57:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/06 19:33:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,18 @@ void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 		hit->t = -1;
 	smallest_dist = find_smallest_dist(ray->origin, ray->direction, cy, discr, a, b);
 	hit->t = smallest_dist;
+}
+
+t_vec3	*cylinder_surface_normal(t_cylinder * cy, t_vec3 *phit)
+{
+	double	t;
+	t_vec3	*pt;
+	t_vec3	*surface_normal;
+
+    t = vec3_dot((vec3_subtract(phit, cy->xyz)), cy->norm); // cy.ori should be normalized and so has the length of 1.
+    pt = vec_from_or_vec_len(cy->xyz, cy->norm, t);
+    surface_normal = vec3_unit(vec3_subtract(phit, pt), 1);
+	return (surface_normal);
 }
 
 //old version - to delete I think

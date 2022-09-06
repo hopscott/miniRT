@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 14:00:22 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 19:25:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	build_cylinder_vecs(t_cylinder **obj)
 {
 	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	(*obj)->norm = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
+	(*obj)->norm = vec3_unit(vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z), 1);
 	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
 }
 

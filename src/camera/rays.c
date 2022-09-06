@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 17:33:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 19:33:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,10 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 		normal = plane_surface_normal(&obj->pl, ray);
 	}
 	else if (hit->nearest->type == CYLINDER)
-		;
+	{
+		rgb = obj->cy.rgb;
+		normal = cylinder_surface_normal(&obj->pl, ray);
+	}
 	// setup ambient
 	ambient = vec3_multiply(space->ambient->rgb, space->ambient->lighting_ratio);
 	// setup diffuse
@@ -275,8 +278,8 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
 			hit.rgb = vec3_copy(obj->l.rgb);
-		else if (hit.nearest->type == CYLINDER)
-			hit.rgb = vec3_init(255, 0, 0);
+//		else if (hit.nearest->type == CYLINDER)
+//			hit.rgb = vec3_copy(obj->cy.rgb);
 		else
 		{
 			hit.phit = ray_to_point(ray, hit.t);

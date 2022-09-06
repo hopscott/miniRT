@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 17:08:16 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 14:00:11 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	build_light_vecs(t_light **obj)
 {
 	t_vec3	*tmp;
 
-	(*obj)->xyz = vec3_init((*obj)->z, (*obj)->y, (*obj)->z);
+	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
 	tmp = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
 	(*obj)->rgb = vec3_multiply(tmp, (*obj)->brightness_ratio);
 	free(tmp);

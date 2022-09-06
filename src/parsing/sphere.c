@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 17:18:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 14:00:47 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_sphere	*build_sphere(char **tbl)
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
-	obj->xyz = vec3_init(obj->z, obj->y, obj->z);
+	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
 	obj->rgb = vec3_init(obj->r, obj->g, obj->b);
 	return (obj);
 }

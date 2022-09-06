@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
 /*   Updated: 2022/09/06 17:33:47 by swillis          ###   ########.fr       */
@@ -14,27 +14,27 @@
 
 /* https://www.scratchapixel.com/code.php?id=10&origin=/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes */
 
-// Vec3f castRay( 
-//     const Vec3f &orig, const Vec3f &dir, 
-//     const std::vector<std::unique_ptr<Object>> &objects) 
-// { 
-//     Vec3f hitColor = 0; 
-//     const Object *hitObject = nullptr;  //this is a pointer to the hit object 
-//     float t;  //this is the intersection distance from the ray origin to the hit point 
-//     if (trace(orig, dir, objects, t, hitObject)) { 
-//         Vec3f Phit = orig + dir * t; 
-//         Vec3f Nhit; 
-//         Vec2f tex; 
-//         hitObject->getSurfaceData(Phit, Nhit, tex); 
+// Vec3f castRay(
+//     const Vec3f &orig, const Vec3f &dir,
+//     const std::vector<std::unique_ptr<Object>> &objects)
+// {
+//     Vec3f hitColor = 0;
+//     const Object *hitObject = nullptr;  //this is a pointer to the hit object
+//     float t;  //this is the intersection distance from the ray origin to the hit point
+//     if (trace(orig, dir, objects, t, hitObject)) {
+//         Vec3f Phit = orig + dir * t;
+//         Vec3f Nhit;
+//         Vec2f tex;
+//         hitObject->getSurfaceData(Phit, Nhit, tex);
 //         // Use the normal and texture coordinates to shade the hit point.
 //         // The normal is used to compute a simple facing ratio and the texture coordinate
 //         // to compute a basic checker board pattern
-//         float scale = 4; 
-//         float pattern = (fmodf(tex.x * scale, 1) > 0.5) ^ (fmodf(tex.y * scale, 1) > 0.5); 
-//         hitColor = std::max(0.f, Nhit.dotProduct(-dir)) * mix(hitObject->color, hitObject->color * 0.8, pattern); 
-//     } 
-//     return hitColor; 
-// } 
+//         float scale = 4;
+//         float pattern = (fmodf(tex.x * scale, 1) > 0.5) ^ (fmodf(tex.y * scale, 1) > 0.5);
+//         hitColor = std::max(0.f, Nhit.dotProduct(-dir)) * mix(hitObject->color, hitObject->color * 0.8, pattern);
+//     }
+//     return hitColor;
+// }
 
 void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 {
@@ -53,7 +53,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		else if (elem->type == PLANE)
 			plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
-			;
+			cy_intersection(ray, &obj->cy, hit);
 		if ((hit->t >= 0.000001) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
@@ -76,32 +76,32 @@ t_vec3	*ray_to_point(t_ray *ray, double t)
 }
 
 // PHONG REFLECTION
-// We use the Phong illumation model int the default case. 
-// The phong model is composed of a diffuse and a specular reflection component. 
-//                 Vec3f lightAmt = 0, specularColor = 0; 
-//                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ? 
-//                     hitPoint + N * options.bias : 
-//                     hitPoint - N * options.bias; 
-// Loop over all lights in the scene and sum their contribution up 
-// We also apply the lambert cosine law here though we haven't explained yet what this means. 
-//                 for (uint32_t i = 0; i < lights.size(); ++i) { 
-//                     Vec3f lightDir = lights[i]->position - hitPoint; 
+// We use the Phong illumation model int the default case.
+// The phong model is composed of a diffuse and a specular reflection component.
+//                 Vec3f lightAmt = 0, specularColor = 0;
+//                 Vec3f shadowPointOrig = (dotProduct(dir, N) < 0) ?
+//                     hitPoint + N * options.bias :
+//                     hitPoint - N * options.bias;
+// Loop over all lights in the scene and sum their contribution up
+// We also apply the lambert cosine law here though we haven't explained yet what this means.
+//                 for (uint32_t i = 0; i < lights.size(); ++i) {
+//                     Vec3f lightDir = lights[i]->position - hitPoint;
 //                     // square of the distance between hitPoint and the light
-//                     float lightDistance2 = dotProduct(lightDir, lightDir); 
-//                     lightDir = normalize(lightDir); 
-//                     float LdotN = std::max(0.f, dotProduct(lightDir, N)); 
-//                     Object *shadowHitObject = nullptr; 
-//                     float tNearShadow = kInfinity; 
-//                     // is the point in shadow, 
+//                     float lightDistance2 = dotProduct(lightDir, lightDir);
+//                     lightDir = normalize(lightDir);
+//                     float LdotN = std::max(0.f, dotProduct(lightDir, N));
+//                     Object *shadowHitObject = nullptr;
+//                     float tNearShadow = kInfinity;
+//                     // is the point in shadow,
 //					   // and is the nearest occluding object closer to the object than the light itself?
-//                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) && 
-//                         tNearShadow * tNearShadow < lightDistance2; 
-//                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN; 
-//                     Vec3f reflectionDirection = reflect(-lightDir, N); 
-//                     specularColor += powf(std::max(0.f, -dotProduct(reflectionDirection, dir)), hitObject->specularExponent) * lights[i]->intensity; 
-//                 } 
-//                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks; 
-//                 break; 
+//                     bool inShadow = trace(shadowPointOrig, lightDir, objects, tNearShadow, index, uv, &shadowHitObject) &&
+//                         tNearShadow * tNearShadow < lightDistance2;
+//                     lightAmt += (1 - inShadow) * lights[i]->intensity * LdotN;
+//                     Vec3f reflectionDirection = reflect(-lightDir, N);
+//                     specularColor += powf(std::max(0.f, -dotProduct(reflectionDirection, dir)), hitObject->specularExponent) * lights[i]->intensity;
+//                 }
+//                 hitColor = lightAmt * hitObject->evalDiffuseColor(st) * hitObject->Kd + specularColor * hitObject->Ks;
+//                 break;
 
 /* https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector */
 
@@ -154,7 +154,6 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	}
 	else if (hit->nearest->type == CYLINDER)
 		;
-	
 	// setup ambient
 	ambient = vec3_multiply(space->ambient->rgb, space->ambient->lighting_ratio);
 	// setup diffuse
@@ -222,7 +221,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 				c = 'x';
 		}
 	}
-	
+
 	// https://www.scratchapixel.com/code.php?id=32&origin=/lessons/3d-basic-rendering/phong-shader-BRDF
 
 	// obj->rgb * diffuse * kd
@@ -276,6 +275,8 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *c)
 		obj = (t_object *)(hit.nearest->content);
 		if (hit.nearest->type == LIGHT)
 			hit.rgb = vec3_copy(obj->l.rgb);
+		else if (hit.nearest->type == CYLINDER)
+			hit.rgb = vec3_init(255, 0, 0);
 		else
 		{
 			hit.phit = ray_to_point(ray, hit.t);

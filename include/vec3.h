@@ -43,6 +43,8 @@ double	vec3_len(t_vec3 *vec);
 double	vec3_lensq(t_vec3 *vec);
 t_vec3	*vec3_unit(t_vec3 *vec1, int free);
 double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2);
+t_vec3	*vec_from_or_vec_len(t_vec3 *origin, t_vec3 *orient_unit, double orient_len);
+
 /* ================================================= */
 
 

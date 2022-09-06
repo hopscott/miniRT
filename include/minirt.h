@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/03 20:30:50 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/06 17:06:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,24 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "vec2.h"
 # include "mlx.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
+# include <stdint.h>
 
 # define WIDTH 800
 # define HEIGHT 600
 
+//#define WIDTH 40
+//#define	HEIGHT 30
+
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
-# define HELP_MSG "usage: ./miniRT scene_file.rt\n"
-# define ERROR_PARSING "Parsing error\n"
+# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck example.rt for the file layout.\n"
+# define ERROR_PARSING "File corrupted.\nUse --help as an option for more information.\n"
 
 /* types of objects in linked list */
 
@@ -46,6 +51,7 @@ enum {
 typedef struct s_obj_lst
 {
 	int					type;
+
 	void				*content;
 	struct s_obj_lst	*next;
 }	t_obj_lst;
@@ -311,6 +317,9 @@ t_vec3		*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit);
 /* plane_intersection.c */
 void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
+
+/* cylinder_intersection.c */
+void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 
 /* =================== VISUALS ====================== */
 

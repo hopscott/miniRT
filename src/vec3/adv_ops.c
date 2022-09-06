@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 16:35:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/01 16:31:49 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,13 @@ double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2)
 	res = vec3_len(sub);
 	free(sub);
 	return (res);
+}
+
+//function that returns a vector that goes from the origin following a direction on a given length
+t_vec3	*vec_from_or_vec_len(t_vec3 *origin, t_vec3 *orient_unit, double orient_len)
+{
+	t_vec3	*ret;
+
+	ret = vec3_init(origin->e[0] + orient_unit->e[0] * orient_len,  origin->e[1] + orient_unit->e[1] * orient_len , origin->e[2] + orient_unit->e[2] * orient_len);
+	return (ret);
 }

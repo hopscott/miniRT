@@ -1,0 +1,22 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/omoudni/miniRT/src/camera/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+camera_lookat	matrix.c	/^t_mat44	*camera_lookat(t_camera *cam)$/;"	f	typeref:typename:t_mat44 *
+camera_lookat_utils	matrix.c	/^t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *coord)$/;"	f	typeref:typename:t_mat44 *
+cast_ray	rays.c	/^size_t	cast_ray(t_ray *ray, t_space *space, char *c)$/;"	f	typeref:typename:size_t
+mat44_init	matrix.c	/^t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)$/;"	f	typeref:typename:t_mat44 *
+nearest_hit_object	rays.c	/^void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)$/;"	f	typeref:typename:void
+obj_to_char	rays.c	/^char	obj_to_char(t_obj_lst *elem)$/;"	f	typeref:typename:char
+ray_to_point	rays.c	/^t_vec3	*ray_to_point(t_ray *ray, double t)$/;"	f	typeref:typename:t_vec3 *
+reflection_vector	rays.c	/^t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)$/;"	f	typeref:typename:t_vec3 *
+shading	rays.c	/^char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)$/;"	f	typeref:typename:char
+shading_v1	rays.c	/^void	shading_v1(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)$/;"	f	typeref:typename:void
+vec3_matrix_multiply	matrix.c	/^t_vec3	*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w)$/;"	f	typeref:typename:t_vec3 *

@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Mon Sep  5 15:57:55 2022
+# Make data base, printed on Tue Sep  6 13:57:06 2022
 
 # Variables
 
@@ -46,7 +46,7 @@ _ = /usr/bin/code
 # makefile (from 'Makefile', line 33)
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 # environment
-JOURNAL_STREAM = 9:1547505
+JOURNAL_STREAM = 9:774748
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -68,13 +68,13 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/40596/bus
 # makefile (from 'Makefile', line 72)
 OBJS := src/parsing/parser.o src/parsing/object_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/init.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/camera/matrix.o src/camera/rays.o src/intersection/light_intersection.o src/intersection/plane_intersection.o src/intersection/sphere_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o
 # environment
-MANAGERPID = 240631
+MANAGERPID = 109933
 # environment
 VSCODE_CWD = /sgoinfre/goinfre/Perso/swillis/miniRT
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session2
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_40596_QITXgI
+KRB5CCNAME = FILE:/tmp/krb5cc_40596_8aCXFY
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -86,7 +86,7 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # makefile (from 'Makefile', line 22)
 BIN_DIR := .
 # environment
-SESSION_MANAGER = local/e1r5p18.clusters.42paris.fr:@/tmp/.ICE-unix/241153,unix/e1r5p18.clusters.42paris.fr:/tmp/.ICE-unix/241153
+SESSION_MANAGER = local/e3r4p3.clusters.42paris.fr:@/tmp/.ICE-unix/110439,unix/e3r4p3.clusters.42paris.fr:/tmp/.ICE-unix/110439
 # environment
 XDG_RUNTIME_DIR = /run/user/40596
 # environment
@@ -94,7 +94,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = d05b680a2a7f483f9e29ae5b77dc7ec7
+INVOCATION_ID = bb411bd94a2144a5a75b64500d04093c
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # default
@@ -110,7 +110,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/40596/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 241647
+GIO_LAUNCHED_DESKTOP_FILE_PID = 114183
 # automatic
 %F = $(notdir $%)
 # environment
@@ -120,7 +120,7 @@ PWD = /mnt/nfs/homes/swillis/sgoinfre/miniRT
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 241118
+SSH_AGENT_PID = 110323
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 20)
@@ -186,7 +186,7 @@ LESS = -R
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/swillis
+OLDPWD = /mnt/nfs/homes/swillis/sgoinfre
 # environment
 TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # default
@@ -250,9 +250,9 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/40596/docker.sock
 # environment
-VSCODE_PID = 242996
+VSCODE_PID = 114425
 # environment
-TERMINATOR_UUID = urn:uuid:40dda383-b7b7-4e9d-982b-fad586c819db
+TERMINATOR_UUID = urn:uuid:d6bf72fb-8269-4a31-bd5d-ac17084c71ac
 # variable set hash-table stats:
 # Load=121/1024=12%, Rehash=0, Collisions=24/185=13%
 
@@ -262,9 +262,9 @@ TERMINATOR_UUID = urn:uuid:40dda383-b7b7-4e9d-982b-fad586c819db
 
 # Directories
 
-# include (device 58, inode 4845708): 4 files, no impossibilities so far.
-# . (device 58, inode 4845589): 21 files, no impossibilities.
-# src/parsing (device 58, inode 4845985): 6 files, no impossibilities so far.
+# include (device 55, inode 4845708): 4 files, no impossibilities so far.
+# . (device 55, inode 4845589): 21 files, no impossibilities.
+# src/parsing (device 55, inode 4845985): 6 files, no impossibilities so far.
 
 # 31 files, no impossibilities in 3 directories.
 
@@ -282,6 +282,7 @@ TERMINATOR_UUID = urn:uuid:40dda383-b7b7-4e9d-982b-fad586c819db
 src/visuals/mlx_render.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -294,7 +295,6 @@ src/intersection/light_intersection.o:
 src/vec3/basic_ops.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -531,6 +531,6 @@ src/parsing/object_list.o:
 # strcache performance: lookups = 97 / hit rate = 31%
 # hash-table stats:
 # Load=66/8192=1%, Rehash=0, Collisions=4/97=4%
-# Finished Make data base on Mon Sep  5 15:57:55 2022
+# Finished Make data base on Tue Sep  6 13:57:06 2022
 
  

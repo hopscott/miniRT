@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 01:07:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 23:24:53 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ double	ft_atod(char *str)
 	double	nbr;
 	double	sign;
 
+	printf("str: %s\n", str);
 	integral = ft_atoi(str);
 	i = 0;
 	sign = 1;

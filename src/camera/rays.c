@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 12:06:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 23:02:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,9 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	else if (hit->nearest->type == PLANE)
 	{
 		rgb = obj->pl.rgb;
-		normal = plane_surface_normal(&obj->pl, ray);
+//		normal = plane_surface_normal(&obj->pl, ray);
+		normal = vec3_copy(obj->pl.norm);
+		printf("final normal, x: %f, y: %f, z: %f\n", normal->e[0], normal->e[1], normal->e[2]);
 	}
 	else if (hit->nearest->type == CYLINDER)
 	{

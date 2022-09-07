@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/07 23:00:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 21:48:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection */
 
-void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
+void	adjust_plane_norm(t_list_obj *space_objs, t_vec3 *r_or)
 {
 	t_vec3	*ret;
 	t_vec3	*p_norm_p1;
@@ -25,27 +25,25 @@ void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 	t_plane	*plane;
 	t_object	*elem;
 	//	printf("p_norm's coordinates are: %f, %f, %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
+	elem = space_objs;
 	while (space_objs)
 	{
-		if (space_objs->type == PLANE)
+		if (space_obj->type == PLANE)
 		{
-			elem = (t_object *)(space_objs->content);
-			plane = &(elem->pl);
-			inv_p_norm = vec3_multiply(plane->norm, -1);
+			elem = (t_object *)(space_obj->content);
+			plane = elem->p;
+			inv_p_norm = vec3_multiply(pc, -1);
 			p_norm_p1 = vec_from_or_vec_len(plane->xyz, plane->norm, 1);
 			p_norm_p2 = vec_from_or_vec_len(plane->xyz, inv_p_norm, 1);
 			distance1 = vec3_distance_points(r_or, p_norm_p1);
-			//			printf("dist1: %f\n", distance1);
-			//			printf("p_norm's coordinates are: %f, %f, %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
+			printf("dist1: %f\n", distance1);
+			printf("p_norm's coordinates are: %f, %f, %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
 			distance2 = vec3_distance_points(r_or, p_norm_p2);
-			//			printf("dist2: %f\n", distance2);
-			if (distance2 < distance1)
-			{
-				printf("x: %f, y: %f, z: %f\n", plane->xyz->e[0], plane->xyz->e[1], plane->xyz->e[2]);
-				printf("n_x: %f, n_y: %f, n_z: %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
-				plane->norm = vec3_copy(inv_p_norm);
-			}
+			printf("dist2: %f\n", distance2);
+			printf("p_norm's coordinates are: %f, %f, %f\n", inv_p_norm->e[0], inv_p_norm->e[1], inv_p_norm->e[2]);
 		}
+		if (distance2 < distance1)
+			p->vec = inv_plane->norm;
 		space_objs = space_objs->next;
 	}
 }
@@ -66,7 +64,7 @@ void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 }
 
 /* https://math.stackexchange.com/questions/4402134/determining-plane-intersection-with-a-ray */
-/*
+
 t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)
 {
 	double	a;
@@ -92,4 +90,4 @@ t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)
 			return (vec3_multiply(plane->norm, -1));
 	}
 }
-*/
+

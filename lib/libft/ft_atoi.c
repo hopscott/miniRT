@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/25 15:36:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 23:17:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_isnum(char c)
 		return (1);
 	return (0);
 }
-
+ 
 int	ft_atoi(char *str)
 {
 	int				i;

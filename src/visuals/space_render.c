@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 00:35:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 22:58:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 	param.scale = tan(deg2rad(space->camera->fov / 2));
 	param.aspect_ratio = (double)width / (double)height;
 	ray.origin = space->camera->xyz;
+	adjust_plane_norm(space->objects, ray.origin);
 	param.py = -1;
 	while (++param.py < height)
 	{

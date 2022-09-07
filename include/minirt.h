@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 12:49:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 19:20:48 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,16 @@ typedef struct s_space {
 /*	Param structure	*/
 
 typedef struct s_param {
+	int			height;
+	int			width;
 	double		scale;
 	double		aspect_ratio;
+	t_mat44		*matrix;
 	double		px;
 	double		py;
 	size_t		colour;
+	char		screen_hit[HEIGHT][WIDTH];
+	char		screen_shade[HEIGHT][WIDTH];
 }	t_param;
 
 /*	Ray structure	*/
@@ -217,6 +222,7 @@ typedef struct s_hit {
 	t_obj_lst	*nearest;
 	t_vec3		*phit;
 	t_vec3		*rgb;
+	char		shading;
 }	t_hit;
 
 /* MLX */
@@ -280,6 +286,18 @@ typedef struct s_mat44 {
 	double	d[4];
 }			t_mat44;
 
+typedef struct s_shade {
+	t_vec3		*rgb;
+	t_vec3		*normal;
+	t_vec3		*ambient;
+	t_vec3		*diffuse;
+	double		kd;
+	double		diffuse_comp;
+	t_vec3		*specular;
+	double		ks;
+	double		specular_comp;
+}	t_shade;
+
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
@@ -334,5 +352,6 @@ double		deg2rad(double degree);
 void		print_progress(int i, int total);
 size_t		rgb_colour(t_vec3 *rgb);
 t_vec3		*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2);
+void		print_screen(char screen[HEIGHT][WIDTH]);
 
 #endif

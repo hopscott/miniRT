@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   adv_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 16:31:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:20:27 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_vec3	*vec3_unit(t_vec3 *vec1, int to_free)
 	double	c;
 	double	len;
 
+	if (!vec1)
+		return (NULL);
 	len = vec3_len(vec1);
 	a = vec1->e[0] / len;
 	b = vec1->e[1] / len;
@@ -64,13 +66,4 @@ double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2)
 	res = vec3_len(sub);
 	free(sub);
 	return (res);
-}
-
-//function that returns a vector that goes from the origin following a direction on a given length
-t_vec3	*vec_from_or_vec_len(t_vec3 *origin, t_vec3 *orient_unit, double orient_len)
-{
-	t_vec3	*ret;
-
-	ret = vec3_init(origin->e[0] + orient_unit->e[0] * orient_len,  origin->e[1] + orient_unit->e[1] * orient_len , origin->e[2] + orient_unit->e[2] * orient_len);
-	return (ret);
 }

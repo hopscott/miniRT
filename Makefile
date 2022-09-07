@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
+#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/06 15:39:10 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/07 17:01:17 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,10 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/sphere.c\
 			$(SRC_DIR)/parsing/plane.c\
 			$(SRC_DIR)/parsing/cylinder.c\
-			$(SRC_DIR)/vec3/init.c\
+			$(SRC_DIR)/vec3/utils.c\
 			$(SRC_DIR)/vec3/basic_ops.c\
 			$(SRC_DIR)/vec3/adv_ops.c\
+			$(SRC_DIR)/vec3/extra_ops.c\
 			$(SRC_DIR)/camera/matrix.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/intersection/light_intersection.c\

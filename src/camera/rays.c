@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 19:33:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:06:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	else if (hit->nearest->type == CYLINDER)
 	{
 		rgb = obj->cy.rgb;
-		normal = cylinder_surface_normal(&obj->pl, ray);
+		normal = cylinder_surface_normal(&obj->cy, hit->phit);
 	}
 	// setup ambient
 	ambient = vec3_multiply(space->ambient->rgb, space->ambient->lighting_ratio);

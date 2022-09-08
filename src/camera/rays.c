@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 23:02:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/08 19:16:33 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 		rgb = obj->pl.rgb;
 //		normal = plane_surface_normal(&obj->pl, ray);
 		normal = vec3_copy(obj->pl.norm);
-		printf("final normal, x: %f, y: %f, z: %f\n", normal->e[0], normal->e[1], normal->e[2]);
+	//	printf("final normal, x: %f, y: %f, z: %f\n", normal->e[0], normal->e[1], normal->e[2]);
 	}
 	else if (hit->nearest->type == CYLINDER)
 	{
@@ -166,7 +166,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	kd = 0.8;
 	// setup specular
 	specular = vec3_init(0, 0, 0);
-	ks = 0.15;
+	ks = 0.2;
 
 	// loop over each light
 	c = '.';
@@ -189,7 +189,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 			{
 				// calculate lambertian reflectance - diffuse => https://en.wikipedia.org/wiki/Lambertian_reflectance
 				// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading
-				
+
 				l = vec3_multiply(lray.direction, -1);
 				if (vec3_dot(l, normal) > 0)
 				{

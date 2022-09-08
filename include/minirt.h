@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 21:59:02 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/08 18:19:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <math.h>
 # include <stdint.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1280 
+# define HEIGHT 1024
 
 //#define WIDTH 40
 //#define	HEIGHT 30

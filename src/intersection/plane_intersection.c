@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/07 23:00:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/08 17:29:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 			//			printf("dist2: %f\n", distance2);
 			if (distance2 < distance1)
 			{
-				printf("x: %f, y: %f, z: %f\n", plane->xyz->e[0], plane->xyz->e[1], plane->xyz->e[2]);
-				printf("n_x: %f, n_y: %f, n_z: %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
+		//		printf("x: %f, y: %f, z: %f\n", plane->xyz->e[0], plane->xyz->e[1], plane->xyz->e[2]);
+		//		printf("n_x: %f, n_y: %f, n_z: %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
 				plane->norm = vec3_copy(inv_p_norm);
 			}
 		}

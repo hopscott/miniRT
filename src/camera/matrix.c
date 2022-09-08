@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 17:22:51 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 20:58:01 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *arb)
 						-vec3_dot(up, old_coord), -vec3_dot(fwd, old_coord));
 	if (!coord)
 	{
-		vec3_free_multi(right, up, NULL);
+		vec3_free_multi(right, up, NULL, 0);
 		return (NULL);
 	}
 	mat = mat44_init(right, up, fwd, coord);
-	vec3_free_multi(right, up, coord);
+	vec3_free_multi(right, up, coord, 0);
 	return (mat);
 }
 

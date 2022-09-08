@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 18:02:06 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 20:56:40 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	print_space(t_space *space)
 	while (elem)
 	{
 		obj = (t_object *)(elem->content);
-		if (elemo->type == LIGHT)
+		if (elem->type == LIGHT)
 			printf("((*)) LIGHT\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tbrightness(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->l.x, obj->l.y, obj->l.z, obj->l.brightness_ratio, obj->l.r, obj->l.g, obj->l.b);
 		else if (elem->type == SPHERE)
 			printf("  o   SPHERE\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tdiameter(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->sp.x, obj->sp.y, obj->sp.z, obj->sp.diameter, obj->sp.r, obj->sp.g, obj->sp.b);

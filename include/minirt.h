@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 19:20:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 21:02:10 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,29 @@ typedef struct s_space {
 	t_light		**lights;
 }	t_space;
 
+/*	mat44 structure	*/
+
+typedef struct s_mat44 {
+	double	a[4];
+	double	b[4];
+	double	c[4];
+	double	d[4];
+}			t_mat44;
+
+/*	Shade structure	*/
+
+typedef struct s_shade {
+	t_vec3		*rgb;
+	t_vec3		*normal;
+	t_vec3		*ambient;
+	t_vec3		*diffuse;
+	double		kd;
+	double		diffuse_comp;
+	t_vec3		*specular;
+	double		ks;
+	double		specular_comp;
+}	t_shade;
+
 /*	Param structure	*/
 
 typedef struct s_param {
@@ -279,25 +302,6 @@ int			parser(char *path, t_space *space);
 void		print_space(t_space *space);
 /* ================================================= */
 
-typedef struct s_mat44 {
-	double	a[4];
-	double	b[4];
-	double	c[4];
-	double	d[4];
-}			t_mat44;
-
-typedef struct s_shade {
-	t_vec3		*rgb;
-	t_vec3		*normal;
-	t_vec3		*ambient;
-	t_vec3		*diffuse;
-	double		kd;
-	double		diffuse_comp;
-	t_vec3		*specular;
-	double		ks;
-	double		specular_comp;
-}	t_shade;
-
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
@@ -308,7 +312,13 @@ t_mat44		*camera_lookat(t_camera *cam);
 t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
 
 /* rays.c */
-size_t		cast_ray(t_ray *ray, t_space *space, char *c);
+size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
+
+/* shading.c */
+int			shading(t_space *space, t_ray *ray, t_hit *hit, t_object *object);
+
+/* shading_light.c */
+int			shading_from_light(t_space *space, t_hit *hit, t_light *light, t_shade *shade);
 
 /* =================== VISUALS ====================== */
 
@@ -337,8 +347,8 @@ void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
 
 /* cylinder_intersection.c */
-void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-t_vec3	*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
+void		cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
+t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
 
 /* =================== VISUALS ====================== */
 

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 18:39:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 20:42:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ size_t	rgb_colour(t_vec3 *rgb)
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	size_t	rgb;
 
 	r = (size_t)rgb->e[0];
 	if (r > 255)

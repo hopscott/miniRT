@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 18:43:19 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 20:54:50 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 
 /* https://math.stackexchange.com/questions/13261/  */
 /* how-to-get-a-reflection-vector 					*/
-
 t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)
 {
 	double	dot;
@@ -99,35 +98,42 @@ char	obj_to_char(t_obj_lst *elem)
 	return ('.');
 }
 
-size_t	cast_ray(t_ray *ray, t_space *space, char *obj, char *shading)
+int	hit_init(t_ray *ray, t_space *space, t_hit *hit)
+{
+	hit->phit = NULL;
+	hit->shading = '.';
+	hit->rgb = vec3_init(0, 0, 0);
+	if (!hit->rgb)
+		return (1);
+	nearest_hit_object(ray, space->objects, hit);
+	return (0);
+}
+
+size_t	cast_ray(t_ray *ray, t_space *space, char *object, char *shading)
 {
 	t_hit		hit;
 	t_object	*obj;
 	size_t		colour;
 
-	hit.shading = '.';
-	nearest_hit_object(ray, space->objects, &hit);
+	hit_init(ray, space, &hit);
 	if (hit.nearest)
 	{
 		obj = (t_object *)(hit.nearest->content);
+		hit.shading = '@';
 		if (hit.nearest->type == LIGHT)
-		{
-			hit.rgb = vec3_copy(obj->l.rgb);
-			hit.shading = '@';
-		}
+			vec3_add_to_self(&hit.rgb, obj->l.rgb);
 		else
 		{
 			hit.phit = vec3_ray_distance_to_point(ray->origin, \
 											ray->direction, hit.t);
 			shading(space, ray, &hit, obj);
-			free(hit.phit);
 		}
 	}
 	else
-		hit.rgb = vec3_copy(space->ambient->rgb);
-	*obj = obj_to_char(hit.nearest);
+		vec3_add_to_self(&hit.rgb, space->ambient->rgb);
+	*object = obj_to_char(hit.nearest);
 	*shading = hit.shading;
 	colour = rgb_colour(hit.rgb);
-	free(hit.rgb);
+	vec3_free_multi(hit.phit, hit.rgb, NULL, 0);
 	return (colour);
 }

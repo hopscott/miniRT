@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 17:43:29 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 19:51:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_vec3 {
 /* utils.c */
 t_vec3	*vec3_init(double a, double b, double c);
 void	vec3_print(t_vec3 *vec);
-void	vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3);
 t_vec3	*vec3_copy(t_vec3 *vec);
+int		vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, int err);
 
 /* basic_ops.c */
 t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2);

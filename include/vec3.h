@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 23:35:53 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:08:49 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ typedef struct s_vec3 {
 /* ***************** FUNCTIONS ********************* */
 /* ************************************************* */
 /* ==================== VEC3 ======================= */
-/* init.c */
+/* utils.c */
 t_vec3	*vec3_init(double a, double b, double c);
-void	vec3_print(t_vec3 *vec);
-void	vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3);
+void	vec3_print(char *str, t_vec3 *vec);
 t_vec3	*vec3_copy(t_vec3 *vec);
-void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new);
+int		vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, int err);
 
 /* basic_ops.c */
 t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2);
@@ -43,7 +42,11 @@ double	vec3_len(t_vec3 *vec);
 double	vec3_lensq(t_vec3 *vec);
 t_vec3	*vec3_unit(t_vec3 *vec1, int free);
 double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2);
-t_vec3	*vec_from_or_vec_len(t_vec3 *origin, t_vec3 *orient_unit, double orient_len);
+
+/* extra_ops.c */
+void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new);
+void	vec3_multiply_to_self(t_vec3 **vec, double t);
+t_vec3	*vec3_ray_distance_to_point(t_vec3 *origin, t_vec3 *direction, double t);
 
 /* ================================================= */
 

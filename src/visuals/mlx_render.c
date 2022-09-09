@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/02 18:26:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:41:29 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	keypress(int key, t_vars *vars)
 {
 	(void)vars;
-	printf("key = %d\n", key);
 	if (key == 65307)
 		mlx_loop_end(vars->mlx);
 	return (0);
@@ -43,14 +42,6 @@ void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 	}
 }
 
-int	render_frame(t_vars *vars)
-{
-	clear_window(vars);
-	space_render(&vars->data, WIDTH, HEIGHT, vars->space);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
-	return (0);
-}
-
 void	mlx_render(t_space *space)
 {
 	t_vars	vars;
@@ -59,10 +50,10 @@ void	mlx_render(t_space *space)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "miniRT");
 	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
-	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, &vars.data.line_length, &vars.data.endian);
-	mlx_hook(vars.win, 2, 1L<<0, keypress, &vars);
-	mlx_hook(vars.win, 17, 1L<<17, destroy, &vars);
-	// mlx_loop_hook(vars.mlx, render_frame, &vars);
+	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
+							&vars.data.line_length, &vars.data.endian);
+	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
+	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
 	space_render(&vars.data, WIDTH, HEIGHT, vars.space);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
 	mlx_loop(vars.mlx);

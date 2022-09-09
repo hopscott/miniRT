@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder_intersection.c                            :+:      :+:    :+:   */
+/*   cylinder_intersection_WIP.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/03 20:49:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:04:07 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ double	cy_intersection_1(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	
 	c = vec3_init(cy->x, cy->y, cy->z);
 	cy_orient = vec3_init(cy->vec_x, cy->vec_y, cy->vec_z);
-	ch = vec_from_or_vec_len(c, cy_orient, cy->height);
+	ch = vec3_ray_distance_to_point(c, cy_orient, cy->height);
 	ch_unit = vec3_unit(ch, 1);
 	printf("ch_x: %f, ch_y: %f, ch_z: %f\n", ch_unit->e[0], ch_unit->e[1], ch_unit->e[2]);
 	abc = find_abc(r_or, r_dir, cy, ch_unit);

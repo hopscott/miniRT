@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 17:07:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/09 16:43:22 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	space_free(t_space *space)
 {
+	t_camera	*cam;
+
+	cam = space->camera;
 	obj_lstfree(&space->objects);
-	vec3_free_multi(space->camera->xyz, space->camera->norm, space->ambient->rgb);
+	vec3_free_multi(cam->xyz, cam->norm, NULL, 0);
 	free(space->camera);
 	free(space->ambient);
 	free(space->lights);
@@ -38,4 +41,3 @@ int	main(int ac, char **av)
 	space_free(&space);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/07 17:04:26 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:54:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ uint8_t	new_dist(double dist, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 
 	radius = cy->diameter / 2;
 	cy_point = vec3_ray_distance_to_point(r_or, r_dir, dist);
-	cy_center = vec3_init(cy->x, cy->y, cy->z);
-	cy_orient = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
+	cy_center =  cy->xyz;
+	cy_orient = cy->norm;
 	cy_center_middle = vec3_ray_distance_to_point(cy_center, cy_orient, cy->height / 2);
 	dist_p_center = vec3_distance_points(cy_point, cy_center_middle);
 	dist_max = sqrt(pow(cy->height / 2, 2) + pow(radius, 2));
@@ -93,6 +93,7 @@ double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double di
 //
 void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 {
+	t_vec3	*tmp;
 	t_vec3	*center;
 	t_vec3	*center_inv;
 	t_vec3	*cy_orient_bef;
@@ -109,7 +110,8 @@ void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	radius = cy->diameter / 2;
 	center = vec3_init(cy->x - ray->origin->e[0], cy->y - ray->origin->e[1] ,cy->z - ray->origin->e[2]);
 	center_inv = vec3_multiply(center, -1);
-	cy_orient_bef = vec3_unit(vec3_init(cy->vec_x, cy->vec_y, cy->vec_z), 1);
+	tmp = vec3_init(cy->vec_x, cy->vec_y, cy->vec_z);
+	cy_orient_bef = vec3_unit(tmp, 1);
 //printf("rx: %f, ry: %f, rz: %f\n",cy->vec_x, cy->vec_y, cy->vec_z);
 	cy_orient = cy_orient_bef;
 	rot_r_dir = vec3_cross(ray->direction, cy_orient);
@@ -129,10 +131,12 @@ t_vec3	*cylinder_surface_normal(t_cylinder * cy, t_vec3 *phit)
 	double	t;
 	t_vec3	*pt;
 	t_vec3	*surface_normal;
+	t_vec3	*tmp;
 
     t = vec3_dot((vec3_subtract(phit, cy->xyz)), cy->norm); // cy.ori should be normalized and so has the length of 1.
     pt = vec3_ray_distance_to_point(cy->xyz, cy->norm, t);
-    surface_normal = vec3_unit(vec3_subtract(phit, pt), 1);
+	tmp = vec3_subtract(phit, pt);
+    surface_normal = vec3_unit(tmp, 1);
 	return (surface_normal);
 }
 

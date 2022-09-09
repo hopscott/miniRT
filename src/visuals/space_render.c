@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 18:40:12 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:55:16 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ t_vec3	*set_direction(t_param param, t_mat44 *mat)
 {
 	double	x;
 	double	y;
+	t_vec3	*tmp;
 	t_vec3	*unit;
 	t_vec3	*direction;
 
 	x = (2 * (param.px + 0.5) / param.width - 1) * \
 								param.scale * param.aspect_ratio;
 	y = (1 - 2 * (param.py + 0.5) / param.height) * param.scale;
-	unit = vec3_unit(vec3_init(x, y, 1), 1);
+	tmp = vec3_init(x, y, 1);
+	if (!tmp)
+		return (NULL);
+	unit = vec3_unit(tmp, 1);
+	if (!unit)
+		return (NULL);
 	direction = vec3_matrix_multiply(mat, unit, 0);
 	free(unit);
 	return (direction);
@@ -56,6 +62,9 @@ int	space_set_lights(t_space *space, t_obj_lst *elem)
 
 int	init_parameters(int width, int height, t_space *space, t_param *param)
 {
+	int	y;
+	int	x;
+
 	param->width = width;
 	param->height = height;
 	if (space_set_lights(space, space->objects))
@@ -64,25 +73,26 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	if (!param->matrix)
 		return (1);
 	param->scale = tan(deg2rad(space->camera->fov / 2));
-	param->aspect_ratio = (double)space->width / (double)space->height;
+	param->aspect_ratio = (double)param->width / (double)param->height;
 	param->colour = 0;
 	y = -1;
-	while (++y < HEIGHT)
+	while (++y < param->height)
 	{
 		x = -1;
-		while (++x < WIDTH)
+		while (++x < param->width)
 		{
 			param->screen_hit[y][x] = '?';
 			param->screen_shading[y][x] = '?';
 		}
 	}
+	return (0);
 }
 
-void	print_screens_and_free_matrix(t_mat44 *matrix)
+void	print_screens_and_free_matrix(t_param *param)
 {
 	print_screen(param->screen_hit);
 	print_screen(param->screen_shading);
-	free(matrix);
+	free(param->matrix);
 }
 
 void	space_render(t_data *data, int width, int height, t_space *space)
@@ -99,7 +109,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 		param.px = -1;
 		while (++param.px < param.width)
 		{
-			ray.direction = set_direction(param, mat);
+			ray.direction = set_direction(param, param.matrix);
 			if (ray.direction)
 			{
 				param.colour = cast_ray(&ray, space, \
@@ -111,5 +121,5 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 		}
 		print_progress(param.py, height);
 	}
-	print_screens_and_free_matrix(param.matrix);
+	print_screens_and_free_matrix(&param);
 }

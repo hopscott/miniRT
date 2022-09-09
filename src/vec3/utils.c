@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 19:51:37 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:07:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ t_vec3	*vec3_copy(t_vec3 *vec)
 	return (new);
 }
 
-void	vec3_print(t_vec3 *vec)
+void	vec3_print(char *str, t_vec3 *vec)
 {
+	printf("%s\n", str);
 	printf("/ %f \\\n", vec->e[0]);
 	printf("| %f |\n", vec->e[1]);
 	printf("\\ %f /\n", vec->e[2]);

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 21:02:10 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:18:51 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ typedef struct s_space {
 	t_obj_lst	*objects;
 	size_t		n_lights;
 	t_light		**lights;
+	double		width;
+	double		height;
 }	t_space;
 
 /*	mat44 structure	*/
@@ -201,20 +203,6 @@ typedef struct s_mat44 {
 	double	c[4];
 	double	d[4];
 }			t_mat44;
-
-/*	Shade structure	*/
-
-typedef struct s_shade {
-	t_vec3		*rgb;
-	t_vec3		*normal;
-	t_vec3		*ambient;
-	t_vec3		*diffuse;
-	double		kd;
-	double		diffuse_comp;
-	t_vec3		*specular;
-	double		ks;
-	double		specular_comp;
-}	t_shade;
 
 /*	Param structure	*/
 
@@ -228,7 +216,7 @@ typedef struct s_param {
 	double		py;
 	size_t		colour;
 	char		screen_hit[HEIGHT][WIDTH];
-	char		screen_shade[HEIGHT][WIDTH];
+	char		screen_shading[HEIGHT][WIDTH];
 }	t_param;
 
 /*	Ray structure	*/
@@ -247,6 +235,23 @@ typedef struct s_hit {
 	t_vec3		*rgb;
 	char		shading;
 }	t_hit;
+
+/*	Shade structure	*/
+
+typedef struct s_shade {
+	t_ray		*ray;
+	t_object	*obj;
+	t_object	*lobj;
+	t_vec3		*rgb;
+	t_vec3		*normal;
+	t_vec3		*ambient;
+	t_vec3		*diffuse;
+	double		kd;
+	double		diffuse_comp;
+	t_vec3		*specular;
+	double		ks;
+	double		specular_comp;
+}	t_shade;
 
 /* MLX */
 
@@ -300,11 +305,7 @@ t_cylinder	*build_cylinder(char **tbl);
 /* parser.c */
 int			parser(char *path, t_space *space);
 void		print_space(t_space *space);
-/* ================================================= */
 
-/* ************************************************* */
-/* ***************** FUNCTIONS ********************* */
-/* ************************************************* */
 /* =================== CAMERA ====================== */
 
 /* matrix.c */
@@ -313,12 +314,13 @@ t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
 
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
+void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
 
 /* shading.c */
 int			shading(t_space *space, t_ray *ray, t_hit *hit, t_object *object);
 
 /* shading_light.c */
-int			shading_from_light(t_space *space, t_hit *hit, t_light *light, t_shade *shade);
+int			shading_from_light(t_space *sp, t_hit *h, t_light *l, t_shade *sh);
 
 /* =================== VISUALS ====================== */
 
@@ -361,7 +363,7 @@ void		space_render(t_data *data, int width, int height, t_space *space);
 double		deg2rad(double degree);
 void		print_progress(int i, int total);
 size_t		rgb_colour(t_vec3 *rgb);
-t_vec3		*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2);
+void		rgb_multiply_to_self(t_vec3 **rgb1, t_vec3 *rgb2);
 void		print_screen(char screen[HEIGHT][WIDTH]);
 
 #endif

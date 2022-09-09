@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 20:58:01 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:41:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,50 +44,51 @@ t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)
 	return (mat);
 }
 
-t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *arb)
+t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *right)
 {
-	t_vec3	*right;
+	t_vec3	*tmp;
 	t_vec3	*up;
-	t_mat44	*mat;
 	t_vec3	*coord;
+	t_mat44	*mat;
 
-	right = vec3_unit(vec3_cross(arb, fwd), 1);
-	if (!right)
-		return (NULL);
-	up = vec3_unit(vec3_cross(fwd, right), 1);
+	tmp = vec3_cross(fwd, right);
+	up = vec3_unit(tmp, 1);
 	if (!up)
-	{
-		free(right);
 		return (NULL);
-	}
 	coord = vec3_init(-vec3_dot(right, old_coord), \
 						-vec3_dot(up, old_coord), -vec3_dot(fwd, old_coord));
 	if (!coord)
 	{
-		vec3_free_multi(right, up, NULL, 0);
+		free(up);
 		return (NULL);
-	}
+	}	
 	mat = mat44_init(right, up, fwd, coord);
-	vec3_free_multi(right, up, coord, 0);
+	vec3_free_multi(up, coord, NULL, 0);
 	return (mat);
 }
 
 t_mat44	*camera_lookat(t_camera *cam)
 {
+	t_vec3	*tmp;
 	t_vec3	*fwd;
-	t_vec3	*coord;
 	t_vec3	*arb;
+	t_vec3	*right;
 	t_mat44	*mat;
 
 	fwd = cam->norm;
-	coord = cam->xyz;
-	if (!fwd | !coord)
+	if (!fwd | !cam->xyz)
 		return (NULL);
-	arb = vec3_unit(vec3_init(0, 1, 0), 1);
+	tmp = vec3_init(0, 1, 0);
+	arb = vec3_unit(tmp, 1);
 	if (!arb)
 		return (NULL);
-	mat = camera_lookat_utils(fwd, coord, arb);
+	tmp = vec3_cross(arb, fwd);
 	free(arb);
+	right = vec3_unit(tmp, 1);
+	if (!right)
+		return (NULL);
+	mat = camera_lookat_utils(fwd, cam->xyz, right);
+	free(right);
 	return (mat);
 }
 

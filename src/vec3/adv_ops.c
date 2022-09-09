@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 17:20:27 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:16:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_vec3	*vec3_unit(t_vec3 *vec1, int to_free)
 	a = vec1->e[0] / len;
 	b = vec1->e[1] / len;
 	c = vec1->e[2] / len;
-	vec = vec3_init(a, b, c);
 	if (to_free)
 		free(vec1);
+	vec = vec3_init(a, b, c);
 	return (vec);
 }
 

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 20:42:55 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 16:44:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ size_t	rgb_colour(t_vec3 *rgb)
 	size_t	r;
 	size_t	g;
 	size_t	b;
-	size_t	rgb;
 
 	r = (size_t)rgb->e[0];
 	if (r > 255)
@@ -57,18 +56,24 @@ size_t	rgb_colour(t_vec3 *rgb)
 	return ((r << 16) + (g << 8) + b);
 }
 
-t_vec3	*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2)
+void	rgb_multiply_to_self(t_vec3 **rgb, t_vec3 *rgb2)
 {
-	t_vec3	*rgb;
+	t_vec3	*new;
+	t_vec3	*rgb1;
 	size_t	r;
 	size_t	g;
 	size_t	b;
 
+	rgb1 = *rgb;
 	r = (size_t)rgb1->e[0] * (size_t)rgb2->e[0] / 255;
 	g = (size_t)rgb1->e[1] * (size_t)rgb2->e[1] / 255;
 	b = (size_t)rgb1->e[2] * (size_t)rgb2->e[2] / 255;
-	rgb = vec3_init(r, g, b);
-	return (rgb);
+	new = vec3_init(r, g, b);
+	if (new)
+	{
+		free((*rgb));
+		*rgb = new;
+	}
 }
 
 void	print_screen(char screen[HEIGHT][WIDTH])

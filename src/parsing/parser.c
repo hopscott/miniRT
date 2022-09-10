@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 20:56:40 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:53:29 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	parser(char *path, t_space *space)
 	{
 		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
 		{
-			printf("I entered here with this str: %s\n", str);
 			tbl = ft_split(str, ' ');
 			err = sub_parser(tbl, space);
 			ft_freetbl(tbl, -1);

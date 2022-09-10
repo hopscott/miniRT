@@ -9,6 +9,7 @@ SRCS	=	ft_atoi.c\
 			ft_strndup.c\
 			get_next_line.c\
 			ft_strncmp.c\
+			ft_swap_double.c\
 
 OBJS	= 	${SRCS:.c=.o}
 

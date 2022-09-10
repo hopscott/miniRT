@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 23:36:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 01:15:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_sphere	*build_sphere(char **tbl)
+t_sphere	*build_sphere(char **tbl, int to_switch)
 {
 	t_sphere	*obj;
 	char		**xyz;
@@ -25,8 +25,17 @@ t_sphere	*build_sphere(char **tbl)
 	if (!xyz[0] || !xyz[1] || !xyz[2])
 		return (NULL);
 	obj->x = (double)ft_atod(xyz[0]);
-	obj->y = (double)ft_atod(xyz[1]);
-	obj->z = (double)ft_atod(xyz[2]);
+	if (to_switch )
+	{
+		obj->x = to_switch * (double)ft_atod(xyz[0]);
+		obj->y = to_switch * (double)ft_atod(xyz[2]);
+		obj->z = (double)ft_atod(xyz[1]);
+	}
+	else
+	{
+		obj->y = (double)ft_atod(xyz[1]);
+		obj->z = (double)ft_atod(xyz[2]);
+	}
 	ft_freetbl(xyz, -1);
 	obj->diameter = (double)ft_atod(tbl[2]);
 	rgb = ft_split(tbl[3], ',');

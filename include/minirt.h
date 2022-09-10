@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/08 18:19:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 00:27:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,19 +254,19 @@ void		print_help(void);
 int			build_ambient(char **tbl, t_ambient **obj);
 
 /* camera.c */
-int			build_camera(char **tbl, t_camera **obj);
+int			build_camera(char **tbl, t_camera **obj, int *to_switch);
 
 /* light.c */
-t_light		*build_light(char **tbl);
+t_light		*build_light(char **tbl, int to_switch);
 
 /* sphere.c */
-t_sphere	*build_sphere(char **tbl);
+t_sphere	*build_sphere(char **tbl, int to_switch);
 
 /* plane.c */
-t_plane		*build_plane(char **tbl);
+t_plane		*build_plane(char **tbl, int to_switch);
 
 /* cylinder.c */
-t_cylinder	*build_cylinder(char **tbl);
+t_cylinder	*build_cylinder(char **tbl, int to_switch);
 
 /* parser.c */
 int			parser(char *path, t_space *space);

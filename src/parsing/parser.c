@@ -6,32 +6,32 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/06 17:17:12 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 00:57:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	sub_parser(char **tbl, t_space *space)
+int	sub_parser(char **tbl, t_space *space, int *to_switch)
 {
 	int	err;
 
 	if (!ft_strncmp(tbl[0], "A", 2))
 		err = build_ambient(tbl, &space->ambient);
 	else if (!ft_strncmp(tbl[0], "C", 2))
-		err = build_camera(tbl, &space->camera);
+		err = build_camera(tbl, &space->camera, to_switch);
 	else if (!ft_strncmp(tbl[0], "L", 2))
 		err = obj_lstadd(&space->objects, LIGHT, \
-				(t_object *)build_light(tbl));
+				(t_object *)build_light(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "sp", 3))
 		err = obj_lstadd(&space->objects, SPHERE, \
-				(t_object *)build_sphere(tbl));
+				(t_object *)build_sphere(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "pl", 3))
 		err = obj_lstadd(&space->objects, PLANE, \
-				(t_object *)build_plane(tbl));
+				(t_object *)build_plane(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "cy", 3))
 		err = obj_lstadd(&space->objects, CYLINDER, \
-				(t_object *)build_cylinder(tbl));
+				(t_object *)build_cylinder(tbl, *to_switch));
 	else
 		err = 1;
 	return (err);
@@ -64,7 +64,9 @@ int	parser(char *path, t_space *space)
 	int		fd;
 	char	*str;
 	char	**tbl;
+	int		to_switch;
 
+	to_switch = 0;
 	space->ambient = NULL;
 	space->camera = NULL;
 	space->objects = NULL;
@@ -80,7 +82,7 @@ int	parser(char *path, t_space *space)
 		{
 			printf("I entered here with this str: %s\n", str);
 			tbl = ft_split(str, ' ');
-			err = sub_parser(tbl, space);
+			err = sub_parser(tbl, space, &to_switch);
 			ft_freetbl(tbl, -1);
 			free(str);
 			if (err)

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 23:31:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 01:17:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	build_cylinder_vecs(t_cylinder **obj)
 	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
 }
 
-t_cylinder	*build_cylinder(char **tbl)
+t_cylinder	*build_cylinder(char **tbl, int to_switch)
 {
 	t_cylinder		*obj;
 	char			**tmp;
@@ -31,15 +31,33 @@ t_cylinder	*build_cylinder(char **tbl)
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		return (NULL);
 	obj->x = (double)ft_atod(tmp[0]);
-	obj->y = (double)ft_atod(tmp[1]);
-	obj->z = (double)ft_atod(tmp[2]);
+	if (to_switch)
+	{
+		obj->x = to_switch * (double)ft_atod(tmp[0]);
+		obj->y = to_switch * (double)ft_atod(tmp[2]);
+		obj->z = (double)ft_atod(tmp[1]);
+	}
+	else
+	{
+		obj->y = (double)ft_atod(tmp[1]);
+		obj->z = (double)ft_atod(tmp[2]);
+	}
 	ft_freetbl(tmp, -1);
 	tmp = ft_split(tbl[2], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		return (NULL);
 	obj->vec_x = (double)ft_atod(tmp[0]);
-	obj->vec_y = (double)ft_atod(tmp[1]);
-	obj->vec_z = (double)ft_atod(tmp[2]);
+	if (to_switch)
+	{
+		obj->vec_x = to_switch * (double)ft_atod(tmp[0]);
+		obj->vec_y = to_switch * (double)ft_atod(tmp[2]);
+		obj->vec_z = (double)ft_atod(tmp[1]);
+	}
+	else
+	{
+		obj->vec_y = (double)ft_atod(tmp[1]);
+		obj->vec_z = (double)ft_atod(tmp[2]);
+	}
 	ft_freetbl(tmp, -1);
 	obj->diameter = (double)ft_atod(tbl[3]);
 	obj->height = (double)ft_atod(tbl[4]);

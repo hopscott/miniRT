@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/05 23:42:12 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 00:04:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,32 @@ t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)
 // 	free(up);
 // 	return (mat);
 // }
+//
+
+t_mat44	*camera_lookat_utils_special(t_vec3 *fwd, t_vec3 *old_coord, int up_down)
+{
+	t_vec3	*right;
+	t_vec3	*up;
+	t_mat44	*mat;
+	t_vec3	*coord;
+
+	if (up_down == 1)
+	{
+		right = vec3_init(1, 0, 0);
+		up = vec3_init(0,0,-1);
+	}
+	if (up_down == 2)
+	{
+		right = vec3_init(1, 0, 0);
+		up = vec3_init(0,0,1);
+	}
+	coord = vec3_init((-1) * vec3_dot(right, old_coord), (-1) * vec3_dot(up, old_coord), (-1) *vec3_dot(fwd, old_coord));
+	mat = mat44_init(right, up, fwd, coord);
+	free(right);
+	free(up);
+	return (mat);
+}
+
 
 t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *arb)
 {
@@ -105,12 +131,26 @@ t_mat44	*camera_lookat(t_camera *cam)
 	t_vec3	*tmp;
 	t_vec3	*arb;
 	t_mat44	*mat;
+	int		up_down;
 
 	fwd = vec3_unit(cam->norm, 0);
 	coord = cam->xyz;
+	if (!fwd->e[0] && !fwd->e[2])
+	{
+		if (fwd->e[1] == 1)
+		{
+			tmp = vec3_init(0, 0, 1);
+			arb = vec3_unit(tmp, 1);
+			mat = camera_lookat_utils(fwd, coord, arb);
+		}
+			//mat = camera_lookat_utils_special(fwd, coord, 1);
+		if (fwd->e[1] == -1)
+			mat = camera_lookat_utils_special(fwd, coord, 2);
+	}
 	tmp = vec3_init(0, 1, 0);
 	arb = vec3_unit(tmp, 1);
 	mat = camera_lookat_utils(fwd, coord, arb);
+	free(tmp);
 	free(fwd);
 	free(arb);
 	return (mat);

@@ -1,10 +1,14 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/omoudni/miniRT/src/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
+!_TAG_PROGRAM_VERSION	5.9.0	//
 adjust_plane_norm	intersection/plane_intersection.c	/^void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)$/;"	f	typeref:typename:void
 build_ambient	parsing/ambient.c	/^int	build_ambient(char **tbl, t_ambient **obj)$/;"	f	typeref:typename:int
 build_camera	parsing/camera.c	/^int	build_camera(char **tbl, t_camera **obj)$/;"	f	typeref:typename:int
@@ -18,6 +22,7 @@ build_sphere	parsing/sphere.c	/^t_sphere	*build_sphere(char **tbl)$/;"	f	typeref
 calc_c_dscr	intersection/sphere_intersection.c	/^void	calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c)$/;"	f	typeref:typename:void
 camera_lookat	camera/matrix.c	/^t_mat44	*camera_lookat(t_camera *cam)$/;"	f	typeref:typename:t_mat44 *
 camera_lookat_utils	camera/matrix.c	/^t_mat44	*camera_lookat_utils(t_vec3 *fwd, t_vec3 *old_coord, t_vec3 *arb)$/;"	f	typeref:typename:t_mat44 *
+camera_lookat_utils_special	camera/matrix.c	/^t_mat44	*camera_lookat_utils_special(t_vec3 *fwd, t_vec3 *old_coord, int up_down)$/;"	f	typeref:typename:t_mat44 *
 cast_ray	camera/rays.c	/^size_t	cast_ray(t_ray *ray, t_space *space, char *c)$/;"	f	typeref:typename:size_t
 check_det	intersection/trash/cylinder_intersection_deprecated.c	/^int check_det(double *det1, double a, double b, double c)$/;"	f	typeref:typename:int
 check_space_null	parsing/parser.c	/^int	check_space_null(t_space *space)$/;"	f	typeref:typename:int
@@ -74,7 +79,6 @@ obj_lstnew	parsing/object_list.c	/^t_obj_lst	*obj_lstnew(int type, void *content
 obj_to_char	camera/rays.c	/^char	obj_to_char(t_obj_lst *elem)$/;"	f	typeref:typename:char
 parser	parsing/parser.c	/^int	parser(char *path, t_space *space)$/;"	f	typeref:typename:int
 plane_intersection	intersection/plane_intersection.c	/^void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)$/;"	f	typeref:typename:void
-plane_surface_normal	intersection/plane_intersection.c	/^t_vec3	*plane_surface_normal(t_plane *plane, t_ray *ray)$/;"	f	typeref:typename:t_vec3 *
 print_help	parsing/errorinizer.c	/^void	print_help(void)$/;"	f	typeref:typename:void
 print_progress	utils.c	/^void	print_progress(int i, int total)$/;"	f	typeref:typename:void
 print_screen	visuals/space_render.c	/^void	print_screen(char screen[HEIGHT][WIDTH])$/;"	f	typeref:typename:void

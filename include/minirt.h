@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 00:27:08 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 02:55:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ t_vec3		*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit);
 /* plane_intersection.c */
 void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
-
+t_vec3		*normal_bmap_plane(t_plane *plane, t_hit *hit);
 /* cylinder_intersection.c */
 void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 t_vec3	*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);

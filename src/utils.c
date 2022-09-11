@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/01 22:47:54 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/09 16:44:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,76 +56,47 @@ size_t	rgb_colour(t_vec3 *rgb)
 	return ((r << 16) + (g << 8) + b);
 }
 
-t_vec3	*rgb_multiply(t_vec3 *rgb1, t_vec3 *rgb2)
+void	rgb_multiply_to_self(t_vec3 **rgb, t_vec3 *rgb2)
 {
-	t_vec3	*rgb;
+	t_vec3	*new;
+	t_vec3	*rgb1;
 	size_t	r;
 	size_t	g;
 	size_t	b;
 
+	rgb1 = *rgb;
 	r = (size_t)rgb1->e[0] * (size_t)rgb2->e[0] / 255;
 	g = (size_t)rgb1->e[1] * (size_t)rgb2->e[1] / 255;
 	b = (size_t)rgb1->e[2] * (size_t)rgb2->e[2] / 255;
-	rgb = vec3_init(r, g, b);
-	return (rgb);
+	new = vec3_init(r, g, b);
+	if (new)
+	{
+		free((*rgb));
+		*rgb = new;
+	}
 }
 
-// unsigned int	perc_colour(t_colour *c0, t_colour *c1, double p)
-// {
-// 	unsigned int	red;
-// 	unsigned int	green;
-// 	unsigned int	blue;
+void	print_screen(char screen[HEIGHT][WIDTH])
+{
+	int	y;	
+	int	x;
 
-// 	red = c0->r * (1 - p) + c1->r * p;
-// 	green = c0->g * (1 - p) + c1->g * p;
-// 	blue = c0->b * (1 - p) + c1->b * p;
-// 	return (rgb_colour(red, green, blue));
-// }
-
-// void	*routine(void *arg)
-// {
-// 	py = -1;
-// 	while (++py < height)
-// 	{
-// 		px = -1;
-// 		while (++px < width)
-// 		{
-// 			x = ((px + 0.5) / width);
-// 			y = ((py + 0.5) / height);
-// 			vec = vec3_init(x, y, -1);
-// 			direction = vec3_matrix_multiply(mat, vec, 1);
-// 			free(vec);
-// 			rgb = cast_ray(origin, direction, space);
-// 			free(direction);
-// 			my_mlx_pixel_put(data, px, py, rgb_colour(rgb));
-// 			printf("[%d][%d] => %X\n", px, py, rgb_colour(rgb));
-// 			// vec3_print(rgb);
-// 			free(rgb);
-// 		}
-// 	}
-// }
-
-// void	object_space_to_camera_space(t_list **lst)
-// {
-// 	t_list		*elem;
-// 	t_object	*obj;
-
-// 	elem = *lst;
-// 	while (elem)
-// 	{
-// 		obj = (t_object *)(elem->content);
-// 		if (elem->type == AMBIENT)
-// 			continue ;
-// 		else if (elem->type == CAMERA)
-// 			continue ;
-// 		else if (elem->type == LIGHT)
-// 			continue ;
-// 		else if (elem->type == SPHERE)
-// 			continue ;
-// 		else if (elem->type == PLANE)
-// 			continue ;
-// 		else if (elem->type == CYLINDER)
-// 			continue ;
-// 		elem = elem->next;
-// 	}
-// }
+	printf("    ");
+	x = -1;
+	while (++x < WIDTH + 2)
+		if (x % 10 == 0)
+			printf("_");
+	printf("_\n");
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		if (y % 20 == 0)
+			printf("%4d|", y);
+		while (++x < WIDTH)
+			if ((x % 10 == 0) && (y % 20 == 0))
+				printf("%c", screen[y][x]);
+		if (y % 20 == 0)
+			printf("|\n");
+	}
+}

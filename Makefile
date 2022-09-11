@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/11 02:56:01 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/11 16:18:28 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,7 @@ EXE := $(BIN_DIR)/miniRT
 CC := cc
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
-# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
-CFLAGS ?= -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
+CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 
 # Src files ======================================
 
@@ -46,10 +45,13 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/parsing/sphere.c\
 			$(SRC_DIR)/parsing/plane.c\
 			$(SRC_DIR)/parsing/cylinder.c\
-			$(SRC_DIR)/vec3/init.c\
+			$(SRC_DIR)/vec3/utils.c\
 			$(SRC_DIR)/vec3/basic_ops.c\
 			$(SRC_DIR)/vec3/adv_ops.c\
+			$(SRC_DIR)/vec3/extra_ops.c\
 			$(SRC_DIR)/camera/matrix.c\
+			$(SRC_DIR)/camera/shading_light.c\
+			$(SRC_DIR)/camera/shading.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/intersection/light_intersection.c\
 			$(SRC_DIR)/intersection/plane_intersection.c\

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/02 17:38:31 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/08 20:57:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ void	obj_lstfree_sub(t_obj_lst *elem)
 	if (elem->type == AMBIENT)
 		free(obj->a.rgb);
 	else if (elem->type == CAMERA)
-		vec3_free_multi(obj->c.xyz, obj->c.norm, NULL);
+		vec3_free_multi(obj->c.xyz, obj->c.norm, NULL, 0);
 	else if (elem->type == LIGHT)
-		vec3_free_multi(obj->l.xyz, obj->l.rgb, NULL);
+		vec3_free_multi(obj->l.xyz, obj->l.rgb, NULL, 0);
 	else if (elem->type == SPHERE)
-		vec3_free_multi(obj->sp.xyz, obj->sp.rgb, NULL);
+		vec3_free_multi(obj->sp.xyz, obj->sp.rgb, NULL, 0);
 	else if (elem->type == PLANE)
-		vec3_free_multi(obj->pl.xyz, obj->pl.norm, obj->pl.rgb);
+		vec3_free_multi(obj->pl.xyz, obj->pl.norm, obj->pl.rgb, 0);
 	else if (elem->type == CYLINDER)
-		vec3_free_multi(obj->cy.xyz, obj->cy.norm, obj->cy.rgb);
+		vec3_free_multi(obj->cy.xyz, obj->cy.norm, obj->cy.rgb, 0);
 	free(elem->content);
 }
 

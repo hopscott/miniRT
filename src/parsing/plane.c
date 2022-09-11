@@ -6,17 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 01:15:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:31:39 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	build_plane_vecs(t_plane **obj)
+void	build_plane_vecs(t_plane*obj)
 {
-	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	(*obj)->norm = vec3_unit(vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z), 1);
-	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
+	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
+	obj->norm = vec3_unit(vec3_init(obj->vec_x, obj->vec_y, obj->vec_z), 1);
+	obj->rgb = vec3_init(obj->r, obj->g, obj->b);
 	//	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
 	//	(*obj)->norm = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
 	//	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
@@ -71,6 +71,6 @@ t_plane	*build_plane(char **tbl, int to_switch)
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
-	build_plane_vecs(&obj);
+	build_plane_vecs(obj);
 	return (obj);
 }

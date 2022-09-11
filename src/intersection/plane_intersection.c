@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/08 17:29:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:27:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ void	plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit)
 	t_vec3	*n;
 	t_vec3	*vec;
 
-	p0 = vec3_init(plane->x, plane->y, plane->z);
-	n = vec3_init(plane->vec_x, plane->vec_y, plane->vec_z);
+	p0 = plane->xyz;
+	n = plane->norm;
 	vec = vec3_subtract(p0, ray->origin);
 	hit->t = vec3_dot(vec, n) / vec3_dot(ray->direction, n);
-	free(p0);
-	free(n);
 	free(vec);
 }
 

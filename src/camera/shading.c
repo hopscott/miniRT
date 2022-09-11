@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 16:44:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:18:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
 		if (hit->nearest->type == SPHERE)
 		{
 			shade->rgb = obj->sp.rgb;
-			shade->normal = sphere_surface_normal(&obj->sp, hit->phit);
+			shade->normal = sphere_surface_normal(ray, &obj->sp, hit->phit);
 		}
 		else if (hit->nearest->type == PLANE)
 		{

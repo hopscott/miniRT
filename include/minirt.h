@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 16:20:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:18:50 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,7 @@ void		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
 void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
-t_vec3		*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit);
+t_vec3		*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit);
 
 /* plane_intersection.c */
 void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);

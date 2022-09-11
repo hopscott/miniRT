@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 02:54:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 04:54:33 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ char	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 		rgb = obj->pl.rgb;
 //		normal = plane_surface_normal(&obj->pl, ray);
 		//normal = vec3_copy(obj->pl.norm);
-		normal = normal_bmap_plane(&obj->pl, hit);
+		normal = normal_bmap_plane_lines(&obj->pl, hit);
 
 
 	//	printf("final normal, x: %f, y: %f, z: %f\n", normal->e[0], normal->e[1], normal->e[2]);

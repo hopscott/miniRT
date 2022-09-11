@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/09 19:26:26 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:44:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
 		else if (hit->nearest->type == PLANE)
 		{
 			shade->rgb = obj->pl.rgb;
-			shade->normal = plane_surface_normal(&obj->pl, shade->ray);
+			shade->normal = vec3_copy(obj->pl.norm);
 		}
 		else if (hit->nearest->type == CYLINDER)
 		{

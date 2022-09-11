@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/11 16:27:12 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:36:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 {
-	t_vec3	*ret;
 	t_vec3	*p_norm_p1;
 	t_vec3	*p_norm_p2;
 	t_vec3	*inv_p_norm;
@@ -32,8 +31,8 @@ void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 			elem = (t_object *)(space_objs->content);
 			plane = &(elem->pl);
 			inv_p_norm = vec3_multiply(plane->norm, -1);
-			p_norm_p1 = vec_from_or_vec_len(plane->xyz, plane->norm, 1);
-			p_norm_p2 = vec_from_or_vec_len(plane->xyz, inv_p_norm, 1);
+			p_norm_p1 = vec3_ray_distance_to_point(plane->xyz, plane->norm, 1);
+			p_norm_p2 = vec3_ray_distance_to_point(plane->xyz, inv_p_norm, 1);
 			distance1 = vec3_distance_points(r_or, p_norm_p1);
 			//			printf("dist1: %f\n", distance1);
 			//			printf("p_norm's coordinates are: %f, %f, %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);

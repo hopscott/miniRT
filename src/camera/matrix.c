@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 16:24:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:34:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ t_mat44	*camera_lookat(t_camera *cam)
 	t_vec3	*arb;
 	t_vec3	*right;
 	t_mat44	*mat;
-	int		up_down;
 
 	fwd = cam->norm;
 	if (!fwd | !cam->xyz)

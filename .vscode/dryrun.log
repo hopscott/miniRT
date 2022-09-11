@@ -1,5 +1,33 @@
 make --dry-run --keep-going --print-directory
-make: Entering directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
-make: Nothing to be done for 'all'.
-make: Leaving directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
-
+make: Entering directory '/mnt/nfs/homes/omoudni/miniRT'
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/parser.o src/parsing/parser.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/object_list.o src/parsing/object_list.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/errorinizer.o src/parsing/errorinizer.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/ambient.o src/parsing/ambient.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/camera.o src/parsing/camera.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/light.o src/parsing/light.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/sphere.o src/parsing/sphere.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/plane.o src/parsing/plane.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/cylinder.o src/parsing/cylinder.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/utils.o src/vec3/utils.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/basic_ops.o src/vec3/basic_ops.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/adv_ops.o src/vec3/adv_ops.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/extra_ops.o src/vec3/extra_ops.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/matrix.o src/camera/matrix.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading_light.o src/camera/shading_light.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading.o src/camera/shading.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/rays.o src/camera/rays.c
+ 
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/light_intersection.o src/intersection/light_intersection.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/plane_intersection.o src/intersection/plane_intersection.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/normal_plan_bmap.o src/intersection/normal_plan_bmap.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/sphere_intersection.o src/intersection/sphere_intersection.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/cylinder_intersection.o src/intersection/cylinder_intersection.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visuals/mlx_render.o src/visuals/mlx_render.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visuals/space_render.o src/visuals/space_render.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/main.o src/main.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/utils.o src/utils.c
+make -C lib/libft -f Makefile
+cc -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g src/parsing/parser.o src/parsing/object_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersection/light_intersection.o src/intersection/plane_intersection.o src/intersection/normal_plan_bmap.o src/intersection/sphere_intersection.o src/intersection/cylinder_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o lib/libft/libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o ./miniRT
+make: Leaving directory '/mnt/nfs/homes/omoudni/miniRT'
+ 

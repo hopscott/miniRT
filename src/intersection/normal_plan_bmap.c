@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 02:31:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/11 04:53:44 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:37:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_vec3	*normal_bmap_plane_mountains(t_plane *plane, t_hit *hit)
 	int		right;
 	int		above;
 	double	h;
-	double	d;
 	double	d_p;
 	double	d_r;
 	double	d_a;

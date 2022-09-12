@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/miniRT'
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/parser.o src/parsing/parser.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parsing/object_list.o src/parsing/object_list.c
@@ -17,13 +17,13 @@ cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading_light.o src/camera/shading_light.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading.o src/camera/shading.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/rays.o src/camera/rays.c
- 
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/light_intersection.o src/intersection/light_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/plane_intersection.o src/intersection/plane_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/normal_plan_bmap.o src/intersection/normal_plan_bmap.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/sphere_intersection.o src/intersection/sphere_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersection/cylinder_intersection.o src/intersection/cylinder_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visuals/mlx_render.o src/visuals/mlx_render.c
+ 
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visuals/space_render.o src/visuals/space_render.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/main.o src/main.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/utils.o src/utils.c

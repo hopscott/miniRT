@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Sep 11 16:19:04 2022
+# Make data base, printed on Mon Sep 12 13:44:28 2022
 
 # Variables
 
@@ -27,7 +27,7 @@ SRC_DIR := src
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/miniRT
 # environment
-TERMINATOR_UUID = urn:uuid:de153528-75bc-4a29-8720-4342b4bb57ca
+TERMINATOR_UUID = urn:uuid:e31dbec2-febd-479e-9fc8-43a614240536
 # environment
 LIBVIRT_DEFAULT_URI = qemu:///system
 # default
@@ -49,16 +49,15 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/mnt/nfs/homes/omoudni/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-OLDPWD = /mnt/nfs/homes/omoudni/miniRT/src
+OLDPWD = /mnt/nfs/homes/omoudni/miniRT
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
- 
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/784b0177c56c607789f9638da7b6bf3230d47a8c
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session6
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # makefile (from 'Makefile', line 81)
 LIBFT := lib/libft/libft.a
 # environment
@@ -102,15 +101,15 @@ MAKEFILE_LIST := Makefile
 # environment
 ZSH = /mnt/nfs/homes/omoudni/.oh-my-zsh
 # environment
-VSCODE_PID = 576683
+VSCODE_PID = 46201
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_MKLM6t
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_cZkSYi
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/e1r3p3.clusters.42paris.fr:@/tmp/.ICE-unix/565383,unix/e1r3p3.clusters.42paris.fr:/tmp/.ICE-unix/565383
+SESSION_MANAGER = local/e1r9p4.clusters.42paris.fr:@/tmp/.ICE-unix/5375,unix/e1r9p4.clusters.42paris.fr:/tmp/.ICE-unix/5375
 # automatic
 *F = $(notdir $*)
 # environment
@@ -152,7 +151,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 03ef32355d004256a291c47e5dfbc2e5
+INVOCATION_ID = 70523f6dd7544d6f89c527fd8b44b3c4
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # automatic
@@ -184,7 +183,7 @@ EXE := ./miniRT
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 565402
+SYSTEMD_EXEC_PID = 5395
 # environment
 DISPLAY = :0
 # environment
@@ -198,9 +197,9 @@ MAKE_VERSION := 4.3
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # environment
-MANAGERPID = 564835
+MANAGERPID = 4831
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 573256
+GIO_LAUNCHED_DESKTOP_FILE_PID = 21109
 # environment
 PAGER = less
 # environment
@@ -214,7 +213,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 COLORTERM = truecolor
 # environment
-JOURNAL_STREAM = 8:2853317
+JOURNAL_STREAM = 8:64362
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -315,9 +314,10 @@ src/vec3/adv_ops.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-11 16:18:28.679827979
+#  Last modified 2022-09-11 20:46:52.768521942
 #  File has been updated.
 #  Successfully updated.
+ 
 
 # Not a target:
 src/utils.o:
@@ -349,8 +349,7 @@ src/parsing/camera.o:
 # Not a target:
 src/parsing/parser.c:
 #  Implicit rule search has been done.
- 
-#  Last modified 2022-09-11 16:17:34.204526362
+#  Last modified 2022-09-11 16:50:10.339485218
 #  File has been updated.
 #  Successfully updated.
 
@@ -556,12 +555,12 @@ src/parsing/parser.o: src/parsing/parser.c include/libft.h
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 75 / storage = 1161 B / avg = 15 B
-# current buf: size = 8162 B / used = 1161 B / count = 75 / avg = 15 B
+# strcache buffers: 1 (0) / strings = 75 / storage = 1183 B / avg = 15 B
+# current buf: size = 8162 B / used = 1183 B / count = 75 / avg = 15 B
 
 # strcache performance: lookups = 106 / hit rate = 29%
 # hash-table stats:
 # Load=75/8192=1%, Rehash=0, Collisions=1/106=1%
-# Finished Make data base on Sun Sep 11 16:19:04 2022
+# Finished Make data base on Mon Sep 12 13:44:28 2022
 
  

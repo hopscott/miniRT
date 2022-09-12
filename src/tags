@@ -81,7 +81,7 @@ space_free	main.c	/^void	space_free(t_space *space)$/;"	f	typeref:typename:void
 space_render	visuals/space_render.c	/^void	space_render(t_data *data, int width, int height, t_space *space)$/;"	f	typeref:typename:void
 space_set_lights	visuals/space_render.c	/^int	space_set_lights(t_space *space, t_obj_lst *elem)$/;"	f	typeref:typename:int
 sphere_intersection	intersection/sphere_intersection.c	/^void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)$/;"	f	typeref:typename:void
-sphere_surface_normal	intersection/sphere_intersection.c	/^t_vec3	*sphere_surface_normal(t_sphere *sphere, t_vec3 *phit)$/;"	f	typeref:typename:t_vec3 *
+sphere_surface_normal	intersection/sphere_intersection.c	/^t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)$/;"	f	typeref:typename:t_vec3 *
 sub_parser	parsing/parser.c	/^int	sub_parser(char **tbl, t_space *space, int *to_switch)$/;"	f	typeref:typename:int
 surface_rgb_normal	camera/shading.c	/^int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)$/;"	f	typeref:typename:int
 vec3_add	vec3/basic_ops.c	/^t_vec3	*vec3_add(t_vec3 *vec1, t_vec3 *vec2)$/;"	f	typeref:typename:t_vec3 *

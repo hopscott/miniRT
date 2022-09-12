@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/11 18:19:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 13:47:39 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,13 @@ t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)
 	t_vec3	*tmp;
 	t_vec3	*normal;
 
+	printf("I entered here\n");
+
 	if (vec3_distance_points(ray->origin, sphere->xyz) < sphere->diameter / 2)
+	{
+		printf("I entered here\n");
 		tmp = vec3_subtract(sphere->xyz, phit);
+	}
 	else
 		tmp = vec3_subtract(phit, sphere->xyz);
 	normal = vec3_unit(tmp, 1);

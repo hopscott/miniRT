@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 18:18:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 13:52:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 //#define	HEIGHT 30
 
 # define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
-# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck example.rt for the file layout.\n"
+# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README for more details about the parameters\nCheck example.rt for the file layout.\n"
 # define ERROR_PARSING "File corrupted.\nUse --help as an option for more information.\n"
 
 /* types of objects in linked list */

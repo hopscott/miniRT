@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 01:14:51 by omoudni          ###   ########.fr       */
+/*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
+/*   Updated: 2022/09/12 18:41:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	build_light_vecs(t_light **obj)
+t_sphere	*build_sphere(char **tbl, int to_switch)
 {
-	t_vec3	*tmp;
-
-	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	tmp = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
-	(*obj)->rgb = vec3_multiply(tmp, (*obj)->brightness_ratio);
-	free(tmp);
-}
-
-t_light	*build_light(char **tbl, int to_switch)
-{
-	t_light		*obj;
+	t_sphere	*obj;
 	char		**xyz;
 	char		**rgb;
 
-	obj = malloc(sizeof(t_light));
+	obj = malloc(sizeof(t_sphere));
 	if (!obj)
 		return (NULL);
 	xyz = ft_split(tbl[1], ',');
-	if (!xyz[0] || !xyz[1] || !xyz[2])
-		return (NULL);
+	if (!xyz || tbl_3_check(xyz) || (!xyz[0] || !xyz[1] || !xyz[2]))
+		return (tbl_free(&xyz), NULL);
 	obj->x = (double)ft_atod(xyz[0]);
 	if (to_switch)
 	{
@@ -47,14 +37,22 @@ t_light	*build_light(char **tbl, int to_switch)
 		obj->z = (double)ft_atod(xyz[2]);
 	}
 	ft_freetbl(xyz, -1);
-	obj->brightness_ratio = (double)ft_atod(tbl[2]);
+	obj->diameter = (double)ft_atod(tbl[2]);
 	rgb = ft_split(tbl[3], ',');
-	if (!rgb[0] || !rgb[1] || !rgb[2])
-		return (NULL);
+	if (!rgb || tbl_3_check(rgb) || (!rgb[0] || !rgb[1] || !rgb[2]))
+		return (tbl_free(&rgb), NULL);
 	obj->r = (size_t)ft_atoi(rgb[0]);
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
-	build_light_vecs(&obj);
+	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
+	if (!(obj->xyz))
+		return (free(obj), NULL);
+	obj->rgb = vec3_init(obj->r, obj->g, obj->b);
+	if (!(obj->rgb))
+	{
+		free(obj->xyz);
+		return (free(obj), NULL);
+	}
 	return (obj);
 }

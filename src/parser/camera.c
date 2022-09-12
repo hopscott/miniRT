@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 01:20:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:36:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ int	build_camera(char **tbl, t_camera **obj, int *to_switch)
 	if (!(*obj))
 		return (1);
 	xyz = ft_split(tbl[1], ',');
-	if (!xyz[0] || !xyz[1] || !xyz[2])
-		return (1);
+	if (!xyz || (tbl_3_check(xyz)) || (!xyz[0] || !xyz[1] || !xyz[2]))
+		return (tbl_free(&xyz), 1);
 	(*obj)->x = (double)ft_atod(xyz[0]);
 	(*obj)->y = (double)ft_atod(xyz[1]);
 	(*obj)->z = (double)ft_atod(xyz[2]);
 	ft_freetbl(xyz, -1);
 	vec = ft_split(tbl[2], ',');
-	if (!vec[0] || !vec[1] || !vec[2])
-		return (1);
+	if (!vec || tbl_3_check(xyz) || (!vec[0] || !vec[1] || !vec[2]))
+		return (tbl_free(&vec), 1);
 	(*obj)->vec_x = (double)ft_atod(vec[0]);
 	(*obj)->vec_y = (double)ft_atod(vec[1]);
 	(*obj)->vec_z = (double)ft_atod(vec[2]);
@@ -68,7 +68,11 @@ int	build_camera(char **tbl, t_camera **obj, int *to_switch)
 	(*obj)->fov = (size_t)ft_atoi(tbl[3]);
 	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
 	tmp = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
+	if (!((*obj)->xyz) || !tmp)
+		return (1);
 	(*obj)->norm = vec3_unit(tmp, 1);
+	if (!((*obj)->norm))
+		return (1);
 	cam_switch(obj, to_switch);
 	return (0);
 }

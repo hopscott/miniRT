@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:25:01 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 15:15:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 15:05:59 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ size_t	check_eol(char *str)
 {
 	size_t	i;
 
-	if (!str)
-		return (1);
 	i = 0;
 	while (str && str[i])
 	{
@@ -76,8 +74,6 @@ char	*ft_realign_buff(char *s, size_t i, char buff[])
 
 	len = BUFFER_SIZE - i;
 	tmp = ft_strndup(&buff[i], len);
-	if (!tmp)
-		return (NULL);
 	ft_bzero(buff, BUFFER_SIZE);
 	i = 0;
 	while (tmp && i < len)

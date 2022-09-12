@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 16:27:27 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:50:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,21 @@ void	build_cylinder_vecs(t_cylinder **obj)
 	t_vec3	*tmp;
 
 	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
+	if (!((*obj)->xyz))
+		return (1);
 	tmp = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
+	if (!tmp)
+		return (free((*obj)->xyz), 1);
 	(*obj)->norm = vec3_unit(tmp, 1);
+	if (!((*obj)->norm))
+		return (free((*obj)->xyz), 1);
 	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
+	if (!((*obj)->rgb))
+	{
+		free((*obj)->xyz);
+		free((*obj)->norm);
+		return (1);
+	}
 }
 
 t_cylinder	*build_cylinder(char **tbl, int to_switch)
@@ -31,8 +43,8 @@ t_cylinder	*build_cylinder(char **tbl, int to_switch)
 	if (!obj)
 		return (NULL);
 	tmp = ft_split(tbl[1], ',');
-	if (!tmp[0] || !tmp[1] || !tmp[2])
-		return (NULL);
+	if (!tmp || tbl_3_check(tmp) || (!tmp[0] || !tmp[1] || !tmp[2]))
+		return (tbl_free(&tmp), NULL);
 	obj->x = (double)ft_atod(tmp[0]);
 	if (to_switch)
 	{
@@ -47,8 +59,8 @@ t_cylinder	*build_cylinder(char **tbl, int to_switch)
 	}
 	ft_freetbl(tmp, -1);
 	tmp = ft_split(tbl[2], ',');
-	if (!tmp[0] || !tmp[1] || !tmp[2])
-		return (NULL);
+	if (!tmp || tbl_3_check(tmp) || (!tmp[0] || !tmp[1] || !tmp[2]))
+		return (tbl_free(&tmp), NULL);
 	obj->vec_x = (double)ft_atod(tmp[0]);
 	if (to_switch)
 	{
@@ -65,12 +77,13 @@ t_cylinder	*build_cylinder(char **tbl, int to_switch)
 	obj->diameter = (double)ft_atod(tbl[3]);
 	obj->height = (double)ft_atod(tbl[4]);
 	tmp = ft_split(tbl[5], ',');
-	if (!tmp[0] || !tmp[1] || !tmp[2])
-		return (NULL);
+	if (!tmp || tbl_3_check(tmp) || (!tmp[0] || !tmp[1] || !tmp[2]))
+		return (tbl_free(&tmp), NULL);
 	obj->r = (size_t)ft_atoi(tmp[0]);
 	obj->g = (size_t)ft_atoi(tmp[1]);
 	obj->b = (size_t)ft_atoi(tmp[2]);
 	ft_freetbl(tmp, -1);
-	build_cylinder_vecs(&obj);
+	if (build_cylinder_vecs(&obj))
+		return (free(obj), NULL);
 	return (obj);
 }

@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/11 16:18:28 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/12 14:52:30 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,17 @@ CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 
 HEADERS := 	$(INC_DIR)/libft.h\
 
-SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
-			$(SRC_DIR)/parsing/object_list.c\
-			$(SRC_DIR)/parsing/errorinizer.c\
-			$(SRC_DIR)/parsing/ambient.c\
-			$(SRC_DIR)/parsing/camera.c\
-			$(SRC_DIR)/parsing/light.c\
-			$(SRC_DIR)/parsing/sphere.c\
-			$(SRC_DIR)/parsing/plane.c\
-			$(SRC_DIR)/parsing/cylinder.c\
+SRCS	:= 	$(SRC_DIR)/printer/printer.c\
+			$(SRC_DIR)/parser/parser.c\
+			$(SRC_DIR)/parser/parser_utils.c\
+			$(SRC_DIR)/parser/object_list.c\
+			$(SRC_DIR)/parser/errorinizer.c\
+			$(SRC_DIR)/parser/ambient.c\
+			$(SRC_DIR)/parser/camera.c\
+			$(SRC_DIR)/parser/light.c\
+			$(SRC_DIR)/parser/sphere.c\
+			$(SRC_DIR)/parser/plane.c\
+			$(SRC_DIR)/parser/cylinder.c\
 			$(SRC_DIR)/vec3/utils.c\
 			$(SRC_DIR)/vec3/basic_ops.c\
 			$(SRC_DIR)/vec3/adv_ops.c\
@@ -53,11 +55,11 @@ SRCS	:= 	$(SRC_DIR)/parsing/parser.c\
 			$(SRC_DIR)/camera/shading_light.c\
 			$(SRC_DIR)/camera/shading.c\
 			$(SRC_DIR)/camera/rays.c\
-			$(SRC_DIR)/intersection/light_intersection.c\
-			$(SRC_DIR)/intersection/plane_intersection.c\
-			$(SRC_DIR)/intersection/normal_plan_bmap.c\
-			$(SRC_DIR)/intersection/sphere_intersection.c\
-			$(SRC_DIR)/intersection/cylinder_intersection.c\
+			$(SRC_DIR)/intersector/light_intersection.c\
+			$(SRC_DIR)/intersector/plane_intersection.c\
+			$(SRC_DIR)/intersector/normal_plan_bmap.c\
+			$(SRC_DIR)/intersector/sphere_intersection.c\
+			$(SRC_DIR)/intersector/cylinder_intersection.c\
 			$(SRC_DIR)/visuals/mlx_render.c\
 			$(SRC_DIR)/visuals/space_render.c\
 			$(SRC_DIR)/main.c\

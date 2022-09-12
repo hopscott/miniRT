@@ -1,99 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/11 16:27:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 14:35:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	sub_parser(char **tbl, t_space *space, int *to_switch)
-{
-	int	err;
-
-	if (!ft_strncmp(tbl[0], "A", 2))
-		err = build_ambient(tbl, &space->ambient);
-	else if (!ft_strncmp(tbl[0], "C", 2))
-		err = build_camera(tbl, &space->camera, to_switch);
-	else if (!ft_strncmp(tbl[0], "L", 2))
-		err = obj_lstadd(&space->objects, LIGHT, \
-				(t_object *)build_light(tbl, *to_switch));
-	else if (!ft_strncmp(tbl[0], "sp", 3))
-		err = obj_lstadd(&space->objects, SPHERE, \
-				(t_object *)build_sphere(tbl, *to_switch));
-	else if (!ft_strncmp(tbl[0], "pl", 3))
-		err = obj_lstadd(&space->objects, PLANE, \
-				(t_object *)build_plane(tbl, *to_switch));
-	else if (!ft_strncmp(tbl[0], "cy", 3))
-		err = obj_lstadd(&space->objects, CYLINDER, \
-				(t_object *)build_cylinder(tbl, *to_switch));
-	else
-		err = 1;
-	return (err);
-}
-
-int	check_space_null(t_space *space)
-{
-	if (!space->ambient && !space->camera && !space->objects && !space->lights)
-		return (1);
-	return (0);
-}
-
-int	line_is_space(char *str)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(str);
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-		i++;
-	if (i == len)
-		return (1);
-	return (0);
-}
-
-int	parser(char *path, t_space *space)
-{
-	int		err;
-	int		fd;
-	char	*str;
-	char	**tbl;
-	int		to_switch;
-
-	to_switch = 0;
-	space->ambient = NULL;
-	space->camera = NULL;
-	space->objects = NULL;
-	space->lights = NULL;
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (1);
-	err = 0;
-	str = get_next_line(fd);
-	while (str && !err)
-	{
-		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
-		{
-			tbl = ft_split(str, ' ');
-			err = sub_parser(tbl, space, &to_switch);
-			ft_freetbl(tbl, -1);
-			free(str);
-			if (err)
-				break ;
-		}
-		str = get_next_line(fd);
-	}
-	close(fd);
-	if (check_space_null(space))
-		return (-1);
-	return (err);
-}
 
 void	print_space(t_space *space)
 {

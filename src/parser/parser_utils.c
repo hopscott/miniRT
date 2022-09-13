@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/12 22:21:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 20:23:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int	check_rt(char *path)
 	return (0);
 }
 
-void	init_parser_params(t_space *space, int *to_switch)
+void	init_parser_params(t_space *space)
 {
-	*to_switch = 0;
 	space->ambient = NULL;
 	space->camera = NULL;
+	space->cam = 0;
+	space->amb = 0;
 	space->objects = NULL;
 	space->lights = NULL;
 }

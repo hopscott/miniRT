@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 00:09:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 21:03:02 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,12 @@ typedef struct s_camera
 /* the light brightness ratio in range [0.0,1.0]: 0.6	 		*/
 /* (not mandatory)R,G,B colors in range [0-255]: 10, 0, 255 	*/
 
+typedef struct s_cambient
+{
+	t_camera	*camera;
+	t_ambient	*ambient;
+}			t_cambient;
+
 typedef struct s_light
 {
 	double	x;
@@ -177,8 +183,6 @@ typedef struct s_cylinder
 /*	Union object structure	*/
 
 typedef union u_object {
-	t_ambient	a;
-	t_camera	c;
 	t_light		l;
 	t_sphere	sp;
 	t_plane		pl;
@@ -189,7 +193,9 @@ typedef union u_object {
 
 typedef struct s_space {
 	t_camera	*camera;
+	int			cam;
 	t_ambient	*ambient;
+	int			amb;
 	t_obj_lst	*objects;
 	size_t		n_lights;
 	t_light		**lights;
@@ -291,10 +297,10 @@ void		puterr_free(char *err, t_space *space);
 void		print_help(void);
 
 /* ambient.c */
-int			build_ambient(char **tbl, t_ambient **obj);
+int			build_ambient(char **tbl, t_ambient *obj);
 
 /* camera.c */
-int			build_camera(char **tbl, t_camera **obj, int *to_switch);
+int			build_camera(char **tbl, t_camera *obj, int *to_switch);
 
 /* light.c */
 t_light		*build_light(char **tbl, int to_switch);
@@ -309,13 +315,13 @@ t_plane		*build_plane(char **tbl, int to_switch);
 t_cylinder	*build_cylinder(char **tbl, int to_switch);
 
 /* parser.c */
-int			parser(char *path, t_space *space);
+int			parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient);
 
 /* parser_utils.c */
 int			check_space_null(t_space *space);
 int			line_is_space(char *str);
 int			check_rt(char *path);
-void		init_parser_params(t_space *space, int *to_switch);
+void		init_parser_params(t_space *space);
 int			len_free(char ***tbl);
 
 /* free_er.c */

@@ -4,6 +4,7 @@ cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/p
  
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/parser.o src/parser/parser.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/parser_utils.o src/parser/parser_utils.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/free_er.o src/parser/free_er.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/object_list.o src/parser/object_list.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/errorinizer.o src/parser/errorinizer.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/ambient.o src/parser/ambient.c
@@ -16,7 +17,6 @@ cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/v
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/basic_ops.o src/vec3/basic_ops.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/adv_ops.o src/vec3/adv_ops.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/vec3/extra_ops.o src/vec3/extra_ops.c
- 
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/matrix.o src/camera/matrix.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading_light.o src/camera/shading_light.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/camera/shading.o src/camera/shading.c
@@ -27,11 +27,11 @@ cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/i
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersector/sphere_intersection.o src/intersector/sphere_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersector/cylinder_intersection.o src/intersector/cylinder_intersection.c
  
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visualizer/mlx_render.o src/visualizer/mlx_render.c
+cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visualizer/space_render.o src/visualizer/space_render.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/main.o src/main.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/utils.o src/utils.c
 make -C lib/libft -f Makefile
+cc -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g src/printer/printer.o src/parser/parser.o src/parser/parser_utils.o src/parser/free_er.o src/parser/object_list.o src/parser/errorinizer.o src/parser/ambient.o src/parser/camera.o src/parser/light.o src/parser/sphere.o src/parser/plane.o src/parser/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersector/light_intersection.o src/intersector/plane_intersection.o src/intersector/normal_plan_bmap.o src/intersector/sphere_intersection.o src/intersector/cylinder_intersection.o src/visualizer/mlx_render.o src/visualizer/space_render.o src/main.o src/utils.o lib/libft/libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o ./miniRT
 make: Leaving directory '/mnt/nfs/homes/omoudni/miniRT'
  
-make: *** No rule to make target 'src/visuals/mlx_render.o', needed by 'miniRT'.
-make: *** No rule to make target 'src/visuals/space_render.o', needed by 'miniRT'.
-

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 02:25:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:33:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 		while (++x < param->width)
 		{
 			param->screen_hit[y][x] = '?';
+			if (y >= HEIGHT)
+				printf("y: %d\n", y);
 			param->screen_shading[y][x] = '?';
 		}
 	}

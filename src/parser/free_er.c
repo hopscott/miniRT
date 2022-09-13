@@ -6,33 +6,29 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:39:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/13 02:39:47 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:13:16 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	free_camera(t_camera **cam_ptr)
+void	free_camera(t_camera **camera)
 {
-	t_camera	*camera;
-
-	camera = *cam_ptr;
-	if (camera->xyz)
-		free(camera->xyz);
-	if (camera->norm)
-		free(camera->norm);
-	free(camera);
+	if (camera && (*camera) && (*camera)->xyz)
+		free((*camera)->xyz);
+	if (camera && (*camera) && (*camera)->norm)
+		free((*camera)->norm);
+//	free(*camera);
 }
 
 void	free_ambient(t_ambient **amb_ptr)
 {
-	printf("I entered here!\n");
 	t_ambient	*ambient;
 
 	ambient = *amb_ptr;
-	if (ambient->rgb)
+	if (ambient && ambient->rgb)
 		free(ambient->rgb);
-	free(ambient);
+//	free(ambient);
 }
 
 void	free_lights(t_light ***lights_ptr, size_t n_lights)
@@ -52,7 +48,6 @@ void	free_lights(t_light ***lights_ptr, size_t n_lights)
 
 void	free_space(t_space *space)
 {
-	printf("I entered here2!\n");
 	if (space)
 	{
 		if (space->camera)
@@ -62,7 +57,7 @@ void	free_space(t_space *space)
 		if (space->objects)
 			obj_lstfree(&(space->objects));
 		if (space->lights)
-			free_lights(&(space->lights), space->n_lights);
+			free(space->lights);
 		//space = NULL;
 	}
 }

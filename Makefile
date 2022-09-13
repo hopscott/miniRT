@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/13 00:04:21 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/13 22:28:57 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,13 +82,16 @@ OBJS := $(SRCS:.c=.o)
 # Libs ==========================================
 
 LIBFT := $(LIB_DIR)/libft/libft.a
-
+ 
 $(LIBFT) :
 	make -C lib/libft -f Makefile
 
+$(ULIMIT) :
+	ulimit -s 65536
+
 # Recipes ========================================
 
-miniRT : $(OBJS) $(LIBFT)
+miniRT : $(OBJS) $(LIBFT) $(ULIMIT)
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(EXE)
 
 # Cleanup ========================================

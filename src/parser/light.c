@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:39:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:30:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ t_light	*build_light(char **tbl, int to_switch)
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
 	if (build_light_vecs(&obj))
-		return (free(obj), 1);
+		return (free(obj), NULL);
 	return (obj);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:53:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 01:23:44 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	objs_builder(char **tbl, t_space *space, int *to_switch)
 	return (err);
 }
 
-void	sub_parser(t_space *space, int *to_switch, int fd)
+int	sub_parser(t_space *space, int *to_switch, int fd)
 {
 	char	*str;
 	char	**tbl;
@@ -53,10 +53,12 @@ void	sub_parser(t_space *space, int *to_switch, int fd)
 			err = objs_builder(tbl, space, to_switch);
 			ft_freetbl(tbl, -1);
 			free(str);
+			str = NULL;
 			if (err)
 				break ;
 		}
-		free(str);
+		if (str)
+			free(str);
 		str = get_next_line(fd);
 	}
 	return (err);

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Sep 11 16:19:04 2022
+# Make data base, printed on Mon Sep 12 22:27:45 2022
 
 # Variables
 
@@ -27,7 +27,7 @@ SRC_DIR := src
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/miniRT
 # environment
-TERMINATOR_UUID = urn:uuid:de153528-75bc-4a29-8720-4342b4bb57ca
+TERMINATOR_UUID = urn:uuid:2f61c174-586f-475d-8a08-f21d866b9944
 # environment
 LIBVIRT_DEFAULT_URI = qemu:///system
 # default
@@ -49,17 +49,16 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/mnt/nfs/homes/omoudni/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-OLDPWD = /mnt/nfs/homes/omoudni/miniRT/src
+OLDPWD = /mnt/nfs/homes/omoudni/miniRT/include
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
- 
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/784b0177c56c607789f9638da7b6bf3230d47a8c
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session6
-# makefile (from 'Makefile', line 81)
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# makefile (from 'Makefile', line 83)
 LIBFT := lib/libft/libft.a
 # environment
 LANG = C
@@ -80,7 +79,7 @@ INC_DIR := include
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # makefile (from 'Makefile', line 39)
-SRCS := src/parsing/parser.c src/parsing/object_list.c src/parsing/errorinizer.c src/parsing/ambient.c src/parsing/camera.c src/parsing/light.c src/parsing/sphere.c src/parsing/plane.c src/parsing/cylinder.c src/vec3/utils.c src/vec3/basic_ops.c src/vec3/adv_ops.c src/vec3/extra_ops.c src/camera/matrix.c src/camera/shading_light.c src/camera/shading.c src/camera/rays.c src/intersection/light_intersection.c src/intersection/plane_intersection.c src/intersection/normal_plan_bmap.c src/intersection/sphere_intersection.c src/intersection/cylinder_intersection.c src/visuals/mlx_render.c src/visuals/space_render.c src/main.c src/utils.c 
+SRCS := src/printer/printer.c src/parser/parser.c src/parser/parser_utils.c src/parser/object_list.c src/parser/errorinizer.c src/parser/ambient.c src/parser/camera.c src/parser/light.c src/parser/sphere.c src/parser/plane.c src/parser/cylinder.c src/vec3/utils.c src/vec3/basic_ops.c src/vec3/adv_ops.c src/vec3/extra_ops.c src/camera/matrix.c src/camera/shading_light.c src/camera/shading.c src/camera/rays.c src/intersector/light_intersection.c src/intersector/plane_intersection.c src/intersector/normal_plan_bmap.c src/intersector/sphere_intersection.c src/intersector/cylinder_intersection.c src/visuals/mlx_render.c src/visuals/space_render.c src/main.c src/utils.c 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -102,15 +101,15 @@ MAKEFILE_LIST := Makefile
 # environment
 ZSH = /mnt/nfs/homes/omoudni/.oh-my-zsh
 # environment
-VSCODE_PID = 576683
+VSCODE_PID = 22497
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_MKLM6t
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_2AvBuN
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/e1r3p3.clusters.42paris.fr:@/tmp/.ICE-unix/565383,unix/e1r3p3.clusters.42paris.fr:/tmp/.ICE-unix/565383
+SESSION_MANAGER = local/e1r9p4.clusters.42paris.fr:@/tmp/.ICE-unix/3094,unix/e1r9p4.clusters.42paris.fr:/tmp/.ICE-unix/3094
 # automatic
 *F = $(notdir $*)
 # environment
@@ -125,8 +124,8 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
-# makefile (from 'Makefile', line 77)
-OBJS := src/parsing/parser.o src/parsing/object_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersection/light_intersection.o src/intersection/plane_intersection.o src/intersection/normal_plan_bmap.o src/intersection/sphere_intersection.o src/intersection/cylinder_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o
+# makefile (from 'Makefile', line 79)
+OBJS := src/printer/printer.o src/parser/parser.o src/parser/parser_utils.o src/parser/object_list.o src/parser/errorinizer.o src/parser/ambient.o src/parser/camera.o src/parser/light.o src/parser/sphere.o src/parser/plane.o src/parser/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersector/light_intersection.o src/intersector/plane_intersection.o src/intersector/normal_plan_bmap.o src/intersector/sphere_intersection.o src/intersector/cylinder_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # makefile
@@ -152,7 +151,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 03ef32355d004256a291c47e5dfbc2e5
+INVOCATION_ID = 678e5fb9bf0b485c8353da4176ed7a57
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # automatic
@@ -184,7 +183,7 @@ EXE := ./miniRT
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 565402
+SYSTEMD_EXEC_PID = 3114
 # environment
 DISPLAY = :0
 # environment
@@ -198,9 +197,9 @@ MAKE_VERSION := 4.3
 # makefile (from 'Makefile', line 31)
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 # environment
-MANAGERPID = 564835
+MANAGERPID = 2545
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 573256
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6578
 # environment
 PAGER = less
 # environment
@@ -214,7 +213,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 COLORTERM = truecolor
 # environment
-JOURNAL_STREAM = 8:2853317
+JOURNAL_STREAM = 8:45938
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -256,7 +255,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=122/1024=12%, Rehash=0, Collisions=12/196=6%
+# Load=122/1024=12%, Rehash=0, Collisions=12/198=6%
 
 # Pattern-specific Variable Values
 
@@ -265,17 +264,19 @@ GDMSESSION = ubuntu
 # Directories
 
 # include (device 60, inode 194865738): 5 files, no impossibilities so far.
-# . (device 60, inode 194826351): 23 files, no impossibilities.
-# src/parsing (device 60, inode 195115032): 7 files, no impossibilities so far.
+# src/printer (device 60, inode 262874261): 3 files, no impossibilities so far.
+# src/parser (device 60, inode 195115032): 17 files, no impossibilities so far.
+# . (device 60, inode 194826351): 24 files, no impossibilities.
 
-# 35 files, no impossibilities in 3 directories.
+# 49 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
 %.o: %.c include/libft.h
-#  recipe to execute (from 'Makefile', line 73):
+#  recipe to execute (from 'Makefile', line 75):
 	$(CC) -c $(CFLAGS) -o $@ $<
 
+ 
 # 1 implicit rules, 0 (0.0%) terminal.
 # Files
 
@@ -283,11 +284,41 @@ lib/libft/libft.a:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 84):
+#  recipe to execute (from 'Makefile', line 86):
 	make -C lib/libft -f Makefile
 
 # Not a target:
-src/parsing/object_list.o:
+src/parser/sphere.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/parser/parser_utils.o: src/parser/parser_utils.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/parser/parser_utils'
+#  Last modified 2022-09-12 22:27:13.27737205
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+src/parser/errorinizer.o: src/parser/errorinizer.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/parser/errorinizer'
+#  Last modified 2022-09-12 22:27:13.354372501
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+# Not a target:
+src/parser/plane.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/intersector/sphere_intersection.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -301,10 +332,18 @@ miniRT.a: miniRT
 # Load=0/32=0%, Rehash=0, Collisions=0/6=0%
 
 # Not a target:
-src/intersection/normal_plan_bmap.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/parser/errorinizer.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 22:26:17.845047176
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/printer/printer.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 14:35:28.142430028
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 src/vec3/adv_ops.o:
@@ -315,7 +354,14 @@ src/vec3/adv_ops.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-11 16:18:28.679827979
+#  Last modified 2022-09-12 14:52:31.005049147
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/parser/object_list.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 22:22:35.114741807
 #  File has been updated.
 #  Successfully updated.
 
@@ -325,34 +371,27 @@ src/utils.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+src/parser/parser_utils.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 22:21:38.839411991
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/parser/light.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 94):
+#  recipe to execute (from 'Makefile', line 96):
 	make -C lib/libft -f Makefile clean
 	rm -rf $(OBJS)
-
-# Not a target:
-src/parsing/plane.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-src/parsing/camera.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-src/parsing/parser.c:
-#  Implicit rule search has been done.
- 
-#  Last modified 2022-09-11 16:17:34.204526362
-#  File has been updated.
-#  Successfully updated.
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -360,8 +399,17 @@ re: fclean all
 #  File does not exist.
 #  File has not been updated.
 
+src/parser/object_list.o: src/parser/object_list.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/parser/object_list'
+#  Last modified 2022-09-12 22:27:13.320372302
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
+
 # Not a target:
-src/parsing/light.o:
+src/intersector/normal_plan_bmap.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -379,12 +427,6 @@ src/visuals/space_render.o:
 #  File has not been updated.
 
 # Not a target:
-src/parsing/errorinizer.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
 src/main.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -396,12 +438,6 @@ include/libft.h:
 #  Last modified 2022-08-12 18:16:59.148471457
 #  File has been updated.
 #  Successfully updated.
-
-# Not a target:
-src/intersection/cylinder_intersection.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 src/vec3/basic_ops.o:
@@ -436,12 +472,18 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 98):
+#  recipe to execute (from 'Makefile', line 100):
 	make -C lib/libft -f Makefile fclean
 	rm -rf $(EXE)
 
 # Not a target:
 src/vec3/extra_ops.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/parser/cylinder.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -453,28 +495,40 @@ src/visuals/mlx_render.o:
 #  File has not been updated.
 
 # Not a target:
+src/parser/camera.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 src/camera/matrix.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
-src/parsing/cylinder.o:
+src/intersector/plane_intersection.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-src/intersection/sphere_intersection.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/printer/printer.o: src/printer/printer.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/printer/printer'
+#  Last modified 2022-09-12 22:27:13.188371528
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
 
-# Not a target:
-src/parsing/ambient.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/parser/parser.o: src/parser/parser.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/parser/parser'
+#  Last modified 2022-09-12 22:27:13.227371756
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Not a target:
 src/camera/shading_light.o:
@@ -482,20 +536,43 @@ src/camera/shading_light.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-src/intersection/plane_intersection.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/parser/ambient.o: src/parser/ambient.c include/libft.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'src/parser/ambient'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := src/parser/ambient.o
+# automatic
+# * := src/parser/ambient
+# automatic
+# < := src/parser/ambient.c
+# automatic
+# + := src/parser/ambient.c include/libft.h
+# automatic
+# % := 
+# automatic
+# ^ := src/parser/ambient.c include/libft.h
+# automatic
+# ? := src/parser/ambient.c include/libft.h
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/16=12%
+#  recipe to execute (from 'Makefile', line 75):
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Not a target:
-src/intersection/light_intersection.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/parser/parser.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 22:20:14.183915848
+#  File has been updated.
+ 
+#  Successfully updated.
 
 # Not a target:
-src/parsing/sphere.o:
+src/intersector/light_intersection.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -511,57 +588,43 @@ src/camera/rays.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-miniRT: src/parsing/parser.o src/parsing/object_list.o src/parsing/errorinizer.o src/parsing/ambient.o src/parsing/camera.o src/parsing/light.o src/parsing/sphere.o src/parsing/plane.o src/parsing/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersection/light_intersection.o src/intersection/plane_intersection.o src/intersection/normal_plan_bmap.o src/intersection/sphere_intersection.o src/intersection/cylinder_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o lib/libft/libft.a
+# Not a target:
+src/intersector/cylinder_intersection.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/parser/ambient.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-12 17:11:25.220072689
+#  File has been updated.
+#  Successfully updated.
+
+miniRT: src/printer/printer.o src/parser/parser.o src/parser/parser_utils.o src/parser/object_list.o src/parser/errorinizer.o src/parser/ambient.o src/parser/camera.o src/parser/light.o src/parser/sphere.o src/parser/plane.o src/parser/cylinder.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/camera/matrix.o src/camera/shading_light.o src/camera/shading.o src/camera/rays.o src/intersector/light_intersection.o src/intersector/plane_intersection.o src/intersector/normal_plan_bmap.o src/intersector/sphere_intersection.o src/intersector/cylinder_intersection.o src/visuals/mlx_render.o src/visuals/space_render.o src/main.o src/utils.o lib/libft/libft.a
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/6=0%
-#  recipe to execute (from 'Makefile', line 89):
+#  recipe to execute (from 'Makefile', line 91):
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(EXE)
 
-src/parsing/parser.o: src/parsing/parser.c include/libft.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'src/parsing/parser'
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := src/parsing/parser.o
-# automatic
-# * := src/parsing/parser
-# automatic
-# < := src/parsing/parser.c
-# automatic
-# + := src/parsing/parser.c include/libft.h
-# automatic
-# % := 
-# automatic
-# ^ := src/parsing/parser.c include/libft.h
-# automatic
-# ? := src/parsing/parser.c include/libft.h
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=2/16=12%
-#  recipe to execute (from 'Makefile', line 73):
-	$(CC) -c $(CFLAGS) -o $@ $<
-
 # files hash-table stats:
-# Load=39/1024=4%, Rehash=0, Collisions=3/93=3%
+# Load=46/1024=4%, Rehash=0, Collisions=4/127=3%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 75 / storage = 1161 B / avg = 15 B
-# current buf: size = 8162 B / used = 1161 B / count = 75 / avg = 15 B
+# strcache buffers: 1 (0) / strings = 100 / storage = 1576 B / avg = 15 B
+# current buf: size = 8162 B / used = 1576 B / count = 100 / avg = 15 B
 
-# strcache performance: lookups = 106 / hit rate = 29%
+# strcache performance: lookups = 148 / hit rate = 32%
 # hash-table stats:
-# Load=75/8192=1%, Rehash=0, Collisions=1/106=1%
-# Finished Make data base on Sun Sep 11 16:19:04 2022
+# Load=100/8192=1%, Rehash=0, Collisions=1/148=1%
+# Finished Make data base on Mon Sep 12 22:27:45 2022
 
  

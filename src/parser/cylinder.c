@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:50:22 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:33:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	build_cylinder_vecs(t_cylinder **obj)
+int	build_cylinder_vecs(t_cylinder **obj)
 {
 	t_vec3	*tmp;
 
@@ -32,6 +32,7 @@ void	build_cylinder_vecs(t_cylinder **obj)
 		free((*obj)->norm);
 		return (1);
 	}
+	return (0);
 }
 
 t_cylinder	*build_cylinder(char **tbl, int to_switch)

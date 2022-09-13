@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/12 17:16:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:21:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,4 @@ void	tbl_free(char ***tbl)
 			free(tmp[i]);
 		free(tmp);
 	}
-}
-
-void	three_tbl_free(char ***tbl1, char ***tbl2, char **tbl3)
-{
-	tbl_free(tbl1);
-	tbl_free(tbl2);
-	tbl_free(tbl3);
 }

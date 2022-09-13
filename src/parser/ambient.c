@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 17:11:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:29:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	build_ambient(char **tbl, t_ambient **obj)
 	(*obj)->lighting_ratio = (double)ft_atod(tbl[1]);
 	rgb = ft_split(tbl[2], ',');
 	if (tbl_3_check(rgb) || (!rgb[0] || !rgb[1] || !rgb[2]))
-		return (tbl_free(rgb), 1);
+		return (tbl_free(&rgb), 1);
 	(*obj)->r = (size_t)ft_atoi(rgb[0]);
 	(*obj)->g = (size_t)ft_atoi(rgb[1]);
 	(*obj)->b = (size_t)ft_atoi(rgb[2]);

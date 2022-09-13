@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 14:44:39 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 01:51:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	print_progress(int i, int total)
 
 	if (i == 0)
 		printf("\n====== Loading =======\n");
-	if (i % (total / 20) == 0)
+	if (i % (total / 19) == 0)
 	{
 		str1 = ft_strdup("####################");
 		str2 = ft_strdup("                    ");
-		printf("\r[%s%s]", &str1[19 - (i / (total / 20))], \
+		printf("\r[%s%s]", &str1[19 - ((i / (total / 20)))], \
 							&str2[(i / (total / 20)) + 1]);
 		fflush(stdout);
 		free(str1);

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:36:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 02:39:49 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	build_camera(char **tbl, t_camera **obj, int *to_switch)
 	(*obj)->z = (double)ft_atod(xyz[2]);
 	ft_freetbl(xyz, -1);
 	vec = ft_split(tbl[2], ',');
-	if (!vec || tbl_3_check(xyz) || (!vec[0] || !vec[1] || !vec[2]))
+	if (!vec || tbl_3_check(vec) || (!vec[0] || !vec[1] || !vec[2]))
 		return (tbl_free(&vec), 1);
 	(*obj)->vec_x = (double)ft_atod(vec[0]);
 	(*obj)->vec_y = (double)ft_atod(vec[1]);

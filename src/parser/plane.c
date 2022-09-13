@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:44:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:32:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_plane	*build_plane(char **tbl, int to_switch)
 		return (NULL);
 	xyz = ft_split(tbl[1], ',');
 	if (!xyz || tbl_3_check(xyz) || (!xyz[0] || !xyz[1] || !xyz[2]))
-		return (free_tbl(&xyz), NULL);
+		return (tbl_free(&xyz), NULL);
 	obj->x = (double)ft_atod(xyz[0]);
 	if (to_switch)
 	{
@@ -61,7 +61,7 @@ t_plane	*build_plane(char **tbl, int to_switch)
 	}
 	ft_freetbl(xyz, -1);
 	vec = ft_split(tbl[2], ',');
-	if (!vec || tbl_3_check || (!vec[0] || !vec[1] || !vec[2]))
+	if (!vec || tbl_3_check(vec) || (!vec[0] || !vec[1] || !vec[2]))
 		return (tbl_free(&vec), NULL);
 	obj->vec_x = (double)ft_atod(vec[0]);
 	if (to_switch)

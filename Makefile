@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/12 14:52:30 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/13 00:04:21 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ HEADERS := 	$(INC_DIR)/libft.h\
 SRCS	:= 	$(SRC_DIR)/printer/printer.c\
 			$(SRC_DIR)/parser/parser.c\
 			$(SRC_DIR)/parser/parser_utils.c\
+			$(SRC_DIR)/parser/free_er.c\
 			$(SRC_DIR)/parser/object_list.c\
 			$(SRC_DIR)/parser/errorinizer.c\
 			$(SRC_DIR)/parser/ambient.c\
@@ -60,8 +61,8 @@ SRCS	:= 	$(SRC_DIR)/printer/printer.c\
 			$(SRC_DIR)/intersector/normal_plan_bmap.c\
 			$(SRC_DIR)/intersector/sphere_intersection.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
-			$(SRC_DIR)/visuals/mlx_render.c\
-			$(SRC_DIR)/visuals/space_render.c\
+			$(SRC_DIR)/visualizer/mlx_render.c\
+			$(SRC_DIR)/visualizer/space_render.c\
 			$(SRC_DIR)/main.c\
 			$(SRC_DIR)/utils.c\
 

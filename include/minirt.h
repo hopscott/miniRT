@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 16:55:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 00:09:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ int			obj_lstadd(t_obj_lst **lst, int type, t_object *object);
 void		obj_lstfree(t_obj_lst **lst);
 
 /* errorinizer.c */
-void		putstr_error(char *err);
+void		puterr_free(char *err, t_space *space);
 void		print_help(void);
 
 /* ambient.c */
@@ -317,6 +317,11 @@ int			line_is_space(char *str);
 int			check_rt(char *path);
 void		init_parser_params(t_space *space, int *to_switch);
 int			len_free(char ***tbl);
+
+/* free_er.c */
+void		free_space(t_space *space_ptr);
+int			tbl_3_check(char **tbl);
+void		tbl_free(char ***tbl);
 
 /* =================== CAMERA ====================== */
 
@@ -362,9 +367,9 @@ t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
 t_vec3		*normal_bmap_plane_mountains(t_plane *plane, t_hit *hit);
 t_vec3		*normal_bmap_plane_lines(t_plane *plane, t_hit *hit);
 /* cylinder_intersection.c */
-void	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-t_vec3	*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
-void	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
+void		cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
+t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
+void		adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
 
 /* =================== VISUALS ====================== */
 

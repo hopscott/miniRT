@@ -1,68 +1,127 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   space_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 18:37:20 by omoudni          ###   ########.fr       */
+/*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
+/*   Updated: 2022/09/13 01:41:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	build_light_vecs(t_light **obj)
+t_vec3	*set_direction(t_param param, t_mat44 *mat)
 {
+	double	x;
+	double	y;
 	t_vec3	*tmp;
+	t_vec3	*unit;
+	t_vec3	*direction;
 
-	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	if (!((*obj)->xyz))
+	x = (2 * (param.px + 0.5) / param.width - 1) * \
+								param.scale * param.aspect_ratio;
+	y = (1 - 2 * (param.py + 0.5) / param.height) * param.scale;
+	tmp = vec3_init(x, y, 1);
+	if (!tmp)
+		return (NULL);
+	unit = vec3_unit(tmp, 1);
+	if (!unit)
+		return (NULL);
+	direction = vec3_matrix_multiply(mat, unit, 0);
+	free(unit);
+	return (direction);
+}
+
+int	space_set_lights(t_space *space, t_obj_lst *elem)
+{
+	int	i;
+
+	space->n_lights = 0;
+	while (elem)
+	{
+		if (elem->type == LIGHT)
+			space->n_lights++;
+		elem = elem->next;
+	}
+	space->lights = malloc(sizeof(t_light *) * (space->n_lights + 1));
+	if (!space->lights)
 		return (1);
-	tmp = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
-	if (!((*obj)->xyz) || !tmp)
-		return (1);
-	(*obj)->rgb = vec3_multiply(tmp, (*obj)->brightness_ratio);
-	if (!((*obj)->rgb))
-		return (1);
-	free(tmp);
+	i = 0;
+	elem = space->objects;
+	while (elem)
+	{
+		if (elem->type == LIGHT)
+			space->lights[i++] = (t_light *)elem->content;
+		elem = elem->next;
+	}
+	space->lights[i] = NULL;
 	return (0);
 }
 
-t_light	*build_light(char **tbl, int to_switch)
+int	init_parameters(int width, int height, t_space *space, t_param *param)
 {
-	t_light		*obj;
-	char		**xyz;
-	char		**rgb;
+	int	y;
+	int	x;
 
-	obj = malloc(sizeof(t_light));
-	if (!obj)
-		return (NULL);
-	xyz = ft_split(tbl[1], ',');
-	if (!xyz || tbl_3_check(xyz) || (!xyz[0] || !xyz[1] || !xyz[2]))
-		return (tbl_free(&xyz), NULL);
-	obj->x = (double)ft_atod(xyz[0]);
-	if (to_switch)
+	param->width = width;
+	param->height = height;
+	if (space_set_lights(space, space->objects))
+		return (1);
+	param->matrix = camera_lookat(space->camera);
+	if (!param->matrix)
+		return (1);
+	param->scale = tan(deg2rad(space->camera->fov / 2));
+	param->aspect_ratio = (double)param->width / (double)param->height;
+	param->colour = 0;
+	y = -1;
+	while (++y < param->height)
 	{
-		obj->x = to_switch * (double)ft_atod(xyz[0]);
-		obj->y = to_switch * (double)ft_atod(xyz[2]);
-		obj->z = (double)ft_atod(xyz[1]);
+		x = -1;
+		while (++x < param->width)
+		{
+			param->screen_hit[y][x] = '?';
+			param->screen_shading[y][x] = '?';
+		}
 	}
-	else
+	return (0);
+}
+
+void	print_screens_and_free_matrix(t_param *param)
+{
+	print_screen(param->screen_hit);
+	print_screen(param->screen_shading);
+	free(param->matrix);
+}
+
+void	space_render(t_data *data, int width, int height, t_space *space)
+{
+	t_param	param;
+	t_ray	ray;
+
+	if (init_parameters(width, height, space, &param))
+		return ;
+	ray.origin = space->camera->xyz;
+	adjust_plane_norm(space->objects, ray.origin);
+	param.py = -1;
+	while (++param.py < param.height)
 	{
-		obj->y = (double)ft_atod(xyz[1]);
-		obj->z = (double)ft_atod(xyz[2]);
+		param.px = -1;
+		while (++param.px < param.width)
+		{
+			ray.direction = set_direction(param, param.matrix);
+			if (ray.direction)
+			{
+				param.colour = cast_ray(&ray, space, \
+					&param.screen_hit[(int)param.py][(int)param.px], \
+					&param.screen_shading[(int)param.py][(int)param.px]);
+				free(ray.direction);
+			}
+			my_mlx_pixel_put(data, param.px, param.py, param.colour);
+		}
+		print_progress(param.py, height);
 	}
-	ft_freetbl(xyz, -1);
-	obj->brightness_ratio = (double)ft_atod(tbl[2]);
-	rgb = ft_split(tbl[3], ',');
-	if (!rgb || tbl_3_check(rgb) || (!rgb[0] || !rgb[1] || !rgb[2]))
-		return (tbl_free(&rgb), NULL);
-	obj->r = (size_t)ft_atoi(rgb[0]);
-	obj->g = (size_t)ft_atoi(rgb[1]);
-	obj->b = (size_t)ft_atoi(rgb[2]);
-	ft_freetbl(rgb, -1);
-	if (build_light_vecs(&obj))
-		return (free(obj), 1);
-	return (obj);
+	exit (0);
+	print_screens_and_free_matrix(&param);
 }

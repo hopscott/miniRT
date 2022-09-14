@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 00:36:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:58:27 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	ft_swap_double(double *a, double *b)
 	*b = c;
 }
 
-
 void	cam_switch(t_camera *obj, int *to_switch)
 {
-	if(!(obj)->norm->e[0] && !(obj)->norm->e[2] && (obj)->norm->e[1] > 0)
+	if (!(obj)->norm->e[0] && !(obj)->norm->e[2] && \
+												(obj)->norm->e[1] > 0)
 	{
 		ft_swap_double(&((obj)->norm->e[1]), &((obj)->norm->e[2]));
 		ft_swap_double(&((obj)->xyz->e[1]), &((obj)->xyz->e[2]));
 		*to_switch = 1;
 	}
-	if(!(obj)->norm->e[0] && !(obj)->norm->e[2] && (obj)->norm->e[1] < 0)
+	if (!(obj)->norm->e[0] && !(obj)->norm->e[2] && \
+												(obj)->norm->e[1] < 0)
 	{
 		ft_swap_double(&((obj)->norm->e[1]), &((obj)->norm->e[2]));
 		ft_swap_double(&((obj)->xyz->e[1]), &((obj)->xyz->e[2]));
@@ -49,7 +50,7 @@ void	build_helper(double *x, double *y, double *z, char **tab)
 	*z = (double)ft_atod(tab[2]);
 }
 
-int		sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)
+int	sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)
 {
 	t_vec3		*tmp;
 
@@ -64,7 +65,6 @@ int		sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)
 	cam_switch(obj, to_switch);
 	return (0);
 }
-
 
 int	build_camera(char **tbl, t_camera *obj, int *to_switch)
 {

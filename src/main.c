@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 22:42:10 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:37:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int ac, char **av)
 		return (puterr_free(ERROR_PARSING, &space), 1);
 	print_space(&space);
 	mlx_render(&space);
+	if (space.fatal_error)
+		puterr_free(FATAL_ERROR, NULL);
 	free_space(&space);
 	return (0);
 }

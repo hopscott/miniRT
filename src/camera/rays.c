@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 22:36:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:27:15 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,27 @@
 /* https://www.scratchapixel.com/code.php?id=10&origin=/lessons/ */
 /* 3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes */
 /* ============================================================= */
-void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
+int	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 {
 	double		tmin;
 	t_object	*obj;
+	int			err;
 
+	err = 0;
 	hit->nearest = NULL;
 	tmin = INFINITY;
 	while (elem)
 	{
 		obj = (t_object *)(elem->content);
 		if (elem->type == LIGHT)
-			light_intersection(ray, &obj->l, hit);
+			err = light_intersection(ray, &obj->l, hit);
 		else if (elem->type == SPHERE)
-			sphere_intersection(ray, &obj->sp, hit);
+			err = sphere_intersection(ray, &obj->sp, hit);
 		else if (elem->type == PLANE)
-			plane_intersection(ray, &obj->pl, hit);
+			err = plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
 			cy_intersection(ray, &obj->cy, hit);
-		if ((hit->t >= 0.000001) && (hit->t < tmin))
+		if (!err && (hit->t >= 0.000001) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
 			tmin = hit->t;
@@ -42,6 +44,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		elem = elem->next;
 	}
 	hit->t = tmin;
+	return (err);
 }
 
 /* ================================================ */
@@ -84,8 +87,7 @@ int	hit_init(t_ray *ray, t_space *space, t_hit *hit)
 	hit->rgb = vec3_init(0, 0, 0);
 	if (!hit->rgb)
 		return (1);
-	nearest_hit_object(ray, space->objects, hit);
-	return (0);
+	return (nearest_hit_object(ray, space->objects, hit));
 }
 
 size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
@@ -93,8 +95,11 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 	t_hit		hit;
 	t_object	*obj;
 	size_t		colour;
+	int			error;
 
-	hit_init(ray, space, &hit);
+	error = hit_init(ray, space, &hit);
+	if (error)
+		return (space->fatal_error = 1, 0);
 	if (hit.nearest)
 	{
 		obj = (t_object *)(hit.nearest->content);
@@ -103,7 +108,9 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 		else
 		{
 			hit.phit = vec3_ray_distance_to_point(ray->origin, \
-											ray->direction, hit.t);
+					ray->direction, hit.t);
+			if (!hit.phit)
+				return (space->fatal_error = 1, 0);
 			shading(space, ray, &hit, obj);
 		}
 	}

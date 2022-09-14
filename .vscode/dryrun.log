@@ -1,7 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/miniRT'
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/printer/printer.o src/printer/printer.c
- 
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/parser.o src/parser/parser.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/parser_utils.o src/parser/parser_utils.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/parser/free_er.o src/parser/free_er.c
@@ -26,7 +25,6 @@ cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/i
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersector/normal_plan_bmap.o src/intersector/normal_plan_bmap.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersector/sphere_intersection.o src/intersector/sphere_intersection.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/intersector/cylinder_intersection.o src/intersector/cylinder_intersection.c
- 
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visualizer/mlx_render.o src/visualizer/mlx_render.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/visualizer/space_render.o src/visualizer/space_render.c
 cc -c -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g -o src/main.o src/main.c

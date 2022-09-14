@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 01:20:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 00:44:43 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,19 @@ int	vec3_free_multi(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, int err)
 	if (v3)
 		free(v3);
 	return (err);
+}
+
+//just_for_testing_not_needed
+void	vec3_free_multi2(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3)
+{
+	printf("ptr: %p\n", v2);
+	if (v1)
+		free(v1);
+	if (v2)
+	{
+		printf("entered to v2\n");
+		free(v2);
+	}
+	if (v3)
+		free(v3);
 }

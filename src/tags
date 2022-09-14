@@ -43,10 +43,13 @@ find_smallest_dist	intersector/cylinder_intersection.c	/^double	find_smallest_di
 find_smallest_dist	intersector/cylinder_intersection_WIP.c	/^double	find_smallest_dist(double discr, double a, double b, double max, double r_dir_unit_len)$/;"	f	typeref:typename:double
 free_ambient	parser/free_er.c	/^void	free_ambient(t_ambient **amb_ptr)$/;"	f	typeref:typename:void
 free_camera	parser/free_er.c	/^void	free_camera(t_camera **camera)$/;"	f	typeref:typename:void
+free_double_vec3	intersector/sphere_intersection.c	/^void	free_double_vec3(double **abc, t_vec3 **vec3)$/;"	f	typeref:typename:void
 free_lights	parser/free_er.c	/^void	free_lights(t_light ***lights_ptr, size_t n_lights)$/;"	f	typeref:typename:void
 free_space	parser/free_er.c	/^void	free_space(t_space *space)$/;"	f	typeref:typename:void
 ft_swap_double	parser/camera.c	/^void	ft_swap_double(double *a, double *b)$/;"	f	typeref:typename:void
-get_dscr	intersector/sphere_intersection.c	/^double	get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2])$/;"	f	typeref:typename:double
+get_dsc_helper	intersector/sphere_intersection.c	/^void	get_dsc_helper(double (*p_xyz)[3], double (*c_xyz)[3], t_vec3 *s_center, t_ray *ray)$/;"	f	typeref:typename:void
+get_dscr	intersector/sphere_intersection.c	/^double	*get_dscr(t_ray *r, t_sphere *sp)$/;"	f	typeref:typename:double *
+get_dscr_2	intersector/sphere_intersection.c	/^double	*get_dscr_2(double **old_abc, t_sphere *sp, t_ray *r, t_vec3 **s_center)$/;"	f	typeref:typename:double *
 get_short_dist	intersector/sphere_intersection.c	/^double	get_short_dist(double discriminant, double a, double b)$/;"	f	typeref:typename:double
 get_switch_coord	parser/light.c	/^void	get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **xy/;"	f	typeref:typename:void
 hit_init	camera/rays.c	/^int	hit_init(t_ray *ray, t_space *space, t_hit *hit)$/;"	f	typeref:typename:int
@@ -95,7 +98,7 @@ shading_from_light	camera/shading_light.c	/^int	shading_from_light(t_space *spac
 space_free	main.c	/^void	space_free(t_space *space)$/;"	f	typeref:typename:void
 space_render	visualizer/space_render.c	/^void	space_render(t_data *data, int width, int height, t_space *space)$/;"	f	typeref:typename:void
 space_set_lights	visualizer/space_render.c	/^int	space_set_lights(t_space *space, t_obj_lst *elem)$/;"	f	typeref:typename:int
-sphere_intersection	intersector/sphere_intersection.c	/^void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)$/;"	f	typeref:typename:void
+sphere_intersection	intersector/sphere_intersection.c	/^int	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)$/;"	f	typeref:typename:int
 sphere_surface_normal	intersector/sphere_intersection.c	/^t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)$/;"	f	typeref:typename:t_vec3 *
 sub_build_cam	parser/camera.c	/^int		sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)$/;"	f	typeref:typename:int
 sub_build_cy	parser/cylinder.c	/^t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, char ***tmp)$/;"	f	typeref:typename:t_cylinder *

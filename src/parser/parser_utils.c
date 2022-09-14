@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 01:48:47 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 20:56:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	init_parser_params(t_space *space)
 	space->amb = 0;
 	space->objects = NULL;
 	space->lights = NULL;
+	space->fatal_error = 0;
 }
 
 int	dptr_len(char **tbl)

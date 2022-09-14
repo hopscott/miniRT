@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 23:26:48 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:30:50 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README for more details about the parameters.\nCheck example.rt for the file layout.\n"
 # define ERROR_PARSING "Corrupted file.\nUse --help as an option for more information.\n"
 # define ERROR_PARAMS "None of the parameters required was introduced in .rt file.\nUse --help as an option for more information.\n"
-# define FATAL_ERROR "\nFATAL ERROR!!!\n"
 
 
 /* types of objects in linked list */
@@ -204,7 +203,6 @@ typedef struct s_space {
 	t_light		**lights;
 	double		width;
 	double		height;
-	int			fatal_error;
 }	t_space;
 
 /*	mat44 structure	*/
@@ -247,7 +245,6 @@ typedef struct s_hit {
 	t_obj_lst	*nearest;
 	t_vec3		*phit;
 	t_vec3		*rgb;
-	size_t		colour;
 	char		shading;
 }	t_hit;
 
@@ -337,8 +334,6 @@ void	build_helper_2(double *x, double *y, double *z, double coords[3]);
 void	rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
 void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
 
-void	fatal_error(t_space *space);
-void	free_2_vec3(t_vec3 **a, t_vec3 **b);
 
 
 
@@ -355,7 +350,7 @@ t_vec3		*vec3_matrix_multiply(t_mat44 *mat, t_vec3 *vec, double w);
 
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
-int			nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
+void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
 
 /* shading.c */
 int			shading(t_space *space, t_ray *ray, t_hit *hit, t_object *object);
@@ -379,21 +374,21 @@ t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* =================== INTERSECTOR ====================== */
 
 /* light_intersection.c */
-int		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
+void		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
-int			sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
+void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
 t_vec3		*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit);
 
 /* plane_intersection.c */
-int			plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
+void		plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
 t_vec3		*normal_bmap_plane_mountains(t_plane *plane, t_hit *hit);
 t_vec3		*normal_bmap_plane_lines(t_plane *plane, t_hit *hit);
 /* cylinder_intersection.c */
 void		cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
-int			adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
+void		adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
 
 /* =================== VISUALS ====================== */
 

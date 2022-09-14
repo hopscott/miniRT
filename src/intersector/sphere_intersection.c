@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/13 00:13:46 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:26:53 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,72 @@ void	calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c)
 		- pow(sp->diameter/2,2);
 }
 
-double	get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2])
+void	get_dsc_helper(double (*p_xyz)[3], double (*c_xyz)[3], t_vec3 *s_center, t_ray *ray)
 {
-	double	abc[3];
-	double	discriminant;
+	(*p_xyz)[0] = ray->origin->e[0];
+	(*p_xyz)[1] = ray->origin->e[1];
+	(*p_xyz)[2] = ray->origin->e[2];
+	(*c_xyz)[0] = s_center->e[0];
+	(*c_xyz)[1] = s_center->e[1];
+	(*c_xyz)[2] = s_center->e[2];
+}
+
+void	free_double_vec3(double **abc, t_vec3 **vec3)
+{
+	if (*abc)
+		free(abc);
+	if (*vec3)
+		free(vec3);
+}
+
+double	*get_dscr_2(double **old_abc, t_sphere *sp, t_ray *r, t_vec3 **s_center)
+{
+	double	*ab_dsc;
+	double	*abc;
+	double	p_xyz[3];
+	double	c_xyz[3];
+	t_vec3	*vec_substr;
+
+	abc = *old_abc;
+	ab_dsc = malloc(3 * sizeof(double));
+	if (!ab_dsc)
+		return (NULL);
+	get_dsc_helper(&p_xyz, &c_xyz, *s_center, r);
+	calc_c_dscr(p_xyz, c_xyz, sp, &(abc[2]));
+	ab_dsc[2] = abc[1] * abc[1] - 4 * abc[0] * abc[2];
+	vec_substr = vec3_subtract(r->origin, *s_center); // if malloc fails free everything and exit
+	if (!vec_substr)
+		return (free_double_vec3(old_abc, s_center), NULL);
+	ab_dsc[0] = vec3_dot(r->direction, r->direction);
+	ab_dsc[1] = 2 * vec3_dot(vec_substr, r->direction);
+	free(vec_substr);
+	free(*s_center);
+	free(*old_abc);
+	return (ab_dsc);
+}
+
+double	*get_dscr(t_ray *r, t_sphere *sp)
+{
+	double	*abc;
 	t_vec3	*s_center;
 	double	p_xyz[3];
 	double	c_xyz[3];
 	t_vec3	*vec_substr;
 
-	p_xyz[0] = r_or->e[0];
-	p_xyz[1] = r_or->e[1];
-	p_xyz[2] = r_or->e[2];
+	abc = malloc(3 * sizeof(double));
+	if (!abc)
+		return (NULL);
 	s_center = vec3_init(sp->x, sp->y, sp->z);
-	c_xyz[0] = s_center->e[0];
-	c_xyz[1] = s_center->e[1];
-	c_xyz[2] = s_center->e[2];
-	abc[0] = vec3_dot(r_dir, r_dir);
-	vec_substr = vec3_subtract(r_or, s_center); // if malloc fails free everything and exit
-	abc[1] = 2 * vec3_dot(vec_substr, r_dir);
+	if (!s_center)
+		return (free(abc), NULL);
+	get_dsc_helper(&p_xyz, &c_xyz, s_center, r);
+	vec_substr = vec3_subtract(r->origin, s_center); // if malloc fails free everything and exit
+	if (!vec_substr)
+		return (free_double_vec3(&abc, &s_center), NULL);
+	abc[0] = vec3_dot(r->direction, r->direction);
+	abc[1] = 2 * vec3_dot(vec_substr, r->direction);
 	free(vec_substr);
-	calc_c_dscr(p_xyz, c_xyz, sp, &(abc[2]));
-	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
-	(*ab)[0] = vec3_dot(r_dir, r_dir);
-	vec_substr = vec3_subtract(r_or, s_center); // if malloc fails free everything and exit
-	(*ab)[1] = 2 * vec3_dot(vec_substr, r_dir);
-	free(vec_substr);
-	free(s_center);
-	return (discriminant);
+	return (get_dscr_2(&abc, sp, r, &s_center));
 }
 
 double	get_short_dist(double discriminant, double a, double b)
@@ -79,16 +117,21 @@ t_vec3	*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t)
 	return (ret);
 }
 
-void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)
+int	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit)
 {
-	double	ab[2];
+	double	*abc_dsc;
 	double	discriminant;
 
-	discriminant = get_dscr(ray->origin, ray->direction, sp, &ab);
+	abc_dsc = get_dscr(ray, sp);
+	if (!abc_dsc)
+		return (1);
+	discriminant = abc_dsc[2];
 	if (discriminant < 0)
 		hit->t = -1;
 	else
-		hit->t = get_short_dist(discriminant, ab[0], ab[1]);
+		hit->t = get_short_dist(discriminant, abc_dsc[0], abc_dsc[1]);
+	free(abc_dsc);
+	return (0);
 }
 
 t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)
@@ -97,47 +140,13 @@ t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)
 	t_vec3	*normal;
 
 	if (vec3_distance_points(ray->origin, sphere->xyz) < sphere->diameter / 2)
-	{
 		tmp = vec3_subtract(sphere->xyz, phit);
-	}
 	else
 		tmp = vec3_subtract(phit, sphere->xyz);
+	if (!tmp)
+		return (NULL);
 	normal = vec3_unit(tmp, 1);
+	if (!normal)
+		return (NULL);
 	return (normal);
 }
-
-/*
-Function that directly finds the point of intersection, The one above was derived from it:
-t_vec3	*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp)
-{
-	double	ab[2];
-	double	discriminant;
-	double	t;
-	discriminant = get_dscr(r_or, r_dir, sp, &ab);
-	if (discriminant < 0)
-		return (NULL);
-	t = get_short_dist(discriminant, ab[0], ab[1]);
-	return (hit_point(r_or, r_dir, t));
-}
-//main for testing the function
-int	main(int argc, char **argv)
-{
-	t_vec3		r_origin;
-	t_vec3		r_direction;
-	t_sphere	sphere;
-	t_vec3		*hit_pt;
-	r_origin.e[0] = 0;
-	r_origin.e[1] = 0;
-	r_origin.e[2] = -5;
-	r_direction.e[0] = 0;
-	r_direction.e[1] = 0;
-	r_direction.e[2] = 1;
-	sphere.x = 0;
-	sphere.y = 0;
-	sphere.z = 0;
-	sphere.diameter = 2;
-	hit_pt = hitpt_raysp(&r_origin, &r_direction, &sphere);
-	printf("point:\nx: %f\ny: %f\nz: %f\n", hit_pt->e[0], hit_pt->e[1], hit_pt->e[2]);
-	return (0);
-}
-*/

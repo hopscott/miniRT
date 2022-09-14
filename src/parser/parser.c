@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 21:11:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 01:17:45 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	objs_builder1(char **tbl, t_space *space, t_ambient *ambient)
 	}
 	return (err);
 }
-
 
 int	objs_builder2(char **tbl, t_space *space, int *to_switch, t_camera *camera)
 {
@@ -107,8 +106,6 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 	int			err;
 	int			fd;
 
-//	camera = NULL;
-//	ambient = NULL;
 	init_parser_params(space);
 	if (check_rt(path))
 		return (1);

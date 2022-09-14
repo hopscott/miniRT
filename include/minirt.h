@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 21:03:02 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 01:48:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,8 @@ typedef struct s_cylinder
 /*	Union object structure	*/
 
 typedef union u_object {
+	t_camera	c;
+	t_ambient	a;
 	t_light		l;
 	t_sphere	sp;
 	t_plane		pl;
@@ -323,6 +325,15 @@ int			line_is_space(char *str);
 int			check_rt(char *path);
 void		init_parser_params(t_space *space);
 int			len_free(char ***tbl);
+
+void	build_helper(double *x, double *y, double *z, char **tab);
+void	get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **tab);
+void	build_helper_2(double *x, double *y, double *z, double coords[3]);
+void	rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
+void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
+
+
+
 
 /* free_er.c */
 void		free_space(t_space *space_ptr);

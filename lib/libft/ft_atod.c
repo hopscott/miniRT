@@ -6,11 +6,11 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/07 23:24:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:53:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <math.h>
 
 static int	ft_isspace(char c)
 {
@@ -65,6 +65,19 @@ static int	ft_strlen(char *str)
 	return (len);
 }
 
+int	nbr_len(int nbr)
+{
+	int	len;
+
+	len = 1;
+	while (nbr / 10)
+	{
+		len++;
+		nbr = nbr / 10;
+	}
+	return (len);
+}
+
 double	ft_atod(char *str)
 {
 	int		i;
@@ -73,7 +86,6 @@ double	ft_atod(char *str)
 	double	nbr;
 	double	sign;
 
-	printf("str: %s\n", str);
 	integral = ft_atoi(str);
 	i = 0;
 	sign = 1;
@@ -93,6 +105,6 @@ double	ft_atod(char *str)
 		fractional = ft_atoi(&str[i]);
 	if (fractional == 0)
 		return ((double)integral);
-	nbr = ((double)integral + ((double)fractional / 10)) * sign;
+	nbr = ((double)integral + ((double)fractional / pow(10, nbr_len(fractional)))) * sign;
 	return (nbr);
 }

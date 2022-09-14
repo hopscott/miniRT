@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 20:44:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 00:36:49 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,18 @@ void	cam_switch(t_camera *obj, int *to_switch)
 	}
 }
 
-int	build_camera(char **tbl, t_camera *obj, int *to_switch)
+void	build_helper(double *x, double *y, double *z, char **tab)
 {
-	char		**xyz;
-	char		**vec;
+	*x = (double)ft_atod(tab[0]);
+	*y = (double)ft_atod(tab[1]);
+	*z = (double)ft_atod(tab[2]);
+}
+
+int		sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)
+{
 	t_vec3		*tmp;
 
-//	(*obj) = malloc(sizeof(t_camera));
-//	if (!(*obj))
-//		return (1);
-	xyz = ft_split(tbl[1], ',');
-	if (!xyz || (tbl_3_check(xyz)) || (!xyz[0] || !xyz[1] || !xyz[2]))
-		return (tbl_free(&xyz), 1);
-	obj->x = (double)ft_atod(xyz[0]);
-	obj->y = (double)ft_atod(xyz[1]);
-	obj->z = (double)ft_atod(xyz[2]);
-	ft_freetbl(xyz, -1);
-	vec = ft_split(tbl[2], ',');
-	if (!vec || tbl_3_check(vec) || (!vec[0] || !vec[1] || !vec[2]))
-		return (tbl_free(&vec), 1);
-	obj->vec_x = (double)ft_atod(vec[0]);
-	obj->vec_y = (double)ft_atod(vec[1]);
-	obj->vec_z = (double)ft_atod(vec[2]);
-	ft_freetbl(vec, -1);
-	obj->fov = (size_t)ft_atoi(tbl[3]);
+	obj->fov = (size_t)ft_atoi(tbl_3);
 	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
 	tmp = vec3_init(obj->vec_x, obj->vec_y, obj->vec_z);
 	if (!(obj->xyz) || !tmp)
@@ -75,4 +63,25 @@ int	build_camera(char **tbl, t_camera *obj, int *to_switch)
 		return (1);
 	cam_switch(obj, to_switch);
 	return (0);
+}
+
+
+int	build_camera(char **tbl, t_camera *obj, int *to_switch)
+{
+	char		**xyz;
+	char		**vec;
+
+	xyz = ft_split(tbl[1], ',');
+	if (!xyz || (tbl_3_check(xyz)) || (!xyz[0] || !xyz[1] || !xyz[2]))
+		return (tbl_free(&xyz), 1);
+	build_helper(&(obj->x), &(obj->y), &(obj->z), xyz);
+	ft_freetbl(xyz, -1);
+	vec = ft_split(tbl[2], ',');
+	if (!vec || tbl_3_check(vec) || (!vec[0] || !vec[1] || !vec[2]))
+		return (tbl_free(&vec), 1);
+	build_helper(&(obj->vec_x), &(obj->vec_y), &(obj->vec_z), vec);
+	ft_freetbl(vec, -1);
+	if (!obj->vec_x && !obj->vec_y && !obj->vec_z)
+		return (3);
+	return (sub_build_cam(tbl[3], obj, to_switch));
 }

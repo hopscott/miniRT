@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/13 20:23:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 01:48:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,27 @@ int	tbl_3_check(char **tbl)
 	if (len != 3)
 		return (1);
 	return (0);
+}
+
+void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl)
+{
+	int		len;
+	int		i;
+	char	**tmp;
+
+	tmp = *tbl;
+	if (tmp)
+	{
+		len = dptr_len(tmp);
+		i = -1;
+		while (++i < len)
+			free(tmp[i]);
+		free(tmp);
+	}
+	if (cy && *cy)
+		free(*cy);
+	if (p && *p)
+		free(*p);
 }
 
 void	tbl_free(char ***tbl)

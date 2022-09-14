@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 01:51:22 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 13:18:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	rgb_multiply_to_self(t_vec3 **rgb, t_vec3 *rgb2)
 	}
 }
 
-void	print_screen(char screen[HEIGHT][WIDTH])
+void	print_screen(char **screen)
 {
 	int	y;	
 	int	x;

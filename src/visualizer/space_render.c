@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/13 22:41:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:13:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,33 @@ int	space_set_lights(t_space *space, t_obj_lst *elem)
 	return (0);
 }
 
+int	sub_create_debugger(char ***tab, int dim_y, int dim_x)
+{
+	char	**tableau;
+	int		i;
+
+
+	tableau = *tab;
+	i = 0;
+	tableau = (char **)malloc((dim_y + 1) * sizeof(char *));
+	if (!tableau)
+		return (1);
+	while (i < dim_y)
+	{
+		tableau[i] = (char *)malloc((dim_x + 1) * sizeof(char));
+//		printf("------------------\ni / dim_y: %d/ %d\n, dim_x: %d", i, dim_y, dim_x);
+		if (!tableau[i])
+		{
+			ft_freetbl(tableau, i - 1);
+			return (1);
+		}
+		ft_bzero(tableau[i], dim_x + 1);
+		i++;
+	}
+	tableau[i] = NULL;
+	return (0);
+}
+
 int	init_parameters(int width, int height, t_space *space, t_param *param)
 {
 	int	y;
@@ -75,15 +102,26 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	param->scale = tan(deg2rad(space->camera->fov / 2));
 	param->aspect_ratio = (double)param->width / (double)param->height;
 	param->colour = 0;
+	if (sub_create_debugger(&param->screen_hit, height, width))
+		return (1);
+	if (sub_create_debugger(&param->screen_shading, height, width))
+		return (1);
+	int	j;
+	j = 0;
+	while(param->screen_hit[j])
+		j++;
+//	printf("j: %d\n", j);
+//	exit(0);
+//	printf("--------------------\ntest: %c\n------------------------\n", param->screen_hit[10][0]);
+//	exit(0);
 	y = -1;
 	while (++y < param->height)
 	{
 		x = -1;
 		while (++x < param->width)
 		{
+//			printf("-----------------------\nx,y: %d %d\n", x, y);
 			param->screen_hit[y][x] = '?';
-			if (y >= HEIGHT)
-				printf("y: %d\n", y);
 			param->screen_shading[y][x] = '?';
 		}
 	}
@@ -94,6 +132,8 @@ void	print_screens_and_free_matrix(t_param *param)
 {
 	print_screen(param->screen_hit);
 	print_screen(param->screen_shading);
+	tbl_free(&param->screen_shading);
+	tbl_free(&param->screen_hit);
 	free(param->matrix);
 }
 

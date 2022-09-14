@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 01:48:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 13:18:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,8 +225,10 @@ typedef struct s_param {
 	double		px;
 	double		py;
 	size_t		colour;
-	char		screen_hit[HEIGHT][WIDTH];
-	char		screen_shading[HEIGHT][WIDTH];
+	char		**screen_hit;
+	char		**screen_shading;
+//	char		screen_hit[HEIGHT][WIDTH];
+//	char		screen_shading[HEIGHT][WIDTH];
 }	t_param;
 
 /*	Ray structure	*/
@@ -400,6 +402,6 @@ double		deg2rad(double degree);
 void		print_progress(int i, int total);
 size_t		rgb_colour(t_vec3 *rgb);
 void		rgb_multiply_to_self(t_vec3 **rgb1, t_vec3 *rgb2);
-void		print_screen(char screen[HEIGHT][WIDTH]);
+void		print_screen(char **screen);
 
 #endif

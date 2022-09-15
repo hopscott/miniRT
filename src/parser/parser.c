@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 01:17:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/14 01:17:45 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 	err = 0;
 	to_switch = 0;
 	str = get_next_line(fd);
-	while (!err && str)
+	while (str && !err)
 	{
-		if (!err && !(*str == '\n') && !(*str == '#') && !line_is_space(str))
+		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
 		{
 			tbl = ft_split(str, ' ');
 			err = objs_builder1(tbl, space, ambient);
@@ -90,7 +90,12 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 			printf("err3: %d\n", err);
 			ft_freetbl(tbl, -1);
 			free(str);
+			str = NULL;
+			if (err)
+				break ;
 		}
+		if (str)
+			free(str);
 		str = get_next_line(fd);
 	}
 	return (err);

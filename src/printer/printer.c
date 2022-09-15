@@ -3,95 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 01:10:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:57:41 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-void	print_sphere(t_sphere *sp)
-{
-	printf("  o   SPHERE   ");
-	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", sp->x, sp->y, sp->z);
-	printf("|");
-	printf("                ");
-	printf("|");
-	printf(" (%3zu,%3zu,%3zu) ", sp->r, sp->g, sp->b);
-	printf("|");
-	printf("          ");
-	printf("|");
-	printf("        ");
-	printf("|");
-	printf("            ");
-	printf("|");
-	printf("    ");
-	printf("\n");
-}
-
-void	print_plane(t_plane *pl)
-{
-	printf(" [X]  PLANE    ");
-	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", pl->x, pl->y, pl->z);
-	printf("|");
-	printf("                ");
-	printf("|");
-	printf(" (%3zu,%3zu,%3zu) ", pl->r, pl->g, pl->b);
-	printf("|");
-	printf("          ");
-	printf("|");
-	printf("        ");
-	printf("|");
-	printf("            ");
-	printf("|");
-	printf("    ");
-	printf("\n");
-}
-
-void	print_cylinder(t_cylinder *cy)
-{
-	printf(" o=o  CYLINDER ");
-	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", cy->x, cy->y, cy->z);
-	printf("|");
-	printf("                ");
-	printf("|");
-	printf(" (%3zu,%3zu,%3zu) ", cy->r, cy->g, cy->b);
-	printf("|");
-	printf("          ");
-	printf("|");
-	printf("        ");
-	printf("|");
-	printf("            ");
-	printf("|");
-	printf("    ");
-	printf("\n");
-}
 
 void	print_space(t_space *space)
 {
 	t_obj_lst		*elem;
 	t_object		*obj;
 
-	print_columns();
-	print_ambient(space->ambient);
-	print_camera(space->camera);
+	printf("\n~~~~ Space Layout ~~~~\n\n");
+	printf("##### AMBIENT\t=> brightness(%.3f)\t\t\t\t\t\t\t\trgb(%zu,%zu,%zu) \n", space->ambient->lighting_ratio, space->ambient->r, space->ambient->g, space->ambient->b);
+	printf("-<[0] CAMERA\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tfov(%zu) \n", space->camera->x, space->camera->y, space->camera->z, space->camera->vec_x, space->camera->vec_y, space->camera->vec_z, space->camera->fov);
 	elem = space->objects;
 	while (elem)
 	{
 		obj = (t_object *)(elem->content);
 		if (elem->type == LIGHT)
-			print_light(&obj->l);
+			printf("((*)) LIGHT\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tbrightness(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->l.x, obj->l.y, obj->l.z, obj->l.brightness_ratio, obj->l.r, obj->l.g, obj->l.b);
 		else if (elem->type == SPHERE)
-			print_sphere(&obj->sp);
+			printf("  o   SPHERE\t=> xyz(%.1f,%.1f,%.1f)\t\t\t\tdiameter(%.1f)\t\t\trgb(%zu,%zu,%zu) \n", obj->sp.x, obj->sp.y, obj->sp.z, obj->sp.diameter, obj->sp.r, obj->sp.g, obj->sp.b);
 		else if (elem->type == PLANE)
-			print_plane(&obj->pl);
+			printf(" [X]  PLANE\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\t\t\t\t\trgb(%zu,%zu,%zu) \n", obj->pl.x, obj->pl.y, obj->pl.z, obj->pl.vec_x, obj->pl.vec_y, obj->pl.vec_z, obj->pl.r, obj->pl.g, obj->pl.b);
 		else if (elem->type == CYLINDER)
-			print_cylinder(&obj->cy);
+			printf(" o=o  CYLINDER\t=> xyz(%.1f,%.1f,%.1f)\tdir(%.1f,%.1f,%.1f)\tdiameter(%.1f) height(%.1f)\trgb(%zu,%zu,%zu) \n", obj->cy.x, obj->cy.y, obj->cy.z, obj->cy.vec_x, obj->cy.vec_y, obj->cy.vec_z, obj->cy.diameter, obj->cy.height, obj->cy.r, obj->cy.g, obj->cy.b);
 		elem = elem->next;
 	}
 }

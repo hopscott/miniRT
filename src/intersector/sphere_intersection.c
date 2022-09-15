@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 23:26:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 20:22:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ t_vec3	*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit)
 		return (NULL);
 	normal = vec3_unit(tmp, 1);
 	if (!normal)
-		return (NULL);
+		return (free(tmp), NULL);
 	return (normal);
 }

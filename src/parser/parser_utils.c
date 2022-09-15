@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 20:56:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 17:02:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_space_null(t_space *space)
 {
 	if (!space->ambient && !space->camera && !space->objects && !space->lights)
 		return (1);
+	if (!space->camera && !space->ambient)
+		return (2);
 	return (0);
 }
 

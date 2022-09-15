@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 23:26:48 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 20:03:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,9 @@ typedef struct s_cylinder
 	size_t	r;
 	size_t	g;
 	size_t	b;
+	t_vec3	*co;
+	t_vec3	*cross_co_orient;
+	double	radius;
 	t_vec3	*rgb;
 }			t_cylinder;
 
@@ -331,14 +334,14 @@ int			check_rt(char *path);
 void		init_parser_params(t_space *space);
 int			len_free(char ***tbl);
 
-void	build_helper(double *x, double *y, double *z, char **tab);
-void	get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **tab);
-void	build_helper_2(double *x, double *y, double *z, double coords[3]);
-void	rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
-void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
+void		build_helper(double *x, double *y, double *z, char **tab);
+void		get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **tab);
+void		build_helper_2(double *x, double *y, double *z, double coords[3]);
+void		rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
+void		pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
 
-void	fatal_error(t_space *space);
-void	free_2_vec3(t_vec3 **a, t_vec3 **b);
+void		fatal_error(t_space *space);
+void		free_2_vec3(t_vec3 **a, t_vec3 **b);
 
 
 
@@ -379,7 +382,7 @@ t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 /* =================== INTERSECTOR ====================== */
 
 /* light_intersection.c */
-int		light_intersection(t_ray *ray, t_light *light, t_hit *hit);
+int			light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
 int			sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
@@ -391,9 +394,12 @@ t_vec3		*plane_surface_normal(t_plane *plane, t_ray *ray);
 t_vec3		*normal_bmap_plane_mountains(t_plane *plane, t_hit *hit);
 t_vec3		*normal_bmap_plane_lines(t_plane *plane, t_hit *hit);
 /* cylinder_intersection.c */
-void		cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
+int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
 int			adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
+
+void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);
+
 
 /* =================== VISUALS ====================== */
 

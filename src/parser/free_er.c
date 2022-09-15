@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:39:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/13 22:13:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 20:21:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ void	free_space(t_space *space)
 			obj_lstfree(&(space->objects));
 		if (space->lights)
 			free(space->lights);
-		//space = NULL;
 	}
 }

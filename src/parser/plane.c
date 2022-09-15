@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/15 00:46:45 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 17:31:25 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	build_plane_vecs(t_plane*obj)
 	if (!tmp)
 		return (free(obj->xyz), 1);
 	obj->norm = vec3_unit(tmp, 1);
-	printf("obj->norm created: %p\n", obj->norm);
+	//printf("obj->norm created: %p\n", obj->norm);
 	if (!(obj->norm))
 		return (free(obj->xyz), 1);
 	obj->rgb = vec3_init(obj->r, obj->g, obj->b);

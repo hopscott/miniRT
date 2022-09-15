@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 23:27:15 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 20:03:36 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 		else if (elem->type == PLANE)
 			err = plane_intersection(ray, &obj->pl, hit);
 		else if (elem->type == CYLINDER)
-			cy_intersection(ray, &obj->cy, hit);
-		if (!err && (hit->t >= 0.000001) && (hit->t < tmin))
+			err = cy_intersection(ray, &obj->cy, hit);
+		if (err)
+			return (err);
+		if ((hit->t >= 0.000001) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
 			tmin = hit->t;

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/15 00:30:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 19:58:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,11 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 		space->ambient = ambient;
 	}
 	close(fd);
-	if (!err && check_space_null(space))
-		return (-1);
+	if (!err)
+	{
+		if (check_space_null(space))
+			return (-1);
+		cy_init_cam_center(space->camera, &(space->objects));
+	}
 	return (err);
 }

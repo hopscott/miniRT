@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
+cc -Wall -Wextra -Werror -Iinclude -I/usr/include -Imlx_linux -O3 -g src/camera/matrix.o src/camera/rays.o src/camera/shading_light.o src/camera/shading.o src/intersector/cylinder_intersection.o src/intersector/light_intersection.o src/intersector/normal_plan_bmap.o src/intersector/plane_intersection.o src/intersector/sphere_intersection.o src/parser/ambient.o src/parser/camera.o src/parser/cylinder.o src/parser/errorinizer.o src/parser/free_er.o src/parser/light_utils.o src/parser/light.o src/parser/object_list.o src/parser/parser_utils.o src/parser/parser_utils2.o src/parser/parser.o src/parser/plane.o src/parser/sphere.o src/printer/printer_utils.o src/printer/printer.o src/vec3/utils.o src/vec3/basic_ops.o src/vec3/adv_ops.o src/vec3/extra_ops.o src/visualizer/mlx_render.o src/visualizer/space_render.o src/visualizer/space_render_utils.o src/main.o src/utils.o lib/libft/libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o ./miniRT
+make: Leaving directory '/sgoinfre/goinfre/Perso/swillis/miniRT'
+ 

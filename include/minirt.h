@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 01:09:26 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/14 13:18:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,8 @@ typedef struct s_param {
 	size_t		colour;
 	char		**screen_hit;
 	char		**screen_shading;
+//	char		screen_hit[HEIGHT][WIDTH];
+//	char		screen_shading[HEIGHT][WIDTH];
 }	t_param;
 
 /*	Ray structure	*/
@@ -287,18 +289,9 @@ typedef struct s_vars
 /* ************************************************* */
 
 /* ================== PRINTER ====================== */
-
-/* printer.c */
 void		print_space(t_space *space);
 
-/* printer_utils.c */
-void		print_light(t_light *l);
-void		print_camera(t_camera *cam);
-void		print_ambient(t_ambient *amb);
-void		print_columns(void);
-
 /* ================== PARSER ====================== */
-
 /* object_list.c */
 int			obj_lstadd(t_obj_lst **lst, int type, t_object *object);
 void		obj_lstfree(t_obj_lst **lst);
@@ -315,7 +308,6 @@ int			build_camera(char **tbl, t_camera *obj, int *to_switch);
 
 /* light.c */
 t_light		*build_light(char **tbl, int to_switch);
-t_light		*sub_build_light(char **tbl, t_light **light);
 
 /* sphere.c */
 t_sphere	*build_sphere(char **tbl, int to_switch);
@@ -327,8 +319,7 @@ t_plane		*build_plane(char **tbl, int to_switch);
 t_cylinder	*build_cylinder(char **tbl, int to_switch);
 
 /* parser.c */
-int			parser(char *path, t_space *space, t_camera *camera, \
-														t_ambient *ambient);
+int			parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient);
 
 /* parser_utils.c */
 int			check_space_null(t_space *space);
@@ -337,19 +328,14 @@ int			check_rt(char *path);
 void		init_parser_params(t_space *space);
 int			len_free(char ***tbl);
 
-void		build_helper(double *x, double *y, double *z, char **tab);
-void		get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], \
-													int to_switch, char **tab);
-void		build_helper_2(double *x, double *y, double *z, double coords[3]);
-void		rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
-void		pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
+void	build_helper(double *x, double *y, double *z, char **tab);
+void	get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **tab);
+void	build_helper_2(double *x, double *y, double *z, double coords[3]);
+void	rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
+void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
 
-/* parser_utils2.c */
-int			tbl_3_check(char **tbl);
-void		pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
-void		tbl_free(char ***tbl);
-int			dptr_len(char **tbl);
-int			check_rt(char *path);
+
+
 
 /* free_er.c */
 void		free_space(t_space *space_ptr);
@@ -378,16 +364,12 @@ int			shading_from_light(t_space *sp, t_hit *h, t_light *l, t_shade *sh);
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
 
-/* space_render.c */
-void		space_render(t_data *data, int width, int height, t_space *space);
-
-/* space_render_utils.c */
-t_vec3		*set_direction(t_param param, t_mat44 *mat);
-int			space_set_lights(t_space *space, t_obj_lst *elem);
-int			sub_create_debugger(char ***tab, int dim_y, int dim_x);
-int			init_parameters(int width, int height, t_space *space, \
-														t_param *param);
-void		print_screens_and_free_matrix(t_param *param);
+/* sphere.c */
+void		calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c);
+double		get_dscr(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp, double (*ab)[2]);
+double		get_short_dist(double discriminant, double a, double b);
+t_vec3		*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t);
+t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
 
 /* =================== INTERSECTOR ====================== */
 
@@ -407,6 +389,11 @@ t_vec3		*normal_bmap_plane_lines(t_plane *plane, t_hit *hit);
 void		cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
 void		adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
+
+/* =================== VISUALS ====================== */
+
+/* space_render.c */
+void		space_render(t_data *data, int width, int height, t_space *space);
 
 /* =================== MAIN ====================== */
 

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 17:05:24 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/15 23:48:41 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 	err = 0;
 	to_switch = 0;
 	str = get_next_line(fd);
-	while (str && !err)
+	while (!err && str)
 	{
-		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
+		if (!err && !(*str == '\n') && !(*str == '#') && !line_is_space(str))
 		{
 			tbl = ft_split(str, ' ');
 			err = objs_builder1(tbl, space, ambient);
@@ -87,12 +87,7 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 				err = objs_builder3(tbl, space, &to_switch);
 			ft_freetbl(tbl, -1);
 			free(str);
-			str = NULL;
-			if (err)
-				break ;
 		}
-		if (str)
-			free(str);
 		str = get_next_line(fd);
 	}
 	return (err);

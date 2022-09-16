@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 01:48:47 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 17:02:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_space_null(t_space *space)
 {
 	if (!space->ambient && !space->camera && !space->objects && !space->lights)
 		return (1);
+	if (!space->camera && !space->ambient)
+		return (2);
 	return (0);
 }
 
@@ -53,6 +55,7 @@ void	init_parser_params(t_space *space)
 	space->amb = 0;
 	space->objects = NULL;
 	space->lights = NULL;
+	space->fatal_error = 0;
 }
 
 int	dptr_len(char **tbl)

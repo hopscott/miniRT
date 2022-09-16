@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 01:17:45 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 14:19:59 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,10 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 		{
 			tbl = ft_split(str, ' ');
 			err = objs_builder1(tbl, space, ambient);
-			printf("err1: %d\n", err);
 			if (!err)
 				err = objs_builder2(tbl, space, &to_switch, camera);
-			printf("err2: %d\n", err);
 			if (!err)
 				err = objs_builder3(tbl, space, &to_switch);
-			printf("err3: %d\n", err);
 			ft_freetbl(tbl, -1);
 			free(str);
 			str = NULL;
@@ -119,7 +116,11 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 		space->ambient = ambient;
 	}
 	close(fd);
-	if (!err && check_space_null(space))
-		return (-1);
+	if (!err)
+	{
+		if (check_space_null(space))
+			return (-1);
+		cy_init_cam_center(space->camera, &(space->objects));
+	}
 	return (err);
 }

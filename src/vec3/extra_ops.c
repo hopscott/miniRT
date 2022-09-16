@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/09 18:58:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:10:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ t_vec3	*vec3_ray_distance_to_point(t_vec3 *origin, t_vec3 *direction, double t)
 		return (NULL);
 	xyz = vec3_add(origin, dist);
 	free(dist);
+	if (!xyz)
+		return (NULL);
 	return (xyz);
 }

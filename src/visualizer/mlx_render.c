@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/07 18:41:29 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/14 22:47:37 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,19 @@ void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 	}
 }
 
+void	fatal_error(t_space *space)
+{
+	space->fatal_error = 1;
+}
+
 void	mlx_render(t_space *space)
 {
 	t_vars	vars;
 
 	vars.space = space;
 	vars.mlx = mlx_init();
+	if (!vars.mlx)
+		return (fatal_error(space));
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "miniRT");
 	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
@@ -55,8 +62,11 @@ void	mlx_render(t_space *space)
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
 	space_render(&vars.data, WIDTH, HEIGHT, vars.space);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
-	mlx_loop(vars.mlx);
+	if (!space->fatal_error)
+	{
+		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
+		mlx_loop(vars.mlx);
+	}
 	mlx_destroy_image(vars.mlx, vars.data.img);
 	mlx_destroy_window(vars.mlx, vars.win);
 	mlx_destroy_display(vars.mlx);

@@ -1,15 +1,327 @@
-==243438== Memcheck, a memory error detector
-==243438== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==243438== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==243438== Command: ./miniRT camera_looking_up_example.rt
-==243438== Parent PID: 234311
-==243438== 
-==243438== 
-==243438== HEAP SUMMARY:
-==243438==     in use at exit: 0 bytes in 0 blocks
-==243438==   total heap usage: 10,704,449 allocs, 10,704,449 frees, 257,052,934 bytes allocated
-==243438== 
-==243438== All heap blocks were freed -- no leaks are possible
-==243438== 
-==243438== For lists of detected and suppressed errors, rerun with: -s
-==243438== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==130258== Memcheck, a memory error detector
+==130258== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==130258== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==130258== Command: ./miniRT cylinder_and_sphere_in_room.rt
+==130258== Parent PID: 98539
+==130258== 
+==130258== 
+==130258== Process terminating with default action of signal 2 (SIGINT)
+==130258==    at 0x4B72460: free (malloc.c:3352)
+==130258==    by 0x4056C6: light_intersection (light_intersection.c:0)
+==130258==    by 0x4053D0: nearest_hit_object (rays.c:32)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== HEAP SUMMARY:
+==130258==     in use at exit: 225,825,857 bytes in 9,297,285 blocks
+==130258==   total heap usage: 54,249,480 allocs, 44,952,195 frees, 1,304,704,427 bytes allocated
+==130258== 
+==130258== 24 bytes in 1 blocks are possibly lost in loss record 30 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068BD: cy_intersection (cylinder_intersection.c:111)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 24 bytes in 1 blocks are possibly lost in loss record 31 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068BD: cy_intersection (cylinder_intersection.c:111)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 24 bytes in 1 blocks are possibly lost in loss record 32 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068CD: cy_intersection (cylinder_intersection.c:112)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 24 bytes in 1 blocks are possibly lost in loss record 33 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406911: cy_intersection (cylinder_intersection.c:118)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 24 bytes in 1 blocks are definitely lost in loss record 34 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x40566C: light_intersection (light_intersection.c:23)
+==130258==    by 0x4053D0: nearest_hit_object (rays.c:32)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 48 bytes in 2 blocks are possibly lost in loss record 45 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406903: cy_intersection (cylinder_intersection.c:117)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 259,392 bytes in 10,808 blocks are definitely lost in loss record 86 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x4067B1: new_dist (cylinder_intersection.c:51)
+==130258==    by 0x4067B1: find_smallest_dist (cylinder_intersection.c:85)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 259,392 bytes in 10,808 blocks are definitely lost in loss record 87 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x4067D2: new_dist (cylinder_intersection.c:54)
+==130258==    by 0x4067D2: find_smallest_dist (cylinder_intersection.c:85)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 688,128 bytes in 28,672 blocks are definitely lost in loss record 88 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4069D5: cylinder_surface_normal (cylinder_intersection.c:136)
+==130258==    by 0x4050DF: surface_rgb_normal (shading.c:36)
+==130258==    by 0x4050DF: shading (shading.c:105)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 688,128 bytes in 28,672 blocks are definitely lost in loss record 89 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x4069EE: cylinder_surface_normal (cylinder_intersection.c:137)
+==130258==    by 0x4050DF: surface_rgb_normal (shading.c:36)
+==130258==    by 0x4050DF: shading (shading.c:105)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 947,520 bytes in 39,480 blocks are definitely lost in loss record 90 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x406634: new_dist (cylinder_intersection.c:51)
+==130258==    by 0x406634: find_smallest_dist (cylinder_intersection.c:83)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 947,520 bytes in 39,480 blocks are definitely lost in loss record 91 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x406655: new_dist (cylinder_intersection.c:54)
+==130258==    by 0x406655: find_smallest_dist (cylinder_intersection.c:83)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 1,410,072 bytes in 58,753 blocks are definitely lost in loss record 94 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x406634: new_dist (cylinder_intersection.c:51)
+==130258==    by 0x406634: find_smallest_dist (cylinder_intersection.c:83)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 1,410,072 bytes in 58,753 blocks are definitely lost in loss record 95 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x404851: vec3_ray_distance_to_point (extra_ops.c:50)
+==130258==    by 0x406655: new_dist (cylinder_intersection.c:54)
+==130258==    by 0x406655: find_smallest_dist (cylinder_intersection.c:83)
+==130258==    by 0x4069A9: cy_intersection (cylinder_intersection.c:125)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,644,664 bytes in 901,861 blocks are definitely lost in loss record 96 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068BD: cy_intersection (cylinder_intersection.c:111)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,644,664 bytes in 901,861 blocks are definitely lost in loss record 97 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068CD: cy_intersection (cylinder_intersection.c:112)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,644,664 bytes in 901,861 blocks are definitely lost in loss record 98 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406911: cy_intersection (cylinder_intersection.c:118)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,644,688 bytes in 901,862 blocks are definitely lost in loss record 99 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068F4: cy_intersection (cylinder_intersection.c:114)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,644,688 bytes in 901,862 blocks are definitely lost in loss record 100 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406903: cy_intersection (cylinder_intersection.c:117)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x404DC8: shading_from_light (shading_light.c:83)
+==130258==    by 0x4051C4: shading (shading.c:113)
+==130258==    by 0x4055D6: cast_ray (rays.c:114)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,649,752 bytes in 902,073 blocks are definitely lost in loss record 101 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406903: cy_intersection (cylinder_intersection.c:117)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,649,776 bytes in 902,074 blocks are definitely lost in loss record 102 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068BD: cy_intersection (cylinder_intersection.c:111)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,649,800 bytes in 902,075 blocks are definitely lost in loss record 103 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068CD: cy_intersection (cylinder_intersection.c:112)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,649,800 bytes in 902,075 blocks are definitely lost in loss record 104 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x4068F4: cy_intersection (cylinder_intersection.c:114)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== 21,649,800 bytes in 902,075 blocks are definitely lost in loss record 105 of 105
+==130258==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==130258==    by 0x40439E: vec3_init (utils.c:19)
+==130258==    by 0x406911: cy_intersection (cylinder_intersection.c:118)
+==130258==    by 0x40539A: nearest_hit_object (rays.c:38)
+==130258==    by 0x40555D: hit_init (rays.c:90)
+==130258==    by 0x40555D: cast_ray (rays.c:100)
+==130258==    by 0x4072CF: space_render (space_render.c:161)
+==130258==    by 0x406B70: mlx_render (mlx_render.c:64)
+==130258==    by 0x407467: main (main.c:42)
+==130258== 
+==130258== LEAK SUMMARY:
+==130258==    definitely lost: 223,082,544 bytes in 9,295,106 blocks
+==130258==    indirectly lost: 0 bytes in 0 blocks
+==130258==      possibly lost: 144 bytes in 6 blocks
+==130258==    still reachable: 2,743,169 bytes in 2,173 blocks
+==130258==         suppressed: 0 bytes in 0 blocks
+==130258== Reachable blocks (those to which a pointer was found) are not shown.
+==130258== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==130258== 
+==130258== For lists of detected and suppressed errors, rerun with: -s
+==130258== ERROR SUMMARY: 24 errors from 24 contexts (suppressed: 1 from 1)

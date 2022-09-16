@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 16:13:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/15 01:00:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec3	*set_direction(t_param param, t_mat44 *mat)
 	t_vec3	*direction;
 
 	x = (2 * (param.px + 0.5) / param.width - 1) * \
-								param.scale * param.aspect_ratio;
+		param.scale * param.aspect_ratio;
 	y = (1 - 2 * (param.py + 0.5) / param.height) * param.scale;
 	tmp = vec3_init(x, y, 1);
 	if (!tmp)
@@ -74,7 +74,7 @@ int	sub_create_debugger(char ***tab, int dim_y, int dim_x)
 	while (i < dim_y)
 	{
 		tableau[i] = (char *)malloc((dim_x + 1) * sizeof(char));
-//		printf("------------------\ni / dim_y: %d/ %d\n, dim_x: %d", i, dim_y, dim_x);
+		//		printf("------------------\ni / dim_y: %d/ %d\n, dim_x: %d", i, dim_y, dim_x);
 		if (!tableau[i])
 		{
 			ft_freetbl(tableau, i - 1);
@@ -84,6 +84,7 @@ int	sub_create_debugger(char ***tab, int dim_y, int dim_x)
 		i++;
 	}
 	tableau[i] = NULL;
+	*tab = tableau;
 	return (0);
 }
 
@@ -110,17 +111,12 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	j = 0;
 	while(param->screen_hit[j])
 		j++;
-//	printf("j: %d\n", j);
-//	exit(0);
-//	printf("--------------------\ntest: %c\n------------------------\n", param->screen_hit[10][0]);
-//	exit(0);
 	y = -1;
 	while (++y < param->height)
 	{
 		x = -1;
 		while (++x < param->width)
 		{
-//			printf("-----------------------\nx,y: %d %d\n", x, y);
 			param->screen_hit[y][x] = '?';
 			param->screen_shading[y][x] = '?';
 		}
@@ -137,13 +133,20 @@ void	print_screens_and_free_matrix(t_param *param)
 	free(param->matrix);
 }
 
+void	free_params(t_param *param)
+{
+	tbl_free(&param->screen_shading);
+	tbl_free(&param->screen_hit);
+	free(param->matrix);
+}
+
 void	space_render(t_data *data, int width, int height, t_space *space)
 {
 	t_param	param;
 	t_ray	ray;
 
 	if (init_parameters(width, height, space, &param))
-		return ;
+		return(fatal_error(space));
 	ray.origin = space->camera->xyz;
 	adjust_plane_norm(space->objects, ray.origin);
 	param.py = -1;
@@ -156,8 +159,10 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 			if (ray.direction)
 			{
 				param.colour = cast_ray(&ray, space, \
-					&param.screen_hit[(int)param.py][(int)param.px], \
-					&param.screen_shading[(int)param.py][(int)param.px]);
+						&param.screen_hit[(int)param.py][(int)param.px], \
+						&param.screen_shading[(int)param.py][(int)param.px]);
+				if (space->fatal_error)
+					return(free_params(&param)) ;
 				free(ray.direction);
 			}
 			my_mlx_pixel_put(data, param.px, param.py, param.colour);

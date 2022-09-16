@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/15 20:19:01 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 17:33:02 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ uint8_t	new_dist(double dist, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	cy_point = vec3_ray_distance_to_point(r_or, r_dir, dist);
 	if (!cy_point)
 		return (-10);
-	cy_center_middle = vec3_ray_distance_to_point(cy->xyz, cy->norm, cy->height / 2);
+	cy_center_middle = vec3_ray_distance_to_point(cy->xyz, cy->norm, \
+															cy->height / 2);
 	if (!cy_center_middle)
 		return (free(cy_point), -1);
 	dist_p_center = vec3_distance_points(cy_point, cy_center_middle);
@@ -34,26 +35,28 @@ uint8_t	new_dist(double dist, t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy)
 	return (0);
 }
 
-double	sub_find_smallest(double new_dist1, double new_dist2, double dists[2], int type)
+double	sub_find_smallest(double new_dist1, double new_dist2, \
+												double dists[2], int type)
 {
 	if (type == 1)
 	{
 		if (new_dist1)
 			return (dists[0]);
-		else if (new_dist2) 
+		else if (new_dist2)
 			return (dists[1]);
 	}
 	if (type == 2)
 	{
 		if (new_dist2)
 			return (dists[1]);
-		else if (new_dist1) 
+		else if (new_dist1)
 			return (dists[0]);
 	}
 	return (-1);
 }
 
-double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double discr, double a, double b)
+double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, \
+															double dab[3])
 {
 	double	dist1;
 	double	dist2;
@@ -61,8 +64,8 @@ double	find_smallest_dist(t_vec3 *r_or, t_vec3 *r_dir, t_cylinder *cy, double di
 	double	new_dist2;
 	double	dists[2];
 
-	dist1 = (((- b + sqrt(discr)) / (2 * a)));
-	dist2 = ((- b - sqrt(discr)) / (2 * a));
+	dist1 = (((-dab[2] + sqrt(dab[0])) / (2 * dab[1])));
+	dist2 = ((-dab[2] - sqrt(dab[0])) / (2 * dab[1]));
 	new_dist1 = new_dist(dist1, r_or, r_dir, cy);
 	new_dist2 = new_dist(dist2, r_or, r_dir, cy);
 	if (new_dist1 == -1 || new_dist2 == -1)
@@ -81,24 +84,29 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	double	abc[3];
 	t_vec3	*rot_r_dir;
 	double	discr;
+	double	dab[3];
 
 	rot_r_dir = vec3_cross(ray->direction, cy->norm);
 	if (!rot_r_dir)
 		return (1);
 	abc[0] = vec3_dot(rot_r_dir, rot_r_dir);
 	abc[1] = 2 * vec3_dot(rot_r_dir, cy->cross_co_orient);
-	abc[2] = vec3_dot(cy->cross_co_orient, cy->cross_co_orient) - pow(cy->radius, 2);
+	abc[2] = vec3_dot(cy->cross_co_orient, cy->cross_co_orient) \
+												- pow(cy->radius, 2);
 	discr = pow(abc[1], 2) - 4 * abc[0] * abc[2];
 	if (discr < 0)
 		hit->t = -1;
-	hit->t = find_smallest_dist(ray->origin, ray->direction, cy, discr, abc[0], abc[1]);
+	dab[0] = discr;
+	dab[1] = abc[0];
+	dab[2] = abc[1];
+	hit->t = find_smallest_dist(ray->origin, ray->direction, cy, dab);
 	if (hit->t == -10)
 		return (1);
 	free(rot_r_dir);
 	return (0);
 }
 
-t_vec3	*cylinder_surface_normal(t_cylinder * cy, t_vec3 *phit)
+t_vec3	*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit)
 {
 	double	t;
 	t_vec3	*pt;
@@ -109,8 +117,8 @@ t_vec3	*cylinder_surface_normal(t_cylinder * cy, t_vec3 *phit)
 	tmp1 = vec3_subtract(phit, cy->xyz);
 	if (!tmp1)
 		return (NULL);
-    t = vec3_dot(tmp1, cy->norm);
-    pt = vec3_ray_distance_to_point(cy->xyz, cy->norm, t);
+	t = vec3_dot(tmp1, cy->norm);
+	pt = vec3_ray_distance_to_point(cy->xyz, cy->norm, t);
 	if (!pt)
 		return (free(tmp1), NULL);
 	free(tmp1);
@@ -118,6 +126,6 @@ t_vec3	*cylinder_surface_normal(t_cylinder * cy, t_vec3 *phit)
 	free(pt);
 	if (!tmp2)
 		return (free(pt), NULL);
-    surface_normal = vec3_unit(tmp2, 1);
+	surface_normal = vec3_unit(tmp2, 1);
 	return (surface_normal);
 }

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/16 17:07:05 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/16 17:33:59 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\
+			$(SRC_DIR)/intersector/sphere_intersection_utils.c\
 			$(SRC_DIR)/intersector/sphere_intersection.c\
 			$(SRC_DIR)/parser/ambient.c\
 			$(SRC_DIR)/parser/camera.c\

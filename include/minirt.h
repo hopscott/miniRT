@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:56:32 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 17:35:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,6 +388,15 @@ int			light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 /* sphere_intersection.c */
 int			sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
 t_vec3		*sphere_surface_normal(t_ray *ray, t_sphere *sphere, t_vec3 *phit);
+
+/* sphere_intersection_utils.c */
+void		calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, \
+																	double *c);
+void		get_dsc_helper(double (*p_xyz)[3], double (*c_xyz)[3], \
+											t_vec3 *s_center, t_ray *ray);
+double		*get_dscr_2(double **old_abc, t_sphere *sp, t_ray *r, t_vec3 **s_c);
+double		*get_dscr(t_ray *r, t_sphere *sp);
+double		get_short_dist(double discriminant, double a, double b);
 
 /* plane_intersection.c */
 int			plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);

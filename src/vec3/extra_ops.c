@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 21:10:22 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 18:23:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,11 @@ t_vec3	*vec3_ray_distance_to_point(t_vec3 *origin, t_vec3 *direction, double t)
 	if (!xyz)
 		return (NULL);
 	return (xyz);
+}
+
+int	check_vec3_null(t_vec3 *vec)
+{
+	if (!vec->e[0] && !vec->e[1] && !vec->e[2])
+		return (1);
+	return (0);
 }

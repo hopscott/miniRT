@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/16 17:33:59 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/16 19:45:54 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/visualizer/space_render.c\
 			$(SRC_DIR)/main.c\
 			$(SRC_DIR)/utils.c\
+			$(SRC_DIR)/textures/planes_textures.c\
 
 # Make all ========================================
 

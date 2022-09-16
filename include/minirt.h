@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 17:35:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 20:51:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ typedef struct s_plane
 	size_t	g;
 	size_t	b;
 	t_vec3	*rgb;
+	t_vec3	*e1;
+	t_vec3	*e2;
 }			t_plane;
 
 /* identifier: cy										*/
@@ -194,6 +196,12 @@ typedef union u_object {
 	t_cylinder	cy;
 }				t_object;
 
+typedef struct s_arb_vecs {
+	t_vec3	*v1;
+	t_vec3	*v2;
+	t_vec3	*v3;
+}				t_arb_vecs;
+
 /*	Space structure	*/
 typedef struct s_space {
 	t_camera	*camera;
@@ -206,6 +214,7 @@ typedef struct s_space {
 	double		width;
 	double		height;
 	int			fatal_error;
+	t_arb_vecs	*arb_vecs;
 }	t_space;
 
 /*	mat44 structure	*/
@@ -317,17 +326,18 @@ t_light		*build_light(char **tbl, int to_switch);
 t_sphere	*build_sphere(char **tbl, int to_switch);
 
 /* plane.c */
-t_plane		*build_plane(char **tbl, int to_switch);
+t_plane		*build_plane(char **tbl, int to_switch, t_space *space);
+int			get_e1_e2(t_space *space, t_plane *plane);
 
 /* cylinder.c */
 t_cylinder	*build_cylinder(char **tbl, int to_switch);
 
 /* parser.c */
-int			parser(char *path, t_space *space, t_camera *camera, \
-													t_ambient *ambient);
+int			parser(char *path, t_space *space, t_camera *camerat,t_ambient *ambient);
+int			init_3_arb_vec3(t_space *space, t_arb_vecs *arb_vecs);
 
 /* parser_utils.c */
-void		init_parser_params(t_space *space);
+int		init_parser_params(t_space *space);
 int			check_space_null(t_space *space);
 int			line_is_space(char *str);
 

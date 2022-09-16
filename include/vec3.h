@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:31:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/15 00:42:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 18:21:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ double	vec3_distance_points(t_vec3 *vec1, t_vec3 *vec2);
 void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new);
 void	vec3_multiply_to_self(t_vec3 **vec, double t);
 t_vec3	*vec3_ray_distance_to_point(t_vec3 *origin, t_vec3 *direction, double t);
+int		check_vec3_null(t_vec3 *vec);
 
 /* ================================================= */
 

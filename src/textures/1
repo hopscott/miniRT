@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   planes_textures.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/16 17:59:53 by omoudni           #+#    #+#             */
+/*   Updated: 2022/09/16 18:39:40 by omoudni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+t_vec3	*find_perpend_vec(t_vec3 *vec)
+{
+	t_vec3	*tmp;
+	t_vec3	*ret;
+
+	tmp = vec3_init(1, 0, 0);
+	if (!tmp)
+		return (NULL);
+	ret = vec3_cross()
+
+}
+
+int	sub_get_uv(t_vec3 **tmp, t_vec3 *norm, t_vec3 **e1)
+{
+	*e1 = vec3_unit(vec3_cross(plane->norm, *tmp), 1);
+	if (!*e1)
+		return (free(*tmp), 2);
+	free(*tmp);
+	if (check_vec3_null(e1))
+		return (free(*e1), 1);
+	return (0);
+}
+
+int	get_uv(t_vec3 *point, t_plane *plane)
+{
+	double	u;
+	double	v;
+	t_vec3	*tmp;
+	t_vec3	*e1;
+	t_vec3	*e2;
+
+	tmp = vec3_init(1,0,0);
+	if (!tmp)
+		return (1);
+	if (sub_get_uv(&tmp, plane->norm, &e1))
+	{
+		tmp = vec3_init
+	}
+	e1 = vec3_unit(vec3_cross(plane->norm, tmp), 1);
+	if (!e1)
+		return (free(tmp), 1);
+	if (check_vec3_null(e1))
+	{
+		
+	}
+}

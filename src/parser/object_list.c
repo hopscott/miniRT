@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 17:12:02 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 20:11:01 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	obj_lstfree_sub(t_obj_lst **elem_ptr)
 	if (elem->type == SPHERE)
 		vec3_free_multi(obj->sp.xyz, obj->sp.rgb, NULL, 0);
 	else if (elem->type == PLANE)
+	{
 		vec3_free_multi(obj->pl.xyz, obj->pl.norm, obj->pl.rgb, 0);
+		vec3_free_multi(obj->pl.e1, obj->pl.e2, NULL, 0);
+	}
 	else if (elem->type == CYLINDER)
 	{
 		vec3_free_multi(obj->cy.xyz, obj->cy.norm, obj->cy.rgb, 0);

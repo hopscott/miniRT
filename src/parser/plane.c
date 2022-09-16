@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 16:54:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 20:06:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_plane	*sub_build_plane(char **tbl, int to_switch, t_plane **obj)
 	return (*obj);
 }
 
-t_plane	*build_plane(char **tbl, int to_switch)
+t_plane	*build_plane(char **tbl, int to_switch, t_space *space)
 {
 	t_plane		*obj;
 	char		**xyz;
@@ -83,5 +83,8 @@ t_plane	*build_plane(char **tbl, int to_switch)
 	else
 		build_helper_2(&(obj->x), &(obj->y), &(obj->z), coord_not_switch);
 	ft_freetbl(xyz, -1);
-	return (sub_build_plane(tbl, to_switch, &obj));
+	obj = sub_build_plane(tbl, to_switch, &obj);
+	if (!obj || get_e1_e2(space, obj))
+		return (NULL);
+	return (obj);
 }

@@ -6,13 +6,13 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 16:54:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 20:59:50 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	init_parser_params(t_space *space)
+int	init_parser_params(t_space *space)
 {
 	space->ambient = NULL;
 	space->camera = NULL;
@@ -21,6 +21,7 @@ void	init_parser_params(t_space *space)
 	space->objects = NULL;
 	space->lights = NULL;
 	space->fatal_error = 0;
+	return (0);
 }
 
 int	check_space_null(t_space *space)

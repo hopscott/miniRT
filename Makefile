@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/15 19:59:09 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/16 14:24:27 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,10 +58,9 @@ SRCS	:= 	$(SRC_DIR)/printer/printer.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\
-			$(SRC_DIR)/intersector/normal_plan_bmap.c\
 			$(SRC_DIR)/intersector/sphere_intersection.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
-			$(SRC_DIR)/intersector/cylinder_reformed/init_center_cy_cam.c\
+			$(SRC_DIR)/intersector/init_center_cy_cam.c\
 			$(SRC_DIR)/visualizer/mlx_render.c\
 			$(SRC_DIR)/visualizer/space_render.c\
 			$(SRC_DIR)/main.c\

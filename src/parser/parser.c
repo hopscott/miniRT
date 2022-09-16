@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 15:08:45 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 17:06:34 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 			if (!err)
 				err = objs_builder3(tbl, space, &to_switch);
 			ft_freetbl(tbl, -1);
-			free(str);
 		}
+		free(str);
 		str = get_next_line(fd);
 	}
 	return (err);
@@ -110,7 +110,11 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 		space->camera = camera;
 		space->ambient = ambient;
 	}
-	if (!err && check_space_null(space))
-		return (-1);
+	if (!err)
+	{
+		if (check_space_null(space))
+			return (-1);
+		cy_init_cam_center(space->camera, &(space->objects));
+	}
 	return (err);
 }

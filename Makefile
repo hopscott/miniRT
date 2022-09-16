@@ -3,16 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
+#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/16 14:24:27 by omoudni          ###   ########.fr        #
+#    Updated: 2022/09/16 14:30:58 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# Name ==========================================
-
-NAME := miniRT.a #I'm not sure if we are suppose to build a library
 
 # Dirs ==========================================
 
@@ -68,9 +64,7 @@ SRCS	:= 	$(SRC_DIR)/printer/printer.c\
 
 # Make all ========================================
 
-all : $(NAME)
-
-$(NAME): miniRT
+all : miniRT
 
 %.o: %.c $(HEADERS)
 	$(CC) -c $(CFLAGS) -o $@ $<

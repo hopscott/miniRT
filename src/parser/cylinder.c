@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 02:53:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:00:18 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	build_cylinder_vecs(t_cylinder **obj)
 	return (0);
 }
 
-t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, char ***tmp)
+t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, \
+															char ***tmp)
 {
 	t_cylinder	*obj;
 	double		coord_switch[3];
@@ -44,9 +45,11 @@ t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, char ***tmp
 	obj = *cy;
 	get_switch_coord(&coord_switch, &coord_not_switch, to_switch, *tmp);
 	if (to_switch)
-		build_helper_2(&(obj->vec_x), &(obj->vec_y), &(obj->vec_z), coord_switch);
+		build_helper_2(&(obj->vec_x), &(obj->vec_y), \
+											&(obj->vec_z), coord_switch);
 	else
-		build_helper_2(&(obj->vec_x), &(obj->vec_y), &(obj->vec_z), coord_not_switch);
+		build_helper_2(&(obj->vec_x), &(obj->vec_y), \
+										&(obj->vec_z), coord_not_switch);
 	ft_freetbl(*tmp, -1);
 	if (!(obj->vec_x) && !(obj->vec_y) && !(obj->vec_z))
 		return (free(obj), NULL);
@@ -61,7 +64,6 @@ t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, char ***tmp
 		return (free(obj), NULL);
 	return (obj);
 }
-
 
 t_cylinder	*build_cylinder(char **tbl, int to_switch)
 {

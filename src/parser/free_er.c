@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_er.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:39:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/15 20:21:22 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:59:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	free_camera(t_camera **camera)
 		free((*camera)->xyz);
 	if (camera && (*camera) && (*camera)->norm)
 		free((*camera)->norm);
-//	free(*camera);
 }
 
 void	free_ambient(t_ambient **amb_ptr)
@@ -28,12 +27,11 @@ void	free_ambient(t_ambient **amb_ptr)
 	ambient = *amb_ptr;
 	if (ambient && ambient->rgb)
 		free(ambient->rgb);
-//	free(ambient);
 }
 
 void	free_lights(t_light ***lights_ptr, size_t n_lights)
 {
-	t_light	**lights;
+	t_light		**lights;
 	size_t		i;
 
 	lights = *lights_ptr;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_center_cy_cam.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:19:27 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/15 20:16:54 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 15:22:25 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_cy_params(t_cylinder *cylinder, t_camera *camera)
 	cylinder->cross_co_orient = vec3_cross(cylinder->co, cylinder->norm);
 	cylinder->radius = cylinder->diameter / 2;
 }
-
 
 void	cy_init_cam_center(t_camera *camera, t_obj_lst **objs)
 {

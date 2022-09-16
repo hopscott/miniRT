@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 22:47:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 15:08:14 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 		dst = data->addr + (py * data->line_length + px * (data->bpp / 8));
 		*(unsigned int *)dst = color;
 	}
-}
-
-void	fatal_error(t_space *space)
-{
-	space->fatal_error = 1;
 }
 
 void	mlx_render(t_space *space)

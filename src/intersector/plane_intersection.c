@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/15 00:54:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 15:24:06 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/* https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection */
+/* ============================================================	*/
+/* https://www.scratchapixel.com/lessons/3d-basic-rendering/  	*/
+/* minimal-ray-tracer-rendering-simple-shapes/					*/
+/* ray-plane-and-ray-disk-intersection							*/
+/* ============================================================	*/
 
 void	free_2_vec3(t_vec3 **a, t_vec3 **b)
 {
@@ -50,8 +54,8 @@ int	sub_adjust_plane_norm(t_plane **plane, t_vec3 *inv_p_norm, t_vec3 *r_or)
 
 int	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 {
-	t_vec3	*inv_p_norm;
-	t_plane	*plane;
+	t_vec3		*inv_p_norm;
+	t_plane		*plane;
 	t_object	*elem;
 
 	while (space_objs)

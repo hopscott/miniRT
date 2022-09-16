@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/15 20:03:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/16 16:56:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ typedef struct s_cylinder
 }			t_cylinder;
 
 /*	Union object structure	*/
-
 typedef union u_object {
 	t_camera	c;
 	t_ambient	a;
@@ -196,7 +195,6 @@ typedef union u_object {
 }				t_object;
 
 /*	Space structure	*/
-
 typedef struct s_space {
 	t_camera	*camera;
 	int			cam;
@@ -211,7 +209,6 @@ typedef struct s_space {
 }	t_space;
 
 /*	mat44 structure	*/
-
 typedef struct s_mat44 {
 	double	a[4];
 	double	b[4];
@@ -220,7 +217,6 @@ typedef struct s_mat44 {
 }			t_mat44;
 
 /*	Param structure	*/
-
 typedef struct s_param {
 	int			height;
 	int			width;
@@ -232,8 +228,6 @@ typedef struct s_param {
 	size_t		colour;
 	char		**screen_hit;
 	char		**screen_shading;
-//	char		screen_hit[HEIGHT][WIDTH];
-//	char		screen_shading[HEIGHT][WIDTH];
 }	t_param;
 
 /*	Ray structure	*/
@@ -244,7 +238,6 @@ typedef struct s_ray {
 }	t_ray;
 
 /*	Hit structure	*/
-
 typedef struct s_hit {
 	double		t;
 	t_obj_lst	*nearest;
@@ -255,7 +248,6 @@ typedef struct s_hit {
 }	t_hit;
 
 /*	Shade structure	*/
-
 typedef struct s_shade {
 	t_ray		*ray;
 	t_object	*obj;
@@ -272,7 +264,6 @@ typedef struct s_shade {
 }	t_shade;
 
 /* MLX */
-
 typedef struct s_data
 {
 	void	*img;
@@ -295,7 +286,14 @@ typedef struct s_vars
 /* ************************************************* */
 
 /* ================== PRINTER ====================== */
+/* printer.c */
 void		print_space(t_space *space);
+
+/* printer_utils.c */
+void	print_columns(void);
+void	print_ambient(t_ambient *amb);
+void	print_camera(t_camera *cam);
+void	print_light(t_light *l);
 
 /* ================== PARSER ====================== */
 /* object_list.c */
@@ -325,30 +323,31 @@ t_plane		*build_plane(char **tbl, int to_switch);
 t_cylinder	*build_cylinder(char **tbl, int to_switch);
 
 /* parser.c */
-int			parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient);
+int			parser(char *path, t_space *space, t_camera *camera, \
+													t_ambient *ambient);
 
 /* parser_utils.c */
+void		init_parser_params(t_space *space);
 int			check_space_null(t_space *space);
 int			line_is_space(char *str);
-int			check_rt(char *path);
-void		init_parser_params(t_space *space);
-int			len_free(char ***tbl);
 
-void		build_helper(double *x, double *y, double *z, char **tab);
-void		get_switch_coord(double (*c_switch)[3], double (*c_not_switch)[3], int to_switch, char **tab);
-void		build_helper_2(double *x, double *y, double *z, double coords[3]);
-void		rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
+/* parser_utils2.c */
+int			tbl_3_check(char **tbl);
 void		pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl);
-
-void		fatal_error(t_space *space);
-void		free_2_vec3(t_vec3 **a, t_vec3 **b);
-
-
+void		tbl_free(char ***tbl);
+int			dptr_len(char **tbl);
+int			check_rt(char *path);
 
 /* free_er.c */
 void		free_space(t_space *space_ptr);
 int			tbl_3_check(char **tbl);
 void		tbl_free(char ***tbl);
+
+/* utils.c */
+void		rgb_helper(size_t *r, size_t *g, size_t *b, char **rgb);
+void		get_switch_coord(double (*c_switch)[3], \
+				double (*c_not_switch)[3], int to_switch, char **xyz);
+void		build_helper_2(double *x, double *y, double *z, double coords[3]);
 
 /* =================== CAMERA ====================== */
 
@@ -372,12 +371,14 @@ int			shading_from_light(t_space *sp, t_hit *h, t_light *l, t_shade *sh);
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
 
-/* sphere.c */
-void		calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c);
-double		*get_dscr(t_ray *ray, t_sphere *sp);
-double		get_short_dist(double discriminant, double a, double b);
-t_vec3		*hit_point(t_vec3 *r_origin, t_vec3 *r_direction, double t);
-t_vec3		*hitpt_raysp(t_vec3 *r_or, t_vec3 *r_dir, t_sphere *sp);
+/* space_render.c */
+void		space_render(t_data *data, int width, int height, t_space *space);
+
+/* space_render_utils.c */
+int			fatal_error_int(t_space *space);
+void		fatal_error(t_space *space);
+void		free_params(t_param *param);
+void		print_screens_and_free_matrix(t_param *param);
 
 /* =================== INTERSECTOR ====================== */
 
@@ -399,12 +400,6 @@ t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
 int			adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
 
 void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);
-
-
-/* =================== VISUALS ====================== */
-
-/* space_render.c */
-void		space_render(t_data *data, int width, int height, t_space *space);
 
 /* =================== MAIN ====================== */
 

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 15:21:37 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 16:44:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	if (sub_create_debugger(&param->screen_shading, height, width))
 		return (1);
 	adjust_plane_norm(space->objects, space->camera->xyz);
-	param.py = -1;
+	param->py = -1;
 	return (0);
 }
 

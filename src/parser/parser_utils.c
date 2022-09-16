@@ -6,11 +6,22 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/14 17:04:32 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/16 16:54:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	init_parser_params(t_space *space)
+{
+	space->ambient = NULL;
+	space->camera = NULL;
+	space->cam = 0;
+	space->amb = 0;
+	space->objects = NULL;
+	space->lights = NULL;
+	space->fatal_error = 0;
+}
 
 int	check_space_null(t_space *space)
 {
@@ -31,14 +42,4 @@ int	line_is_space(char *str)
 	if (i == len)
 		return (1);
 	return (0);
-}
-
-void	init_parser_params(t_space *space)
-{
-	space->ambient = NULL;
-	space->camera = NULL;
-	space->cam = 0;
-	space->amb = 0;
-	space->objects = NULL;
-	space->lights = NULL;
 }

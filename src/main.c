@@ -6,22 +6,36 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/15 18:14:20 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:51:34 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	space_free(t_space *space)
+void	puterr_free(char *err, t_space *space)
 {
-	t_camera	*cam;
-	t_ambient	*amb;
+	write(2, err, ft_strlen(err));
+	free_space(space);
+}
 
-	cam = space->camera;
-	amb = space->ambient;
-	obj_lstfree(&space->objects);
-	vec3_free_multi(cam->xyz, cam->norm, amb->rgb, 0);
-	free(space->lights);
+void	print_help(void)
+{
+	write(2, HELP_MSG, ft_strlen(HELP_MSG));
+}
+
+void	free_space(t_space *space)
+{
+	if (space)
+	{
+		if (space->camera)
+			free(space->camera);
+		if (space->ambient)
+			free(space->ambient);
+		if (space->objects)
+			obj_lstfree(&(space->objects));
+		if (space->lights)
+			free(space->lights);
+	}
 }
 
 int	main(int ac, char **av)

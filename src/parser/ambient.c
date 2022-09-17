@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 18:50:55 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:46:40 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	build_ambient(char **tbl, t_ambient *obj)
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
-	vec_init(obj->r, obj->g, obj->b, obj->rgb);
-	vec_multiply(obj->rgb, obj->lighting_ratio);
+	vec_set(obj->r, obj->g, obj->b, &obj->rgb);
+	vec_multiply(obj->rgb, obj->lighting_ratio, &obj->rgb);
 	return (0);
 }

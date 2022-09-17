@@ -6,32 +6,24 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:44:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:20:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3	*set_direction(t_param param, t_mat44 *mat)
+void	set_direction(t_param param, t_mat44 *mat, double *res[3])
 {
 	double	x;
 	double	y;
-	t_vec3	*tmp;
-	t_vec3	*unit;
-	t_vec3	*direction;
+	double	vec[3];
 
 	x = (2 * (param.px + 0.5) / param.width - 1) * \
 								param.scale * param.aspect_ratio;
 	y = (1 - 2 * (param.py + 0.5) / param.height) * param.scale;
-	tmp = vec3_init(x, y, 1);
-	if (!tmp)
-		return (NULL);
-	unit = vec3_unit(tmp, 1);
-	if (!unit)
-		return (NULL);
-	direction = vec3_matrix_multiply(mat, unit, 0);
-	free(unit);
-	return (direction);
+	vec_set(x, y, 1, &vec);
+	vec_unit(vec, &vec);
+	vec_matrix_multiply(mat, vec, 0, &res);
 }
 
 int	space_set_lights(t_space *space, t_obj_lst *elem)

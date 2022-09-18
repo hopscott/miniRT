@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:44:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/18 20:22:21 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ void	print_screens_and_free_matrix(t_param *param)
 {
 	print_screen(param->screen_hit);
 	print_screen(param->screen_shading);
-	tbl_free(&param->screen_shading);
-	tbl_free(&param->screen_hit);
-	free(param->matrix);
+	free_params(param);
 }

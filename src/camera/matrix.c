@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/17 18:40:45 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/18 21:19:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,29 @@
 /* https://www.scratchapixel.com/lessons/					 */
 /* mathematics-physics-for-computer-graphics/lookat-function */
 
-t_mat44	*mat44_init(t_vec3 *a, t_vec3 *b, t_vec3 *c, t_vec3 *d)
+t_mat44	*mat44_init(double a[3], double b[3], double c[3], double d[3])
 {
 	t_mat44	*mat;
 	int		i;
 
-	if (!a | !b | !c | !d)
-		return (NULL);
 	mat = malloc(sizeof(t_mat44));
 	if (!mat)
 		return (NULL);
 	i = -1;
 	while (++i < 3)
-		mat->a[i] = a->e[i];
+		mat->a[i] = a[i];
 	mat->a[i] = 0;
 	i = -1;
 	while (++i < 3)
-		mat->b[i] = b->e[i];
+		mat->b[i] = b[i];
 	mat->b[i] = 0;
 	i = -1;
 	while (++i < 3)
-		mat->c[i] = c->e[i];
+		mat->c[i] = c[i];
 	mat->c[i] = 0;
 	i = -1;
 	while (++i < 3)
-		mat->d[i] = d->e[i];
+		mat->d[i] = d[i];
 	mat->d[i] = 1;
 	return (mat);
 }
@@ -61,8 +59,8 @@ t_mat44	*camera_lookat(t_camera *cam)
 	vec_unit(right, &right);
 	vec_cross(fwd, right, &up);
 	vec_unit(up, &up);
-	vec_set(-vec3_dot(right, cam->xyz), -vec3_dot(up, cam->xyz), \
-										-vec3_dot(fwd, cam->xyz), &coord);
+	vec_set(-vec_dot(right, cam->xyz), -vec_dot(up, cam->xyz), \
+										-vec_dot(fwd, cam->xyz), &coord);
 	return (mat44_init(right, up, fwd, coord));
 }
 
@@ -70,7 +68,7 @@ t_mat44	*camera_lookat(t_camera *cam)
 /* 3-with-4by4-matrix-more-precisely-position-transformat 				  */
 
 void	vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
-															double *res[3])
+															double (*res)[3])
 {
 	double	a;
 	double	b;

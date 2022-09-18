@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/16 17:33:59 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/18 21:58:03 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,13 +41,10 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\
-			$(SRC_DIR)/intersector/sphere_intersection_utils.c\
 			$(SRC_DIR)/intersector/sphere_intersection.c\
 			$(SRC_DIR)/parser/ambient.c\
 			$(SRC_DIR)/parser/camera.c\
 			$(SRC_DIR)/parser/cylinder.c\
-			$(SRC_DIR)/parser/errorinizer.c\
-			$(SRC_DIR)/parser/free_er.c\
 			$(SRC_DIR)/parser/light.c\
 			$(SRC_DIR)/parser/object_list.c\
 			$(SRC_DIR)/parser/parser_utils.c\
@@ -58,10 +55,9 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/parser/utils.c\
 			$(SRC_DIR)/printer/printer_utils.c\
 			$(SRC_DIR)/printer/printer.c\
-			$(SRC_DIR)/vec3/adv_ops.c\
-			$(SRC_DIR)/vec3/basic_ops.c\
-			$(SRC_DIR)/vec3/extra_ops.c\
-			$(SRC_DIR)/vec3/utils.c\
+			$(SRC_DIR)/vec/adv_ops.c\
+			$(SRC_DIR)/vec/basic_ops.c\
+			$(SRC_DIR)/vec/utils.c\
 			$(SRC_DIR)/visualizer/mlx_render.c\
 			$(SRC_DIR)/visualizer/space_render_utils.c\
 			$(SRC_DIR)/visualizer/space_render.c\

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:19:27 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 15:22:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/18 19:54:24 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_cy_params(t_cylinder *cylinder, t_camera *camera)
 {
-	cylinder->co = vec3_subtract(camera->xyz, cylinder->xyz);
-	cylinder->cross_co_orient = vec3_cross(cylinder->co, cylinder->norm);
+	vec_subtract(camera->xyz, cylinder->xyz, &cylinder->co);
+	vec_cross(cylinder->co, cylinder->norm, &cylinder->cross_co_orient);
 	cylinder->radius = cylinder->diameter / 2;
 }
 

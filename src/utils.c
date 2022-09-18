@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 13:18:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/18 21:47:12 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,42 +38,34 @@ void	print_progress(int i, int total)
 		printf("\n======================\n");
 }
 
-size_t	rgb_colour(t_vec3 *rgb)
+size_t	rgb_colour(double rgb[3])
 {
 	size_t	r;
 	size_t	g;
 	size_t	b;
 
-	r = (size_t)rgb->e[0];
+	r = (size_t)rgb[0];
 	if (r > 255)
 		r = 255;
-	g = (size_t)rgb->e[1];
+	g = (size_t)rgb[1];
 	if (g > 255)
 		g = 255;
-	b = (size_t)rgb->e[2];
+	b = (size_t)rgb[2];
 	if (b > 255)
 		b = 255;
 	return ((r << 16) + (g << 8) + b);
 }
 
-void	rgb_multiply_to_self(t_vec3 **rgb, t_vec3 *rgb2)
+void	rgb_multiply(double rgb1[3], double rgb2[3], double (*rgb)[3])
 {
-	t_vec3	*new;
-	t_vec3	*rgb1;
 	size_t	r;
 	size_t	g;
 	size_t	b;
 
-	rgb1 = *rgb;
-	r = (size_t)rgb1->e[0] * (size_t)rgb2->e[0] / 255;
-	g = (size_t)rgb1->e[1] * (size_t)rgb2->e[1] / 255;
-	b = (size_t)rgb1->e[2] * (size_t)rgb2->e[2] / 255;
-	new = vec3_init(r, g, b);
-	if (new)
-	{
-		free((*rgb));
-		*rgb = new;
-	}
+	r = (size_t)rgb1[0] * (size_t)rgb2[0] / 255;
+	g = (size_t)rgb1[1] * (size_t)rgb2[1] / 255;
+	b = (size_t)rgb1[2] * (size_t)rgb2[2] / 255;
+	vec_set(r, g, b, rgb);
 }
 
 void	print_screen(char **screen)

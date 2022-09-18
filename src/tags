@@ -11,7 +11,7 @@
 !_TAG_PROGRAM_VERSION	5.9.0	//
 add_diffuse_component	camera/shading_light.c	/^int	add_diffuse_component(t_shade *shade, t_ray *lray, t_light *light)$/;"	f	typeref:typename:int
 add_specular_component	camera/shading_light.c	/^int	add_specular_component(t_shade *shade, t_ray *lray, t_light *light)$/;"	f	typeref:typename:int
-adjust_plane_norm	intersector/plane_intersection.c	/^int	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)$/;"	f	typeref:typename:int
+adjust_plane_norm	intersector/plane_intersection.c	/^int	adjust_plane_norm(t_space *space, t_obj_lst *space_objs, t_vec3 *r_or)$/;"	f	typeref:typename:int
 build_ambient	parser/ambient.c	/^int	build_ambient(char **tbl, t_ambient *obj)$/;"	f	typeref:typename:int
 build_camera	parser/camera.c	/^int	build_camera(char **tbl, t_camera *obj, int *to_switch)$/;"	f	typeref:typename:int
 build_cylinder	parser/cylinder.c	/^t_cylinder	*build_cylinder(char **tbl, int to_switch)$/;"	f	typeref:typename:t_cylinder *
@@ -20,7 +20,7 @@ build_helper	parser/camera.c	/^void	build_helper(double *x, double *y, double *z
 build_helper_2	parser/utils.c	/^void	build_helper_2(double *x, double *y, double *z, double coords[3])$/;"	f	typeref:typename:void
 build_light	parser/light.c	/^t_light	*build_light(char **tbl, int to_switch)$/;"	f	typeref:typename:t_light *
 build_light_vecs	parser/light.c	/^int	build_light_vecs(t_light **obj)$/;"	f	typeref:typename:int
-build_plane	parser/plane.c	/^t_plane	*build_plane(char **tbl, int to_switch, t_space *space)$/;"	f	typeref:typename:t_plane *
+build_plane	parser/plane.c	/^t_plane	*build_plane(char **tbl, int to_switch)$/;"	f	typeref:typename:t_plane *
 build_plane_vecs	parser/plane.c	/^int	build_plane_vecs(t_plane*obj)$/;"	f	typeref:typename:int
 build_sphere	parser/sphere.c	/^t_sphere	*build_sphere(char **tbl, int to_switch)$/;"	f	typeref:typename:t_sphere *
 calc_c_dscr	intersector/sphere_intersection.c	/^void	calc_c_dscr(double pxyz[3], double cxyz[3], t_sphere *sp, double *c)$/;"	f	typeref:typename:void

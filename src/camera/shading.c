@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 21:10:54 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/18 19:28:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
 {
+	double	u;
+	double	v;
+
 	shade->ray = ray;
 	shade->obj = obj;
 	shade->rgb = NULL;
@@ -27,7 +30,21 @@ int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
 		}
 		else if (hit->nearest->type == PLANE)
 		{
-			shade->rgb = obj->pl.rgb;
+		//	double	t = ray->origin->e[2] / ray->direction->e[2];
+				printf("%f %f\n", vec3_len(obj->pl.e1), vec3_len(obj->pl.e2));
+				u = fabs(fmod(vec3_dot(hit->phit, obj->pl.e1), 1));
+				v = fabs(fmod(vec3_dot(hit->phit, obj->pl.e2), 1));
+//			printf("e1.x: %f e1.y: %f, e1.z: %f\n", obj->pl.e1->e[0], obj->pl.e1->e[1], obj->pl.e1->e[2]);
+		//	printf("e2.x: %f e2.y: %f, e2.z: %f\n", obj->pl.e2->e[0], obj->pl.e2->e[1], obj->pl.e2->e[2]);
+//			u = ray->origin->e[0] + ray->direction->e[0] * t;
+		//	v = ray->origin->e[1] + ray->direction->e[1] * t;
+				printf("u: %f, v: %f\n", u, v);
+//			if ((int)((u / (WIDTH / 10)) + (int)(v / (HEIGHT / 10))) % 2)
+			if (((int)(u * 100))/100 + ((int)(v * 100))/100 % 2)
+				shade->rgb = vec3_init(0, 0, 0);
+			else
+				shade->rgb = vec3_init(255, 255, 255);
+//			shade->rgb = obj->pl.rgb;
 			shade->normal = vec3_copy(obj->pl.norm);
 		}
 		else if (hit->nearest->type == CYLINDER)

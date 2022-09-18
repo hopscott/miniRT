@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:44:05 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 19:01:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 		return (1);
 	if (sub_create_debugger(&param->screen_shading, height, width))
 		return (1);
-	adjust_plane_norm(space->objects, space->camera->xyz);
+	adjust_plane_norm(space, space->objects, space->camera->xyz);
 	param->py = -1;
 	return (0);
 }
@@ -118,7 +118,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 	if (init_parameters(width, height, space, &param))
 		return (fatal_error(space));
 	ray.origin = space->camera->xyz;
-	adjust_plane_norm(space->objects, ray.origin);
+	adjust_plane_norm(space, space->objects, ray.origin);
 	while (++param.py < param.height)
 	{
 		param.px = -1;

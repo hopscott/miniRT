@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 20:49:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:55:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	objs_builder3(char **tbl, t_space *space, int *to_switch)
 				(t_object *)build_sphere(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "pl", 3) || !ft_strncmp(tbl[0], "PL", 3))
 		err = obj_lstadd(&space->objects, PLANE, \
-				(t_object *)build_plane(tbl, *to_switch, space));
+				(t_object *)build_plane(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "cy", 3) || !ft_strncmp(tbl[0], "CY", 3))
 		err = obj_lstadd(&space->objects, CYLINDER, \
 				(t_object *)build_cylinder(tbl, *to_switch));
@@ -97,7 +97,7 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 {
 	int			err;
 	int			fd;
-	
+
 	init_parser_params(space);
 	if (check_rt(path))
 		return (1);

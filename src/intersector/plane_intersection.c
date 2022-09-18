@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 15:24:06 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/18 17:25:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	sub_adjust_plane_norm(t_plane **plane, t_vec3 *inv_p_norm, t_vec3 *r_or)
 	return (0);
 }
 
-int	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
+int	adjust_plane_norm(t_space *space, t_obj_lst *space_objs, t_vec3 *r_or)
 {
 	t_vec3		*inv_p_norm;
 	t_plane		*plane;
@@ -69,6 +69,8 @@ int	adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or)
 				return (1);
 			if (sub_adjust_plane_norm(&plane, inv_p_norm, r_or))
 				return (free(inv_p_norm), 1);
+			printf("%f %f %f\n", plane->norm->e[0], plane->norm->e[1], plane->norm->e[2]);
+			get_e1_e2(space, plane);
 			free(inv_p_norm);
 		}
 		space_objs = space_objs->next;

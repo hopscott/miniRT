@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 20:51:11 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:54:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,8 @@ typedef struct s_hit {
 	t_vec3		*rgb;
 	size_t		colour;
 	char		shading;
+	double		u;
+	double		v;
 }	t_hit;
 
 /*	Shade structure	*/
@@ -326,7 +328,7 @@ t_light		*build_light(char **tbl, int to_switch);
 t_sphere	*build_sphere(char **tbl, int to_switch);
 
 /* plane.c */
-t_plane		*build_plane(char **tbl, int to_switch, t_space *space);
+t_plane		*build_plane(char **tbl, int to_switch);
 int			get_e1_e2(t_space *space, t_plane *plane);
 
 /* cylinder.c */
@@ -416,7 +418,7 @@ t_vec3		*normal_bmap_plane_lines(t_plane *plane, t_hit *hit);
 /* cylinder_intersection.c */
 int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
 t_vec3		*cylinder_surface_normal(t_cylinder *cy, t_vec3 *phit);
-int			adjust_plane_norm(t_obj_lst *space_objs, t_vec3 *r_or);
+int			adjust_plane_norm(t_space *space, t_obj_lst *space_objs, t_vec3 *r_or);
 
 void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);
 

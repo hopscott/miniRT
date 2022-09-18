@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 17:59:53 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 21:19:24 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/18 15:57:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	init_3_arb_vec3(t_space *space, t_arb_vecs *arb_vecs)
 		return (1);
 	}
 	arb_vecs->v1 = v1;
-	arb_vecs->v1 = v2;
-	arb_vecs->v1 = v3;
+	arb_vecs->v2 = v2;
+	arb_vecs->v3 = v3;
 	space->arb_vecs = arb_vecs;
 	return (0);
 }
@@ -57,11 +57,13 @@ int	get_e1(t_space *space, t_plane *plane)
 		return (1);
 	else if (ret == 1)
 	{
+		printf("I entered here 1\n");
 		ret = sub_get_uv(space->arb_vecs->v2, plane->norm, &plane->e1);
 		if (ret == -1)
 			return (1);
 		else if (ret == 1)
 		{
+			printf("I entered here 2\n");
 			ret = sub_get_uv(space->arb_vecs->v3, plane->norm, &plane->e1);
 			if (ret)
 				return (1);

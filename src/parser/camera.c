@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 16:58:27 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:46:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,21 @@ void	ft_swap_double(double *a, double *b)
 
 void	cam_switch(t_camera *obj, int *to_switch)
 {
-	if (!(obj)->norm->e[0] && !(obj)->norm->e[2] && \
-												(obj)->norm->e[1] > 0)
+	if (!obj->norm[0] && !obj->norm[2] && obj->norm[1] > 0)
 	{
-		ft_swap_double(&((obj)->norm->e[1]), &((obj)->norm->e[2]));
-		ft_swap_double(&((obj)->xyz->e[1]), &((obj)->xyz->e[2]));
+		ft_swap_double(&(obj->norm[1]), &(obj->norm[2]));
+		ft_swap_double(&(obj->xyz[1]), &(obj->xyz[2]));
 		*to_switch = 1;
 	}
-	if (!(obj)->norm->e[0] && !(obj)->norm->e[2] && \
-												(obj)->norm->e[1] < 0)
+	if (!obj->norm[0] && !obj->norm[2] && \
+												obj->norm[1] < 0)
 	{
-		ft_swap_double(&((obj)->norm->e[1]), &((obj)->norm->e[2]));
-		ft_swap_double(&((obj)->xyz->e[1]), &((obj)->xyz->e[2]));
-		(obj)->norm->e[0] *= -1;
-		(obj)->norm->e[1] *= -1;
-		(obj)->xyz->e[0] *= -1;
-		(obj)->xyz->e[1] *= -1;
+		ft_swap_double(&(obj->norm[1]), &(obj->norm[2]));
+		ft_swap_double(&(obj->xyz[1]), &(obj->xyz[2]));
+		obj->norm[0] *= -1;
+		obj->norm[1] *= -1;
+		obj->xyz[0] *= -1;
+		obj->xyz[1] *= -1;
 		*to_switch = -1;
 	}
 }
@@ -52,16 +51,10 @@ void	build_helper(double *x, double *y, double *z, char **tab)
 
 int	sub_build_cam(char *tbl_3, t_camera *obj, int *to_switch)
 {
-	t_vec3		*tmp;
-
 	obj->fov = (size_t)ft_atoi(tbl_3);
-	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
-	tmp = vec3_init(obj->vec_x, obj->vec_y, obj->vec_z);
-	if (!(obj->xyz) || !tmp)
-		return (1);
-	obj->norm = vec3_unit(tmp, 1);
-	if (!(obj->norm))
-		return (1);
+	vec_set(obj->x, obj->y, obj->z, &obj->xyz);
+	vec_set(obj->vec_x, obj->vec_y, obj->vec_z, &obj->norm);
+	vec_unit(obj->norm, &obj->norm);
 	cam_switch(obj, to_switch);
 	return (0);
 }

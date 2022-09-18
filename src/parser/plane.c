@@ -6,33 +6,18 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 16:54:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:02:07 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	build_plane_vecs(t_plane*obj)
+void	build_plane_vecs(t_plane *obj)
 {
-	t_vec3	*tmp;
-
-	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
-	if (!(obj->xyz))
-		return (1);
-	tmp = vec3_init(obj->vec_x, obj->vec_y, obj->vec_z);
-	if (!tmp)
-		return (free(obj->xyz), 1);
-	obj->norm = vec3_unit(tmp, 1);
-	if (!(obj->norm))
-		return (free(obj->xyz), 1);
-	obj->rgb = vec3_init(obj->r, obj->g, obj->b);
-	if (!(obj->rgb))
-	{
-		free(obj->xyz);
-		free(obj->norm);
-		return (1);
-	}
-	return (0);
+	vec_set(obj->x, obj->y, obj->z, &obj->xyz);
+	vec_set(obj->vec_x, obj->vec_y, obj->vec_z, &obj->norm);
+	vec_unit(obj->norm, &obj->norm);
+	vec_set(obj->r, obj->g, obj->b, &obj->rgb);
 }
 
 t_plane	*sub_build_plane(char **tbl, int to_switch, t_plane **obj)
@@ -59,8 +44,7 @@ t_plane	*sub_build_plane(char **tbl, int to_switch, t_plane **obj)
 		return (pl_cy_tbl_free(NULL, obj, &vec), NULL);
 	rgb_helper(&((*obj)->r), &((*obj)->g), &((*obj)->b), vec);
 	ft_freetbl(vec, -1);
-	if (build_plane_vecs(*obj))
-		return (free(*obj), NULL);
+	build_plane_vecs(*obj);
 	return (*obj);
 }
 

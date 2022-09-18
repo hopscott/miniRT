@@ -6,27 +6,20 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:43:16 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:54:27 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	build_light_vecs(t_light **obj)
+void	build_light_vecs(t_light **obj)
 {
-	t_vec3	*tmp;
+	t_light	*l;
 
-	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	if (!((*obj)->xyz))
-		return (1);
-	tmp = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
-	if (!tmp)
-		return (free((*obj)->xyz), 1);
-	(*obj)->rgb = vec3_multiply(tmp, (*obj)->brightness_ratio);
-	free(tmp);
-	if (!((*obj)->rgb))
-		return (free((*obj)->xyz), 1);
-	return (0);
+	l = *obj;
+	vec_set(l->x, l->y, l->z, &l->xyz);
+	vec_set(l->r, l->g, l->b, &l->rgb);
+	vec_multiply(l->rgb, l->brightness_ratio, &l->rgb);
 }
 
 t_light	*sub_build_light(char **tbl, t_light **light)
@@ -44,8 +37,7 @@ t_light	*sub_build_light(char **tbl, t_light **light)
 	}
 	rgb_helper(&(obj->r), &(obj->g), &(obj->b), rgb);
 	ft_freetbl(rgb, -1);
-	if (build_light_vecs(&obj))
-		return (free(obj), NULL);
+	build_light_vecs(&obj);
 	return (obj);
 }
 

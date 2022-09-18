@@ -1,55 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_ops.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 21:10:22 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/18 21:06:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vec3.h"
+#include "vec.h"
 
-void	vec3_add_to_self(t_vec3 **vec, t_vec3 *new)
+void	vec_set(double a, double b, double c, double (*vec)[3])
 {
-	t_vec3	*tmp;
-
-	if (new)
-	{
-		tmp = vec3_add((*vec), new);
-		if (tmp)
-		{
-			free((*vec));
-			*vec = tmp;
-		}
-	}
+	(*vec)[0] = a;
+	(*vec)[1] = b;
+	(*vec)[2] = c;
 }
 
-void	vec3_multiply_to_self(t_vec3 **vec, double t)
+void	vec_copy(double vec[3], double (*res)[3])
 {
-	t_vec3	*tmp;
-
-	tmp = vec3_multiply((*vec), t);
-	if (tmp)
-	{
-		free((*vec));
-		*vec = tmp;
-	}
+	vec_set(vec[0], vec[1], vec[2], res);
 }
 
-t_vec3	*vec3_ray_distance_to_point(t_vec3 *origin, t_vec3 *direction, double t)
+void	vec_ray_distance_to_point(double origin[3], double direction[3], \
+													double t, double (*res)[3])
 {
-	t_vec3	*dist;
-	t_vec3	*xyz;
+	double	dist[3];
 
-	dist = vec3_multiply(direction, t);
-	if (!dist)
-		return (NULL);
-	xyz = vec3_add(origin, dist);
-	free(dist);
-	if (!xyz)
-		return (NULL);
-	return (xyz);
+	vec_multiply(direction, t, &dist);
+	vec_add(origin, dist, res);
+}
+
+double	vec_distance_points(double pt1[3], double pt2[3])
+{
+	double	sub[3];
+	double	res;
+
+	vec_subtract(pt1, pt2, &sub);
+	res = vec_len(sub);
+	return (res);
 }

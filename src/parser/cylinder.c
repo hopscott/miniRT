@@ -6,33 +6,21 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 17:00:18 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:48:22 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	build_cylinder_vecs(t_cylinder **obj)
+void	build_cylinder_vecs(t_cylinder **obj)
 {
-	t_vec3	*tmp;
+	t_cylinder	*cy;
 
-	(*obj)->xyz = vec3_init((*obj)->x, (*obj)->y, (*obj)->z);
-	if (!((*obj)->xyz))
-		return (1);
-	tmp = vec3_init((*obj)->vec_x, (*obj)->vec_y, (*obj)->vec_z);
-	if (!tmp)
-		return (free((*obj)->xyz), 1);
-	(*obj)->norm = vec3_unit(tmp, 1);
-	if (!((*obj)->norm))
-		return (free((*obj)->xyz), 1);
-	(*obj)->rgb = vec3_init((*obj)->r, (*obj)->g, (*obj)->b);
-	if (!((*obj)->rgb))
-	{
-		free((*obj)->xyz);
-		free((*obj)->norm);
-		return (1);
-	}
-	return (0);
+	cy = *obj;
+	vec_set(cy->x, cy->y, cy->z, &cy->xyz);
+	vec_set(cy->vec_x, cy->vec_y, cy->vec_z, &cy->norm);
+	vec_unit(cy->norm, &cy->norm);
+	vec_set(cy->r, cy->g, cy->b, &cy->rgb);
 }
 
 t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, \
@@ -60,8 +48,7 @@ t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, \
 		return (pl_cy_tbl_free(cy, NULL, tmp), NULL);
 	rgb_helper(&(obj->r), &(obj->g), &(obj->b), *tmp);
 	ft_freetbl(*tmp, -1);
-	if (build_cylinder_vecs(&obj))
-		return (free(obj), NULL);
+	build_cylinder_vecs(&obj);
 	return (obj);
 }
 

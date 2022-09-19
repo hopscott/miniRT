@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 16:48:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:19:02 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 
 	vec_subtract(hit->phit, sp->xyz, &xyz);
 	r = vec_len(xyz);
-	theta = acos(xyz[2] / r);
-	phi = atan(xyz[1] / xyz[0]);
+	theta = acos(xyz[1] / r);
+	phi = atan(xyz[2] / xyz[0]);
 	if (xyz[0] < 0)
 	{
 		if (xyz[1] >= 0)
@@ -84,18 +84,23 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 	{
 		if (hit->nearest->type == SPHERE)
 		{
-			// vec_copy(obj->sp.rgb, &shade->rgb);
-			set_uv_sphere(hit, &obj->sp);
-			printf("=> u: %f => v: %f \n", hit->u, hit->v);
-			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
-			sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
+			vec_copy(obj->sp.rgb, &shade->rgb);
+			if (hit->nearest->checkered)
+			{
+				set_uv_sphere(hit, &obj->sp);
+				set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
+				sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
+			}
 		}
 		else if (hit->nearest->type == PLANE)
 		{
-			set_uv_plane(hit, &obj->pl);
-			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
-			// vec_copy(obj->sp.rgb, &shade->rgb);
-			vec_copy(obj->pl.norm, &shade->normal);
+			vec_copy(obj->pl.rgb, &shade->rgb);
+			if (hit->nearest->checkered)
+			{	
+				set_uv_plane(hit, &obj->pl);
+				set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
+				vec_copy(obj->pl.norm, &shade->normal);
+			}
 		}
 		else if (hit->nearest->type == CYLINDER)
 		{

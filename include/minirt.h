@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 10:49:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:13:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_obj_lst
 	int					type;
 
 	void				*content;
+	int					checkered;
 	struct s_obj_lst	*next;
 }	t_obj_lst;
 

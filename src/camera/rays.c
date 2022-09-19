@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:34:53 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/18 21:38:57 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@
 /* how-to-get-a-reflection-vector 					*/
 /* ================================================ */
 
-t_vec3	*reflection_vector(t_vec3 *direction, t_vec3 *normal)
+void	reflection_vector(double direction[3], double norm[3], double (*res)[3])
 {
 	double	dot;
-	t_vec3	*vec;
-	t_vec3	*reflection;
+	double	vec[3];
 
-	dot = vec3_dot(direction, normal);
-	vec = vec3_multiply(normal, (2 * dot));
-	reflection = vec3_subtract(direction, vec);
-	free(vec);
-	return (reflection);
+	dot = vec_dot(direction, norm);
+	vec_multiply(norm, (2 * dot), &vec);
+	vec_subtract(direction, vec, res);
 }
 
 char	obj_to_char(t_obj_lst *elem)
@@ -46,40 +43,27 @@ char	obj_to_char(t_obj_lst *elem)
 	return ('.');
 }
 
-int	hit_init(t_ray *ray, t_space *space, t_hit *hit)
-{
-	hit->phit = NULL;
-	hit->shading = '.';
-	hit->rgb = vec3_init(0, 0, 0);
-	if (!hit->rgb)
-		return (1);
-	return (nearest_hit_object(ray, space->objects, hit));
-}
-
 size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 {
 	t_hit		hit;
 	t_object	*obj;
-	size_t		colour;
 
-	if (hit_init(ray, space, &hit))
-		return ((size_t)fatal_error_int(space));
+	hit.shading = '.';
+	vec_set(0, 0, 0, &hit.rgb);
+	nearest_hit_object(ray, space->objects, &hit);
 	if (hit.nearest)
 		obj = (t_object *)(hit.nearest->content);
 	if ((hit.nearest) && (hit.nearest->type == LIGHT))
-		vec3_add_to_self(&hit.rgb, obj->l.rgb);
+		vec_add(hit.rgb, obj->l.rgb, &hit.rgb);
 	else if (hit.nearest)
 	{
-		hit.phit = vec3_ray_distance_to_point(ray->origin, \
-				ray->direction, hit.t);
-		if (!hit.phit)
-			return ((size_t)fatal_error_int(space));
+		vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
+																&hit.phit);
 		shading(space, ray, &hit, obj);
 	}
 	else
-		vec3_add_to_self(&hit.rgb, space->ambient->rgb);
+		vec_add(hit.rgb, space->ambient->rgb, &hit.rgb);
 	*chit = obj_to_char(hit.nearest);
 	*cshading = hit.shading;
-	colour = rgb_colour(hit.rgb);
-	return ((size_t)vec3_free_multi(hit.phit, hit.rgb, NULL, colour));
+	return (rgb_colour(hit.rgb));
 }

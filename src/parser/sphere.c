@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/14 02:46:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:02:57 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,8 @@ t_sphere	*sub_build_sphere(t_sphere **sphere, char **tbl)
 	obj->g = (size_t)ft_atoi(rgb[1]);
 	obj->b = (size_t)ft_atoi(rgb[2]);
 	ft_freetbl(rgb, -1);
-	obj->xyz = vec3_init(obj->x, obj->y, obj->z);
-	if (!(obj->xyz))
-		return (free(obj), NULL);
-	obj->rgb = vec3_init(obj->r, obj->g, obj->b);
-	if (!(obj->rgb))
-	{
-		free(obj->xyz);
-		return (free(obj), NULL);
-	}
+	vec_set(obj->x, obj->y, obj->z, &obj->xyz);
+	vec_set(obj->r, obj->g, obj->b, &obj->rgb);
 	return (obj);
 }
 

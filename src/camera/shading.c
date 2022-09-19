@@ -6,30 +6,35 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/18 22:23:56 by omoudni          ###   ########.fr       */
+=======
+/*   Updated: 2022/09/18 20:40:16 by swillis          ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
+void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 {
 	double	u;
 	double	v;
 
-	shade->ray = ray;
+	shade->ray = r;
 	shade->obj = obj;
-	shade->rgb = NULL;
-	shade->normal = NULL;
 	if (hit->nearest)
 	{
 		if (hit->nearest->type == SPHERE)
 		{
-			shade->rgb = obj->sp.rgb;
-			shade->normal = sphere_surface_normal(ray, &obj->sp, hit->phit);
+			vec_copy(obj->sp.rgb, &shade->rgb);
+			sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
 		}
 		else if (hit->nearest->type == PLANE)
 		{
+			vec_copy(obj->pl.rgb, &shade->rgb);
+			vec_copy(obj->pl.norm, &shade->normal);
+
 		//	double	t = ray->origin->e[2] / ray->direction->e[2];
 		//		printf("%f %f\n", vec3_len(obj->pl.e1), vec3_len(obj->pl.e2));
 			//	u = vec3_dot(vec3_unit(vec3_subtract(hit->phit, obj->pl.xyz), 1), obj->pl.e1) * 0.5 + 0.5;
@@ -62,37 +67,24 @@ int	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *ray, t_shade *shade)
 		}
 		else if (hit->nearest->type == CYLINDER)
 		{
-			shade->rgb = obj->cy.rgb;
-			shade->normal = cylinder_surface_normal(&obj->cy, hit->phit);
+			vec_copy(obj->cy.rgb, &shade->rgb);
+			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
-		if (!shade->normal)
-			return (1);
 	}
-	return (0);
 }
 
-int	init_light_components(t_space *space, t_shade *shade)
+void	init_light_components(t_space *space, t_shade *shade)
 {
 	t_ambient	*amb;
 
-	shade->ambient = NULL;
-	shade->diffuse = NULL;
-	shade->specular = NULL;
 	amb = space->ambient;
-	shade->ambient = vec3_multiply(amb->rgb, amb->lighting_ratio);
-	if (!shade->ambient)
-		return (1);
+	vec_multiply(amb->rgb, amb->lighting_ratio, &shade->ambient);
 	shade->kd = 0.8;
 	shade->diffuse_comp = 0;
-	shade->diffuse = vec3_init(0, 0, 0);
-	if (!shade->diffuse)
-		return (1);
+	vec_set(0, 0, 0, &shade->diffuse);
 	shade->ks = 0.15;
 	shade->specular_comp = 0;
-	shade->specular = vec3_init(0, 0, 0);
-	if (!shade->specular)
-		return (1);
-	return (0);
+	vec_set(0, 0, 0, &shade->specular);
 }
 
 void	set_shading_char(t_shade *shade, t_hit *hit)
@@ -111,44 +103,27 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 		hit->shading = 'x';
 }
 
-int	shade_free(t_shade *shade, int err)
-{
-	if (shade->normal)
-		free(shade->normal);
-	if (shade->ambient)
-		free(shade->ambient);
-	if (shade->diffuse)
-		free(shade->diffuse);
-	if (shade->specular)
-		free(shade->specular);
-	return (err);
-}
-
 /* https://www.scratchapixel.com/code.php?id=32&origin=/	*/
 /* lessons/3d-basic-rendering/phong-shader-BRDF				*/
-int	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 {
 	t_shade		shade;
 	t_light		*light;
 	size_t		i;
 
-	if (surface_rgb_normal(hit, obj, ray, &shade))
-		return (1);
-	if (init_light_components(space, &shade))
-		return (shade_free(&shade, 1));
+	surface_rgb_normal(hit, obj, ray, &shade);
+	init_light_components(space, &shade);
 	i = 0;
 	while (i < space->n_lights)
 	{
 		light = space->lights[i++];
-		if (shading_from_light(space, hit, light, &shade))
-			return (shade_free(&shade, 1));
+		shading_from_light(space, hit, light, &shade);
 		set_shading_char(&shade, hit);
 	}
-	vec3_multiply_to_self(&shade.diffuse, shade.kd);
-	vec3_multiply_to_self(&shade.specular, shade.ks);
-	vec3_add_to_self(&hit->rgb, shade.ambient);
-	vec3_add_to_self(&hit->rgb, shade.diffuse);
-	vec3_add_to_self(&hit->rgb, shade.specular);
-	rgb_multiply_to_self(&hit->rgb, shade.rgb);
-	return (shade_free(&shade, 0));
+	vec_multiply(shade.diffuse, shade.kd, &shade.diffuse);
+	vec_multiply(shade.specular, shade.ks, &shade.specular);
+	vec_add(hit->rgb, shade.ambient, &hit->rgb);
+	vec_add(hit->rgb, shade.diffuse, &hit->rgb);
+	vec_add(hit->rgb, shade.specular, &hit->rgb);
+	rgb_multiply(hit->rgb, shade.rgb, &hit->rgb);
 }

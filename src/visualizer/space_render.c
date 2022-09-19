@@ -3,35 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   space_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/17 19:01:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/19 09:59:34 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3	*set_direction(t_param param, t_mat44 *mat)
+void	set_direction(t_param param, t_mat44 *mat, double (*res)[3])
 {
 	double	x;
 	double	y;
-	t_vec3	*tmp;
-	t_vec3	*unit;
-	t_vec3	*direction;
+	double	vec[3];
 
 	x = (2 * (param.px + 0.5) / param.width - 1) * \
 								param.scale * param.aspect_ratio;
 	y = (1 - 2 * (param.py + 0.5) / param.height) * param.scale;
-	tmp = vec3_init(x, y, 1);
-	if (!tmp)
-		return (NULL);
-	unit = vec3_unit(tmp, 1);
-	if (!unit)
-		return (NULL);
-	direction = vec3_matrix_multiply(mat, unit, 0);
-	free(unit);
-	return (direction);
+	vec_set(x, y, 1, &vec);
+	vec_unit(vec, &vec);
+	vec_matrix_multiply(mat, vec, 0, res);
 }
 
 int	space_set_lights(t_space *space, t_obj_lst *elem)
@@ -117,21 +109,17 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 
 	if (init_parameters(width, height, space, &param))
 		return (fatal_error(space));
-	ray.origin = space->camera->xyz;
-	adjust_plane_norm(space, space->objects, ray.origin);
+	vec_copy(space->camera->xyz, &ray.origin);
+	adjust_plane_norm(space->objects, ray.origin);
 	while (++param.py < param.height)
 	{
 		param.px = -1;
 		while (++param.px < param.width)
 		{
-			ray.direction = set_direction(param, param.matrix);
-			if (ray.direction)
-				param.colour = cast_ray(&ray, space, \
+			set_direction(param, param.matrix, &ray.direction);
+			param.colour = cast_ray(&ray, space, \
 						&param.screen_hit[(int)param.py][(int)param.px], \
 						&param.screen_shading[(int)param.py][(int)param.px]);
-			free(ray.direction);
-			if (space->fatal_error)
-				return (free_params(&param));
 			my_mlx_pixel_put(data, param.px, param.py, param.colour);
 		}
 		print_progress(param.py, height);

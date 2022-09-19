@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 17:13:55 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:35:52 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@
 # define WIDTH 1280
 # define HEIGHT 1024
 
-# define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
-# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README for more details about the parameters.\nCheck example.rt for the file layout.\n"
-# define ERROR_PARSING "Corrupted file.\nUse --help as an option for more information.\n"
-# define ERROR_PARAMS "None of the parameters required was introduced in .rt file.\nUse --help as an option for more information.\n"
+# define ERROR_ARGS "Syntax not respected\nUse \
+--help as an option for more information.\n"
+# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README \
+for more details about the parameters.\nCheck example.rt for the file layout.\n"
+# define ERROR_PARSING "Corrupted file.\nUse --help as an option \
+for more information.\n"
+# define ERROR_PARAMS "None of the parameters required was introduced \
+in .rt file.\nUse --help as an option for more information.\n"
 # define FATAL_ERROR "\nFATAL ERROR!!!\n"
 
 /* types of objects in linked list */
@@ -351,7 +355,6 @@ void		mlx_render(t_space *space);
 void		space_render(t_data *data, int width, int height, t_space *space);
 
 /* space_render_utils.c */
-int			fatal_error_int(t_space *space);
 void		fatal_error(t_space *space);
 void		free_params(t_param *param);
 void		print_screens_and_free_matrix(t_param *param);
@@ -362,19 +365,20 @@ void		print_screens_and_free_matrix(t_param *param);
 int			light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
-void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
-void	sphere_surface_normal(t_ray *ray, t_sphere *sphere, double phit[3], \
+void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
+void		sphere_surface_normal(t_ray *ray, t_sphere *sphere, double phit[3], \
 															double (*norm)[3]);
 
 /* plane_intersection.c */
 int			plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 int			plane_surface_normal(t_plane *plane, t_ray *ray, double vec[3]);
-int			normal_bmap_plane_mountains(t_plane *plane, t_hit *hit, double vec[3]);
+int			normal_bmap_plane_mountains(t_plane *pl, t_hit *hit, double v[3]);
 int			normal_bmap_plane_lines(t_plane *plane, t_hit *hit, double vec[3]);
 
 /* cylinder_intersection.c */
 int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-void		cylinder_surface_normal(t_cylinder *cy, double phit[3], double (*norm)[3]);
+void		cylinder_surface_normal(t_cylinder *cy, double phit[3], \
+															double (*norm)[3]);
 void		adjust_plane_norm(t_obj_lst *space_objs, double r_or[3]);
 
 void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);

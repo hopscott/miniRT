@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:32:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 15:46:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:29:45 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strndup(char *src, size_t n)
 {
-	char	*dst;
-	size_t			i;
+	char		*dst;
+	size_t		i;
 
 	dst = malloc(sizeof(dst) * (n + 1));
 	if (!dst)

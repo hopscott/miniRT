@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:32:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 15:46:15 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:30:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strdup(char *src)
 {
 	char	*dst;
-	int				i;
-	int				len_src;
+	int		i;
+	int		len_src;
 
 	len_src = ft_strlen(src);
 	dst = malloc(sizeof(dst) * (len_src + 1));

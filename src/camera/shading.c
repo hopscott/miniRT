@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 17:19:02 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 18:24:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	set_uv_plane(t_hit *hit, t_plane *pl)
 	hit->v = vec_dot(hit->phit, pl->e2);
 }
 
-void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
+void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
+									double size, double (*rgb)[3])
 {
 	int		u2;
 	int		v2;
@@ -76,7 +77,8 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*
 	}
 }
 
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
+void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, \
+														t_shade *shade)
 {
 	shade->ray = r;
 	shade->obj = obj;
@@ -133,15 +135,18 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 			if (shade->specular_comp > 0.01)
 				hit->shading = '*';
 		}
-		else if (shade->diffuse_comp > 0.9)
+		else if (shade->diffuse_comp > 0.7)
 			hit->shading = 'o';
 	}
 	else
 		hit->shading = 'x';
 }
 
+/* ======================================================== */
 /* https://www.scratchapixel.com/code.php?id=32&origin=/	*/
 /* lessons/3d-basic-rendering/phong-shader-BRDF				*/
+/* ======================================================== */
+
 void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 {
 	t_shade		shade;

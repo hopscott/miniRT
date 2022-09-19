@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:25:01 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/12 15:15:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:29:33 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*ft_realign_buff(char *s, size_t i, char buff[])
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
+	static char		buffer[BUFFER_SIZE];
 	char			*str;
 	int				rd;
 

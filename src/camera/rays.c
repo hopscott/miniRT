@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/18 21:38:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 10:35:18 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	obj_to_char(t_obj_lst *elem)
 		else if (elem->type == SPHERE)
 			return ('o');
 		else if (elem->type == PLANE)
-			return ('-');
+			return ('/');
 		else if (elem->type == CYLINDER)
 			return ('%');
 	}

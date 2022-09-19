@@ -6,11 +6,39 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 09:59:51 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:10:26 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	set_e1_e2(t_space *space, t_plane *plane)
+{
+	vec_cross(space->arb_vecs.v1, plane->norm, &plane->e1);
+
+	// printf("A ==> %f\n", (space->arb_vecs.v1[1] * plane->norm[2]) - (space->arb_vecs.v1[2] * plane->norm[1]));
+	// printf("B ==> %f\n", (space->arb_vecs.v1[2] * plane->norm[0]) - (space->arb_vecs.v1[0] * plane->norm[2]));
+	// printf("C ==> %f\n", (space->arb_vecs.v1[0] * plane->norm[1]) - (space->arb_vecs.v1[1] * plane->norm[0]));
+	// printf("dot ==> %f\n", vec_dot(space->arb_vecs.v1, plane->norm));
+	
+	if (fabs(vec_dot(space->arb_vecs.v1, plane->norm)) == 1)
+	{
+		// printf("A ==> %f\n", (space->arb_vecs.v2[1] * plane->norm[2]) - (space->arb_vecs.v2[2] * plane->norm[1]));
+		// printf("B ==> %f\n", (space->arb_vecs.v2[2] * plane->norm[0]) - (space->arb_vecs.v2[0] * plane->norm[2]));
+		// printf("C ==> %f\n", (space->arb_vecs.v2[0] * plane->norm[1]) - (space->arb_vecs.v2[1] * plane->norm[0]));
+		// printf("dot ==> %f\n", vec_dot(space->arb_vecs.v2, plane->norm));
+	
+		vec_cross(space->arb_vecs.v2, plane->norm, &plane->e1);
+		if (fabs(vec_dot(space->arb_vecs.v2, plane->norm)) == 1)
+			vec_cross(space->arb_vecs.v3, plane->norm, &plane->e1);
+	}
+	vec_unit(plane->e1, &plane->e1);
+	vec_cross(plane->norm, plane->e1, &plane->e2);
+	vec_unit(plane->e2, &plane->e2);
+	
+	// vec_print("-> plane e1", plane->e1);
+	// vec_print("-> plane e2", plane->e2);
+}
 
 void	build_plane_vecs(t_plane *obj)
 {
@@ -48,7 +76,7 @@ t_plane	*sub_build_plane(char **tbl, int to_switch, t_plane **obj)
 	return (*obj);
 }
 
-t_plane	*build_plane(char **tbl, int to_switch)
+t_plane	*build_plane(t_space *space, char **tbl, int to_switch)
 {
 	t_plane		*obj;
 	char		**xyz;
@@ -68,5 +96,6 @@ t_plane	*build_plane(char **tbl, int to_switch)
 		build_helper_2(&(obj->x), &(obj->y), &(obj->z), coord_not_switch);
 	ft_freetbl(xyz, -1);
 	obj = sub_build_plane(tbl, to_switch, &obj);
+	set_e1_e2(space, obj);
 	return (obj);
 }

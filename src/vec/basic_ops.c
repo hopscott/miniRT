@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/18 21:05:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 10:16:02 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ void	vec_multiply(double vec[3], double n, double (*res)[3])
 	a = vec[0] * n;
 	b = vec[1] * n;
 	c = vec[2] * n;
+	vec_set(a, b, c, res);
+}
+
+void	vec_divide(double vec[3], double n, double (*res)[3])
+{
+	double	a;
+	double	b;
+	double	c;
+
+	a = vec[0] / n;
+	b = vec[1] / n;
+	c = vec[2] / n;
 	vec_set(a, b, c, res);
 }
 

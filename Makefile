@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/19 10:06:21 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/19 12:12:15 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,6 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/visualizer/space_render.c\
 			$(SRC_DIR)/main.c\
 			$(SRC_DIR)/utils.c\
-			$(SRC_DIR)/textures/planes_textures.c\
 
 # Make all ========================================
 
@@ -95,11 +94,12 @@ miniRT : $(OBJS) $(LIBFT) $(ULIMIT)
 
 clean:
 	make -C lib/libft -f Makefile clean
-	rm -rf $(OBJS)
+	rm -f $(OBJS)
 
 fclean : clean
 	make -C lib/libft -f Makefile fclean
-	rm -rf $(EXE)
+	rm -f $(EXE)
+	rm -f "hit.txt" "shading.txt"
 
 # Additional ========================================
 

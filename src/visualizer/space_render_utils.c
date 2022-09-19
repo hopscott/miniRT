@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/18 20:22:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 12:09:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,30 @@ void	free_params(t_param *param)
 
 void	print_screens_and_free_matrix(t_param *param)
 {
+	int	i;
+	int	fd;
+
 	print_screen(param->screen_hit);
 	print_screen(param->screen_shading);
+	fd = open("hit.txt", O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+		return (free_params(param));
+	i = -1;
+	while (++i < param->height)
+	{
+		write(fd, param->screen_hit[i], param->width);
+		write(fd, "\n", 1);
+	}
+	close(fd);
+	fd = open("shading.txt", O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+		return (free_params(param));
+	i = -1;
+	while (++i < param->height)
+	{
+		write(fd, param->screen_shading[i], param->width);
+		write(fd, "\n", 1);
+	}
+	close(fd);
 	free_params(param);
 }

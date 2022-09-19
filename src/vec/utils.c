@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:56:59 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 10:06:11 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 10:51:48 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,12 @@ double	vec_distance_points(double pt1[3], double pt2[3])
 	vec_subtract(pt1, pt2, &sub);
 	res = vec_len(sub);
 	return (res);
+}
+
+void	vec_print(char *str, double vec[3])
+{
+	printf("%s\n", str);
+	printf("/ %5.3f \\\n", vec[0]);
+	printf("| %5.3f |\n", vec[1]);
+	printf("\\ %5.3f /\n", vec[2]);
 }

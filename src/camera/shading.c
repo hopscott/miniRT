@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 18:24:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 18:48:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 			if (shade->specular_comp > 0.01)
 				hit->shading = '*';
 		}
-		else if (shade->diffuse_comp > 0.7)
+		else if (shade->diffuse_comp > 0.5)
 			hit->shading = 'o';
 	}
 	else

@@ -6,23 +6,56 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 14:50:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 16:48:25 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /* ======================================================== */
+/* https://en.wikipedia.org/wiki/Spherical_coordinate_system */
+/* ======================================================== */
+
+void	set_uv_sphere(t_hit *hit, t_sphere *sp)
+{
+	double	xyz[3];
+	double	r;
+	double	theta;
+	double	phi;
+
+	vec_subtract(hit->phit, sp->xyz, &xyz);
+	r = vec_len(xyz);
+	theta = acos(xyz[2] / r);
+	phi = atan(xyz[1] / xyz[0]);
+	if (xyz[0] < 0)
+	{
+		if (xyz[1] >= 0)
+			phi += M_PI;
+		else
+			phi -= M_PI;
+	}
+	if (xyz[0] == 0)
+	{
+		if (xyz[1] >= 0)
+			phi = M_PI;
+		else
+			phi = -M_PI;
+	}
+	hit->u = 1 - ((theta / (2 * M_PI)) + 0.5);
+	hit->v = 1 - (phi / M_PI);
+}
+
+/* ======================================================== */
 /* http://raytracerchallenge.com/bonus/texture-mapping.html */
 /* ======================================================== */
 
-void	set_uv_plane(t_hit *hit, t_object *obj)
+void	set_uv_plane(t_hit *hit, t_plane *pl)
 {
-	hit->u = vec_dot(hit->phit, obj->pl.e1);
-	hit->v = vec_dot(hit->phit, obj->pl.e2);
+	hit->u = vec_dot(hit->phit, pl->e1);
+	hit->v = vec_dot(hit->phit, pl->e2);
 }
 
-void	set_checkerboard_rgb(t_hit *hit, t_object *obj, double (*rgb)[3])
+void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
 {
 	int		u2;
 	int		v2;
@@ -30,16 +63,16 @@ void	set_checkerboard_rgb(t_hit *hit, t_object *obj, double (*rgb)[3])
 	double	ncheckers_height;
 	double	max[3];
 
-	ncheckers_width = 0.1;
-	ncheckers_height = 0.1;
+	ncheckers_width = size;
+	ncheckers_height = size;
 	u2 = floor(hit->u * ncheckers_width);
 	v2 = floor(hit->v * ncheckers_height);
 	if ((u2 + v2) % 2 == 0)
-		vec_copy(obj->pl.rgb, rgb);
+		vec_copy(surf_rgb, rgb);
 	else
 	{
 		vec_set(255, 255, 255, &max);
-		vec_subtract(max, obj->pl.rgb, rgb);
+		vec_subtract(max, surf_rgb, rgb);
 	}
 }
 
@@ -51,13 +84,17 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 	{
 		if (hit->nearest->type == SPHERE)
 		{
-			vec_copy(obj->sp.rgb, &shade->rgb);
+			// vec_copy(obj->sp.rgb, &shade->rgb);
+			set_uv_sphere(hit, &obj->sp);
+			printf("=> u: %f => v: %f \n", hit->u, hit->v);
+			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
 			sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
 		}
 		else if (hit->nearest->type == PLANE)
 		{
-			set_uv_plane(hit, obj);
-			set_checkerboard_rgb(hit, obj, &shade->rgb);
+			set_uv_plane(hit, &obj->pl);
+			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
+			// vec_copy(obj->sp.rgb, &shade->rgb);
 			vec_copy(obj->pl.norm, &shade->normal);
 		}
 		else if (hit->nearest->type == CYLINDER)

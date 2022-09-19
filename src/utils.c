@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 14:51:13 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 15:47:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,19 @@ void	print_screen(char **screen)
 	printf("    ");
 	x = -1;
 	while (++x < WIDTH + 2)
-		if (x % 15 == 0)
+		if (x % 10 == 0)
 			printf("_");
 	printf("_\n");
 	y = -1;
 	while (++y < HEIGHT)
 	{
 		x = -1;
-		if (y % 40 == 0)
+		if (y % 20 == 0)
 			printf("%4d|", y);
 		while (++x < WIDTH)
-			if ((x % 15 == 0) && (y % 40 == 0))
+			if ((x % 10 == 0) && (y % 20 == 0))
 				printf("%c", screen[y][x]);
-		if (y % 40 == 0)
+		if (y % 20 == 0)
 			printf("|\n");
 	}
 }

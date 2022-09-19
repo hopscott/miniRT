@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 14:46:01 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 16:03:59 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	print_sphere(t_sphere *sp)
 {
 	printf("  o   SPHERE   ");
 	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", sp->x, sp->y, sp->z);
+	printf(" (%5.1lf,%5.1lf,%5.1lf) ", sp->x, sp->y, sp->z);
 	printf("|");
-	printf("                ");
+	printf("                     ");
 	printf("|");
 	printf(" (%3zu,%3zu,%3zu) ", sp->r, sp->g, sp->b);
 	printf("|");
-	printf("          ");
+	printf("  %5.1f   ", sp->diameter);
 	printf("|");
 	printf("        ");
 	printf("|");
@@ -36,9 +36,9 @@ void	print_plane(t_plane *pl)
 {
 	printf(" [X]  PLANE    ");
 	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", pl->x, pl->y, pl->z);
+	printf(" (%5.1lf,%5.1lf,%5.1lf) ", pl->x, pl->y, pl->z);
 	printf("|");
-	printf("                ");
+	printf(" (%5.2f,%5.2f,%5.2f) ", pl->vec_x, pl->vec_y, pl->vec_z);
 	printf("|");
 	printf(" (%3zu,%3zu,%3zu) ", pl->r, pl->g, pl->b);
 	printf("|");
@@ -56,15 +56,15 @@ void	print_cylinder(t_cylinder *cy)
 {
 	printf(" o=o  CYLINDER ");
 	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", cy->x, cy->y, cy->z);
+	printf(" (%5.1lf,%5.1lf,%5.1lf) ", cy->x, cy->y, cy->z);
 	printf("|");
-	printf("                ");
+	printf(" (%5.2f,%5.2f,%5.2f) ", cy->vec_x, cy->vec_y, cy->vec_z);
 	printf("|");
 	printf(" (%3zu,%3zu,%3zu) ", cy->r, cy->g, cy->b);
 	printf("|");
-	printf("          ");
+	printf("  %5.1f   ", cy->diameter);
 	printf("|");
-	printf("        ");
+	printf(" %5.1f  ", cy->height);
 	printf("|");
 	printf("            ");
 	printf("|");

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/16 16:39:45 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 16:05:55 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	print_columns(void)
 {
+	printf("\n");
 	printf("     Type      ");
 	printf("|");
-	printf("        XYZ         ");
+	printf("         XYZ         ");
 	printf("|");
-	printf("    Normal      ");
+	printf("       Normal        ");
 	printf("|");
 	printf("     RGB       ");
 	printf("|");
@@ -32,16 +33,16 @@ void	print_columns(void)
 	printf("\n");
 	printf("---------------------------------------------------");
 	printf("---------------------------------------------------");
-	printf("------\n");
+	printf("------------\n");
 }
 
 void	print_ambient(t_ambient *amb)
 {
 	printf("##### AMBIENT  ");
 	printf("|");
-	printf("                    ");
+	printf("                     ");
 	printf("|");
-	printf("                ");
+	printf("                     ");
 	printf("|");
 	printf(" (%3zu,%3zu,%3zu) ", amb->r, amb->g, amb->b);
 	printf("|");
@@ -59,9 +60,9 @@ void	print_camera(t_camera *cam)
 {
 	printf("-<[0] CAMERA   ");
 	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", cam->x, cam->y, cam->z);
+	printf(" (%5.1lf,%5.1lf,%5.1lf) ", cam->x, cam->y, cam->z);
 	printf("|");
-	printf("(%.2f,%.2f,%.2f)", cam->vec_x, cam->vec_y, cam->vec_z);
+	printf(" (%5.2f,%5.2f,%5.2f) ", cam->vec_x, cam->vec_y, cam->vec_z);
 	printf("|");
 	printf("               ");
 	printf("|");
@@ -79,9 +80,9 @@ void	print_light(t_light *l)
 {
 	printf("((*)) LIGHT    ");
 	printf("|");
-	printf("(%5.1lf,%5.1lf,%5.1lf) ", l->x, l->y, l->z);
+	printf(" (%5.1lf,%5.1lf,%5.1lf) ", l->x, l->y, l->z);
 	printf("|");
-	printf("                ");
+	printf("                     ");
 	printf("|");
 	printf(" (%3zu,%3zu,%3zu) ", l->r, l->g, l->b);
 	printf("|");

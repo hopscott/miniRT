@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/19 09:58:56 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 13:17:22 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /* ray-plane-and-ray-disk-intersection							*/
 /* ============================================================	*/
 
-void	sub_adjust_plane_norm(t_plane **plane, double inv_p_norm[3],\
+void	sub_adjust_plane_norm(t_plane **plane, double inv_p_norm[3], \
 															double r_or[3])
 {
 	double	p_norm_p1[3];

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/18 21:48:44 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 13:17:42 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	return (0);
 }
 
-void	cylinder_surface_normal(t_cylinder *cy, double phit[3], double (*norm)[3])
+void	cylinder_surface_normal(t_cylinder *cy, double phit[3], \
+														double (*norm)[3])
 {
 	double	t;
 	double	dist[3];

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 13:09:00 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 14:50:21 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,35 @@
 /* http://raytracerchallenge.com/bonus/texture-mapping.html */
 /* ======================================================== */
 
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
+void	set_uv_plane(t_hit *hit, t_object *obj)
 {
-	double	u;
-	double	v;
+	hit->u = vec_dot(hit->phit, obj->pl.e1);
+	hit->v = vec_dot(hit->phit, obj->pl.e2);
+}
+
+void	set_checkerboard_rgb(t_hit *hit, t_object *obj, double (*rgb)[3])
+{
 	int		u2;
 	int		v2;
 	double	ncheckers_width;
 	double	ncheckers_height;
+	double	max[3];
 
+	ncheckers_width = 0.1;
+	ncheckers_height = 0.1;
+	u2 = floor(hit->u * ncheckers_width);
+	v2 = floor(hit->v * ncheckers_height);
+	if ((u2 + v2) % 2 == 0)
+		vec_copy(obj->pl.rgb, rgb);
+	else
+	{
+		vec_set(255, 255, 255, &max);
+		vec_subtract(max, obj->pl.rgb, rgb);
+	}
+}
+
+void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
+{
 	shade->ray = r;
 	shade->obj = obj;
 	if (hit->nearest)
@@ -36,16 +56,8 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 		}
 		else if (hit->nearest->type == PLANE)
 		{
-			u = vec_dot(hit->phit, obj->pl.e1);
-			v = vec_dot(hit->phit, obj->pl.e2);
-			ncheckers_width = 0.1;
-			ncheckers_height = 0.1;
-			u2 = floor(u * ncheckers_width);
-			v2 = floor(v * ncheckers_height);
-			if ((u2 + v2) % 2 == 0)
-				vec_set(255, 0, 0, &shade->rgb);
-			else
-				vec_set(255, 255, 255, &shade->rgb);
+			set_uv_plane(hit, obj);
+			set_checkerboard_rgb(hit, obj, &shade->rgb);
 			vec_copy(obj->pl.norm, &shade->normal);
 		}
 		else if (hit->nearest->type == CYLINDER)
@@ -76,10 +88,10 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 	{
 		if ((shade->specular_comp > shade->diffuse_comp))
 		{
-			if (shade->specular_comp / shade->ks > 0.01)
+			if (shade->specular_comp > 0.01)
 				hit->shading = '*';
 		}
-		else if (shade->diffuse_comp / shade->kd > 0.1)
+		else if (shade->diffuse_comp > 0.9)
 			hit->shading = 'o';
 	}
 	else
@@ -103,9 +115,7 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 		shading_from_light(space, hit, light, &shade);
 		set_shading_char(&shade, hit);
 	}
-	vec_multiply(shade.diffuse, shade.kd, &shade.diffuse);
-	vec_multiply(shade.specular, shade.ks, &shade.specular);
-	vec_add(hit->rgb, shade.ambient, &hit->rgb);
+	vec_copy(shade.ambient, &hit->rgb);
 	vec_add(hit->rgb, shade.diffuse, &hit->rgb);
 	vec_add(hit->rgb, shade.specular, &hit->rgb);
 	rgb_multiply(hit->rgb, shade.rgb, &hit->rgb);

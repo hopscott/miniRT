@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:03:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/18 21:56:13 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 13:17:08 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	get_dscr(t_ray *ray, t_sphere *sp, double (*ab_dsc)[3])
 	abc[1] = 2 * vec_dot(vec_substr, ray->direction);
 	calc_c_dscr(ray->origin, s_center, sp, &(abc[2]));
 	vec_subtract(ray->origin, s_center, &vec_substr);
-	vec_set(vec_dot(ray->direction, ray->direction),\
-			2 * vec_dot(vec_substr, ray->direction),\
-			abc[1] * abc[1] - 4 * abc[0] * abc[2],  \
+	vec_set(vec_dot(ray->direction, ray->direction), \
+			2 * vec_dot(vec_substr, ray->direction), \
+			abc[1] * abc[1] - 4 * abc[0] * abc[2], \
 			ab_dsc);
 }
 

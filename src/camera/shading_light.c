@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/18 21:39:56 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 14:52:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_specular_component(t_shade *shade, t_ray *lray, t_light *light)
 	double	specular[3];
 	int		n;
 
-	n = 20;
+	n = 100;
 	vec_multiply(shade->normal, 2 * \
 							vec_dot(shade->normal, lray->direction), &r);
 	vec_subtract(r, lray->direction, &r);

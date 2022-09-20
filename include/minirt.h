@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 01:55:43 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/20 02:45:25 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,11 +335,11 @@ t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
 															double (*res)[3]);
 /* rays.c */
-size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
+size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading, t_data *tex);
 void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
 
 /* shading.c */
-void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
+void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj, t_data *texture);
 
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
@@ -352,7 +352,7 @@ void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
 
 /* space_render.c */
-void		space_render(t_data *data, int width, int height, t_space *space);
+void		space_render(t_vars *vars, int width, int height, t_space *space);
 
 /* space_render_utils.c */
 int			fatal_error_int(t_space *space);

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 10:35:18 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 02:38:01 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	obj_to_char(t_obj_lst *elem)
 	return ('.');
 }
 
-size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
+size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading, t_data *tex)
 {
 	t_hit		hit;
 	t_object	*obj;
@@ -59,7 +59,7 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 	{
 		vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
 																&hit.phit);
-		shading(space, ray, &hit, obj);
+		shading(space, ray, &hit, obj, tex);
 	}
 	else
 		vec_add(hit.rgb, space->ambient->rgb, &hit.rgb);

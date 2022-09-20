@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 02:14:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/20 04:04:59 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ t_mat44	*mat44_init_utils(double angle_y, t_cylinder *cy)
 	double	d[3];
 	
 	a[0] = cos((angle_y  / 180) * M_PI);
-	printf("a[0]: %f\n", a[0]);
+//	printf("a[0]: %f\n", a[0]);
 	a[1] = 0;
 	a[2] = -sin((angle_y  / 180) * M_PI);
-	printf("a[2]: %f\n", a[2]);
+//	printf("a[2]: %f\n", a[2]);
 	b[0] = 0;
 	b[1] = 1;
 	b[2] = 0;
 	c[0] = sin((angle_y  / 180) * M_PI);
-	printf("c[0]: %f\n", c[0]);
+//	printf("c[0]: %f\n", c[0]);
 	c[1] = 0;
 	c[2] = cos((angle_y  / 180) * M_PI);
-	printf("c[2]: %f\n", c[2]);
+//	printf("c[2]: %f\n", c[2]);
 	d[0] = - cy->xyz[0];
 	d[1] = - cy->xyz[1];
 	d[2] = - cy->xyz[2];
@@ -114,9 +114,50 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	hit->u = 1 - (raw_u + 0.5);
 	tot_y_cy = cy->xyz[1] + cy->height * cy->norm[1];
 	hit->v = (hit->phit[1] - cy_center[1]) / tot_y_cy;
-//	printf("==>u: %f, ==>v: %f\n", hit->u, hit->v);
-
+	printf("==>u: %f, ==>v: %f\n", hit->u, hit->v);
 }
+
+/*
+void	set_checkerboard_rgb_cy(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3], t_data *tex)
+{
+//	int		u2;
+//	int		v2;
+//	double	ncheckers_width;
+//	double	ncheckers_height;
+//	double	max[3];
+
+	(void)tex;
+	ncheckers_width = size;
+	ncheckers_height = size;
+	u2 = floor(hit->u * ncheckers_width);
+	v2 = floor(hit->v * ncheckers_height);
+	if ((u2 + v2) % 2 == 0)
+		vec_copy(surf_rgb, rgb);
+	else
+	{
+		vec_set(255, 255, 255, &max);
+		vec_subtract(max, surf_rgb, rgb);
+	}
+}
+*/
+
+void	set_texture(t_hit *hit, double (*rgb)[3], t_data *tex)
+{
+	int	x;
+	int	y;
+	char	*color;
+	double	rgb_pix[3];
+
+	x = (int)(hit->u * tex->w * tex->bpp/8);
+	y = (int)(hit->v * tex->h * tex->bpp/8);
+	printf("tex->w: %d, tex->h: %d, x: %d, y: %d\n", tex->w, tex->h, x, y);
+	color = tex->addr + x + tex->w * y;
+	rgb_pix[0] = (double)color[2];
+	rgb_pix[1] = (double)color[1];
+	rgb_pix[2] = (double)color[2];
+	vec_copy(rgb_pix, rgb);
+}
+
 
 void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
 {
@@ -139,8 +180,11 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*
 	}
 }
 
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
+
+
+void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_data *tex)
 {
+	(void)tex;
 	shade->ray = r;
 	shade->obj = obj;
 	if (hit->nearest)
@@ -163,7 +207,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 		else if (hit->nearest->type == CYLINDER)
 		{
 			set_uv_cylinder(hit, &obj->cy);
-			set_checkerboard_rgb(hit, obj->cy.rgb, 30 , &shade->rgb);
+			set_texture(hit, &shade->rgb, tex);
 //			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
@@ -202,13 +246,13 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 
 /* https://www.scratchapixel.com/code.php?id=32&origin=/	*/
 /* lessons/3d-basic-rendering/phong-shader-BRDF				*/
-void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj, t_data *tex)
 {
 	t_shade		shade;
 	t_light		*light;
 	size_t		i;
 
-	surface_rgb_normal(hit, obj, ray, &shade);
+	surface_rgb_normal(hit, obj, ray, &shade, tex);
 	init_light_components(space, &shade);
 	i = 0;
 	while (i < space->n_lights)

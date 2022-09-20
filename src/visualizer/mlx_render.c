@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/20 02:12:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/20 02:51:35 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	mlx_render(t_space *space)
 		return (fatal_error(space));
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "miniRT");
 	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
-//	vars.texture.img = mlx_xpm_file_image(vars.mlx, "tex_test.xpm", &vars.texture.w, &vars.texture.h);
+	vars.texture.img = mlx_xpm_file_to_image(vars.mlx, "text_test.xpm", &vars.texture.w, &vars.texture.h);
 	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
 							&vars.data.line_length, &vars.data.endian);
-//	vars.texture.addr = mlx_get_data_addr(vars.texture.img, &vars.texture.bpp, \
-//							&vars.texture.line_length, &vars.texture.endian);
+	vars.texture.addr = mlx_get_data_addr(vars.texture.img, &vars.texture.bpp, \
+							&vars.texture.line_length, &vars.texture.endian);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
-	space_render(&vars.data, WIDTH, HEIGHT, vars.space);
+	space_render(&vars, WIDTH, HEIGHT, vars.space);
 	if (!space->fatal_error)
 	{
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);

@@ -6,109 +6,34 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 18:48:20 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 15:10:07 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/* ======================================================== */
-/* https://en.wikipedia.org/wiki/Spherical_coordinate_system */
-/* ======================================================== */
-
-void	set_uv_sphere(t_hit *hit, t_sphere *sp)
+void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shade *shade)
 {
-	double	xyz[3];
-	double	r;
-	double	theta;
-	double	phi;
-
-	vec_subtract(hit->phit, sp->xyz, &xyz);
-	r = vec_len(xyz);
-	theta = acos(xyz[1] / r);
-	phi = atan(xyz[2] / xyz[0]);
-	if (xyz[0] < 0)
+	if ((hit->nearest) && (hit->nearest->type == SPHERE))
 	{
-		if (xyz[1] >= 0)
-			phi += M_PI;
-		else
-			phi -= M_PI;
+		vec_copy(obj->sp.rgb, &shade->rgb);
+		sphere_surface_normal(shade->ray, &obj->sp, hit->phit, &shade->normal);
+		set_uv_sphere(hit, &obj->sp);
+		if (hit->nearest->checkered)
+			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
 	}
-	if (xyz[0] == 0)
+	else if ((hit->nearest) && (hit->nearest->type == PLANE))
 	{
-		if (xyz[1] >= 0)
-			phi = M_PI;
-		else
-			phi = -M_PI;
+		vec_copy(obj->pl.rgb, &shade->rgb);
+		vec_copy(obj->pl.norm, &shade->normal);
+		set_uv_plane(hit, &obj->pl);
+		if (hit->nearest->checkered)
+			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
 	}
-	hit->u = 1 - ((theta / (2 * M_PI)) + 0.5);
-	hit->v = 1 - (phi / M_PI);
-}
-
-/* ======================================================== */
-/* http://raytracerchallenge.com/bonus/texture-mapping.html */
-/* ======================================================== */
-
-void	set_uv_plane(t_hit *hit, t_plane *pl)
-{
-	hit->u = vec_dot(hit->phit, pl->e1);
-	hit->v = vec_dot(hit->phit, pl->e2);
-}
-
-void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
-									double size, double (*rgb)[3])
-{
-	int		u2;
-	int		v2;
-	double	ncheckers_width;
-	double	ncheckers_height;
-	double	max[3];
-
-	ncheckers_width = size;
-	ncheckers_height = size;
-	u2 = floor(hit->u * ncheckers_width);
-	v2 = floor(hit->v * ncheckers_height);
-	if ((u2 + v2) % 2 == 0)
-		vec_copy(surf_rgb, rgb);
-	else
+	else if ((hit->nearest) && (hit->nearest->type == CYLINDER))
 	{
-		vec_set(255, 255, 255, &max);
-		vec_subtract(max, surf_rgb, rgb);
-	}
-}
-
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, \
-														t_shade *shade)
-{
-	shade->ray = r;
-	shade->obj = obj;
-	if (hit->nearest)
-	{
-		if (hit->nearest->type == SPHERE)
-		{
-			vec_copy(obj->sp.rgb, &shade->rgb);
-			if (hit->nearest->checkered)
-			{
-				set_uv_sphere(hit, &obj->sp);
-				set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
-				sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
-			}
-		}
-		else if (hit->nearest->type == PLANE)
-		{
-			vec_copy(obj->pl.rgb, &shade->rgb);
-			if (hit->nearest->checkered)
-			{	
-				set_uv_plane(hit, &obj->pl);
-				set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
-				vec_copy(obj->pl.norm, &shade->normal);
-			}
-		}
-		else if (hit->nearest->type == CYLINDER)
-		{
-			vec_copy(obj->cy.rgb, &shade->rgb);
-			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
-		}
+		vec_copy(obj->cy.rgb, &shade->rgb);
+		cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 	}
 }
 
@@ -153,7 +78,9 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	t_light		*light;
 	size_t		i;
 
-	surface_rgb_normal(hit, obj, ray, &shade);
+	shade.ray = ray;
+	shade.obj = obj;
+	surface_rgb_normal(hit, obj, &shade);
 	init_light_components(space, &shade);
 	i = 0;
 	while (i < space->n_lights)

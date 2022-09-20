@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 17:35:52 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 14:59:52 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,6 +344,12 @@ void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
 									t_light *light, t_shade *shade);
+
+/* shading_uv.c */
+void		set_uv_sphere(t_hit *hit, t_sphere *sp);
+void		set_uv_plane(t_hit *hit, t_plane *pl);
+void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
+									double size, double (*rgb)[3]);
 
 /* =================== VISUALIZER ====================== */
 

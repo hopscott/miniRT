@@ -6,11 +6,12 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 18:30:44 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 14:55:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <math.h>
 
 int	nbr_len(int nbr)
 {
@@ -46,7 +47,7 @@ double	ft_atod(char *str)
 	while (str[i] && ft_isnum(str[i]))
 		i++;
 	fractional = 0;
-	if (++i < ft_strlen(str))
+	if (++i < (int)ft_strlen(str))
 		fractional = ft_atoi(&str[i]);
 	if (fractional == 0)
 		return ((double)integral);

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/19 12:12:15 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/20 15:00:08 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/camera/matrix.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/camera/shading_light.c\
+			$(SRC_DIR)/camera/shading_uv.c\
 			$(SRC_DIR)/camera/shading.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\

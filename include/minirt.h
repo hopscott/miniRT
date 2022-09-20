@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 17:34:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:57:07 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,7 +379,7 @@ void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space);
 
 /* space_render.c */
-void		space_render(t_data *data, int width, int height, t_space *space);
+void		space_render(t_vars *vars, int width, int height, t_space *space);
 
 /* space_render_utils.c */
 void		fatal_error(t_space *space);

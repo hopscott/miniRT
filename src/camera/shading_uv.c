@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 17:40:44 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:47:57 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,4 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	hit->u = ratio * (1 - ((theta / (2 * M_PI)) + 0.5));
 	tot_y_cy = cy->xyz[1] + cy->height * cy->norm[1];
 	hit->v = (hit->phit[1] - cy_center[1]) / tot_y_cy;
-	// printf("==>u: %f, ==>v: %f\n", hit->u, hit->v);
 }
-

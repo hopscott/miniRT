@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 16:04:30 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 18:04:34 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,12 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	return (0);
 }
 
-void	space_render(t_data *data, int width, int height, t_space *space)
+void	space_render(t_vars *vars, int width, int height, t_space *space)
 {
 	t_param	param;
 	t_ray	ray;
 
+	space->texture = &vars->texture;
 	if (init_parameters(width, height, space, &param))
 		return (fatal_error(space));
 	vec_copy(space->camera->xyz, &ray.origin);
@@ -120,7 +121,7 @@ void	space_render(t_data *data, int width, int height, t_space *space)
 			param.colour = cast_ray(&ray, space, \
 						&param.screen_hit[(int)param.py][(int)param.px], \
 						&param.screen_shading[(int)param.py][(int)param.px]);
-			my_mlx_pixel_put(data, param.px, param.py, param.colour);
+			my_mlx_pixel_put(&vars->data, param.px, param.py, param.colour);
 		}
 		print_progress(param.py, height);
 	}

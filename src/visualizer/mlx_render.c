@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/20 17:09:26 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 18:03:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	mlx_render(t_space *space)
 {
 	t_vars	vars;
 
-	vars.space = space;
 	vars.mlx = mlx_init();
 	if (!vars.mlx)
 		return (fatal_error(space));
@@ -60,7 +59,7 @@ void	mlx_render(t_space *space)
 							&vars.texture.line_length, &vars.texture.endian);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
-	space_render(&vars.data, WIDTH, HEIGHT, vars.space);
+	space_render(&vars, WIDTH, HEIGHT, space);
 	if (!space->fatal_error)
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
 	if (!space->fatal_error)

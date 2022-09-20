@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 17:57:07 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 22:44:42 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct s_space {
 	int			fatal_error;
 	t_arb_vecs	arb_vecs;
 	t_data		*texture;
+	t_data		*bump;
 }	t_space;
 
 typedef struct s_vars
@@ -212,6 +213,7 @@ typedef struct s_vars
 	void	*win;
 	t_data	data;
 	t_data	texture;
+	t_data	bump;
 	t_space	*space;
 }	t_vars;
 
@@ -271,6 +273,7 @@ typedef struct s_shader {
 	double		ks;
 	double		specular_comp;
 	t_data		*texture;
+	t_data		*bump;
 }	t_shader;
 
 /* ************************************************* */
@@ -376,7 +379,7 @@ void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
 
 /* mlx_render.c */
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
-void		mlx_render(t_space *space);
+void		mlx_render(t_space *space, char *path_texture, char *path_bump);
 
 /* space_render.c */
 void		space_render(t_vars *vars, int width, int height, t_space *space);

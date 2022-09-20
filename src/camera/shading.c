@@ -6,61 +6,36 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 15:10:07 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 16:47:50 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shade *shade)
-{
-	if ((hit->nearest) && (hit->nearest->type == SPHERE))
-	{
-		vec_copy(obj->sp.rgb, &shade->rgb);
-		sphere_surface_normal(shade->ray, &obj->sp, hit->phit, &shade->normal);
-		set_uv_sphere(hit, &obj->sp);
-		if (hit->nearest->checkered)
-			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
-	}
-	else if ((hit->nearest) && (hit->nearest->type == PLANE))
-	{
-		vec_copy(obj->pl.rgb, &shade->rgb);
-		vec_copy(obj->pl.norm, &shade->normal);
-		set_uv_plane(hit, &obj->pl);
-		if (hit->nearest->checkered)
-			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
-	}
-	else if ((hit->nearest) && (hit->nearest->type == CYLINDER))
-	{
-		vec_copy(obj->cy.rgb, &shade->rgb);
-		cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
-	}
-}
-
-void	init_light_components(t_space *space, t_shade *shade)
+void	init_light_components(t_space *space, t_shader *shader)
 {
 	t_ambient	*amb;
 
 	amb = space->ambient;
-	vec_multiply(amb->rgb, amb->lighting_ratio, &shade->ambient);
-	shade->kd = 0.8;
-	shade->diffuse_comp = 0;
-	vec_set(0, 0, 0, &shade->diffuse);
-	shade->ks = 0.15;
-	shade->specular_comp = 0;
-	vec_set(0, 0, 0, &shade->specular);
+	vec_multiply(amb->rgb, amb->lighting_ratio, &shader->ambient);
+	shader->kd = 0.8;
+	shader->diffuse_comp = 0;
+	vec_set(0, 0, 0, &shader->diffuse);
+	shader->ks = 0.15;
+	shader->specular_comp = 0;
+	vec_set(0, 0, 0, &shader->specular);
 }
 
-void	set_shading_char(t_shade *shade, t_hit *hit)
+void	set_shading_char(t_shader *shader, t_hit *hit)
 {
-	if (shade->lobj == shade->obj)
+	if (shader->lobj == shader->obj)
 	{
-		if ((shade->specular_comp > shade->diffuse_comp))
+		if ((shader->specular_comp > shader->diffuse_comp))
 		{
-			if (shade->specular_comp > 0.01)
+			if (shader->specular_comp > 0.01)
 				hit->shading = '*';
 		}
-		else if (shade->diffuse_comp > 0.5)
+		else if (shader->diffuse_comp > 0.5)
 			hit->shading = 'o';
 	}
 	else
@@ -74,23 +49,24 @@ void	set_shading_char(t_shade *shade, t_hit *hit)
 
 void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 {
-	t_shade		shade;
+	t_shader	shader;
 	t_light		*light;
 	size_t		i;
 
-	shade.ray = ray;
-	shade.obj = obj;
-	surface_rgb_normal(hit, obj, &shade);
-	init_light_components(space, &shade);
+	shader.texture = space->texture;
+	shader.ray = ray;
+	shader.obj = obj;
+	surface_rgb_normal(hit, obj, &shader);
+	init_light_components(space, &shader);
 	i = 0;
 	while (i < space->n_lights)
 	{
 		light = space->lights[i++];
-		shading_from_light(space, hit, light, &shade);
-		set_shading_char(&shade, hit);
+		shading_from_light(space, hit, light, &shader);
+		set_shading_char(&shader, hit);
 	}
-	vec_copy(shade.ambient, &hit->rgb);
-	vec_add(hit->rgb, shade.diffuse, &hit->rgb);
-	vec_add(hit->rgb, shade.specular, &hit->rgb);
-	rgb_multiply(hit->rgb, shade.rgb, &hit->rgb);
+	vec_copy(shader.ambient, &hit->rgb);
+	vec_add(hit->rgb, shader.diffuse, &hit->rgb);
+	vec_add(hit->rgb, shader.specular, &hit->rgb);
+	rgb_multiply(hit->rgb, shader.rgb, &hit->rgb);
 }

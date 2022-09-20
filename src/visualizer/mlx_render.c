@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 15:08:14 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:09:26 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,17 @@ void	mlx_render(t_space *space)
 	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
 							&vars.data.line_length, &vars.data.endian);
+	vars.texture.img = mlx_xpm_file_to_image(vars.mlx, \
+			"scenes/textures/text_test.xpm", &vars.texture.w, &vars.texture.h);
+	vars.texture.addr = mlx_get_data_addr(vars.texture.img, &vars.texture.bpp, \
+							&vars.texture.line_length, &vars.texture.endian);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
 	space_render(&vars.data, WIDTH, HEIGHT, vars.space);
 	if (!space->fatal_error)
-	{
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
+	if (!space->fatal_error)
 		mlx_loop(vars.mlx);
-	}
 	mlx_destroy_image(vars.mlx, vars.data.img);
 	mlx_destroy_window(vars.mlx, vars.win);
 	mlx_destroy_display(vars.mlx);

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 14:59:52 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:34:21 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ enum {
 	CYLINDER	= 5
 };
 
+enum {
+	NONE		= 0,
+	CHECKERS	= 1,
+	TEXTURE		= 2,
+	BUMP		= 3,
+	BUMPTEXT	= 4,
+};
+
 /* Use void pointers in linked list to build up objects */
 
 typedef struct s_obj_lst
@@ -56,7 +64,7 @@ typedef struct s_obj_lst
 	int					type;
 
 	void				*content;
-	int					checkered;
+	int					surface;
 	struct s_obj_lst	*next;
 }	t_obj_lst;
 
@@ -151,6 +159,7 @@ typedef struct s_cylinder
 	double	radius;
 	double	co[3];
 	double	cross_co_orient[3];
+	double	norm_magnitude;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -169,6 +178,18 @@ typedef struct s_arb_vecs {
 	double	v3[3];
 }				t_arb_vecs;
 
+/* MLX */
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		w;
+	int		h;
+}	t_data;
+
 /*	Space structure	*/
 typedef struct s_space {
 	t_camera	*camera;
@@ -182,7 +203,17 @@ typedef struct s_space {
 	double		height;
 	int			fatal_error;
 	t_arb_vecs	arb_vecs;
+	t_data		*texture;
 }	t_space;
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	t_data	data;
+	t_data	texture;
+	t_space	*space;
+}	t_vars;
 
 /*	mat44 structure	*/
 typedef struct s_mat44 {
@@ -226,7 +257,7 @@ typedef struct s_hit {
 }	t_hit;
 
 /*	Shade structure	*/
-typedef struct s_shade {
+typedef struct s_shader {
 	t_ray		*ray;
 	t_object	*obj;
 	t_object	*lobj;
@@ -239,25 +270,8 @@ typedef struct s_shade {
 	double		specular[3];
 	double		ks;
 	double		specular_comp;
-}	t_shade;
-
-/* MLX */
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-}	t_data;
-
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-	t_data	data;
-	t_space	*space;
-}	t_vars;
+	t_data		*texture;
+}	t_shader;
 
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
@@ -331,6 +345,7 @@ void		build_helper_2(double *x, double *y, double *z, double coords[3]);
 /* =================== CAMERA ====================== */
 
 /* matrix.c */
+t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 t_mat44		*camera_lookat(t_camera *cam);
 void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
 															double (*res)[3]);
@@ -343,13 +358,19 @@ void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
 
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
-									t_light *light, t_shade *shade);
+									t_light *light, t_shader *shader);
 
 /* shading_uv.c */
 void		set_uv_sphere(t_hit *hit, t_sphere *sp);
 void		set_uv_plane(t_hit *hit, t_plane *pl);
+void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+
+/* shading_rgb.c */
 void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 									double size, double (*rgb)[3]);
+void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
+void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
+void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
 
 /* =================== VISUALIZER ====================== */
 

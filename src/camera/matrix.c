@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/18 21:19:56 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 00:12:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_mat44	*camera_lookat(t_camera *cam)
 										-vec_dot(fwd, cam->xyz), &coord);
 	return (mat44_init(right, up, fwd, coord));
 }
+
 
 /* https://math.stackexchange.com/questions/89621/how-to-multiply-vector- */
 /* 3-with-4by4-matrix-more-precisely-position-transformat 				  */

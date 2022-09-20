@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 16:48:25 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/20 02:14:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 
 	vec_subtract(hit->phit, sp->xyz, &xyz);
 	r = vec_len(xyz);
-	theta = acos(xyz[2] / r);
-	phi = atan(xyz[1] / xyz[0]);
+	theta = acos(xyz[1] / r);
+	phi = atan(xyz[2] / xyz[0]);
 	if (xyz[0] < 0)
 	{
 		if (xyz[1] >= 0)
@@ -41,7 +41,7 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 		else
 			phi = -M_PI;
 	}
-	hit->u = 1 - ((theta / (2 * M_PI)) + 0.5);
+	hit->u = 2 * (1 - ((theta / (2 * M_PI)) + 0.5));
 	hit->v = 1 - (phi / M_PI);
 }
 
@@ -53,6 +53,69 @@ void	set_uv_plane(t_hit *hit, t_plane *pl)
 {
 	hit->u = vec_dot(hit->phit, pl->e1);
 	hit->v = vec_dot(hit->phit, pl->e2);
+}
+
+t_mat44	*mat44_init_utils(double angle_y, t_cylinder *cy)
+{
+	t_mat44	*ret;
+	double	a[3];
+	double	b[3];
+	double	c[3];
+	double	d[3];
+	
+	a[0] = cos((angle_y  / 180) * M_PI);
+	printf("a[0]: %f\n", a[0]);
+	a[1] = 0;
+	a[2] = -sin((angle_y  / 180) * M_PI);
+	printf("a[2]: %f\n", a[2]);
+	b[0] = 0;
+	b[1] = 1;
+	b[2] = 0;
+	c[0] = sin((angle_y  / 180) * M_PI);
+	printf("c[0]: %f\n", c[0]);
+	c[1] = 0;
+	c[2] = cos((angle_y  / 180) * M_PI);
+	printf("c[2]: %f\n", c[2]);
+	d[0] = - cy->xyz[0];
+	d[1] = - cy->xyz[1];
+	d[2] = - cy->xyz[2];
+	ret = mat44_init(a, b, c, d); 
+	return (ret);
+}
+
+void	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
+{
+	t_mat44	*mat;
+	double	angle_y;
+
+	angle_y = acos(1/cy->norm_magnitude);
+//	printf("angle_y: %f, vec_len: %f, cy->norm.x: %f, cy->norm.y: %f, cy_norm.z: %f\n", angle_y, vec_len(cy->norm), cy->norm[0],cy->norm[1],cy->norm[2]);
+	mat = mat44_init_utils(angle_y, cy);
+	vec_matrix_multiply(mat, hit->phit, 1, trans_phit);
+}
+
+void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
+{
+	double	cy_center[3];
+	double	xyz[3];
+	double	theta;
+	double	raw_u;
+	double	tot_y_cy;
+//	double	trans_phit[3];
+
+//	vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height/2, &cy_center);
+	vec_set(cy->xyz[0] , cy->xyz[1], cy->xyz[2], &cy_center);
+//	printf("phit_x: %f, phit_y: %f, phit_z: %f\n", hit->phit[0], hit->phit[1], hit->phit[2]);
+	trans_to_cy(&xyz, cy, hit);
+//	printf("xyz: %f, xyz: %f, xyz: %f\n", xyz[0], xyz[1], xyz[2]);
+//	vec_subtract(hit->phit, cy_center, &xyz);
+	theta = atan(xyz[0] / xyz[2]);
+	raw_u = theta / (2 * M_PI);
+	hit->u = 1 - (raw_u + 0.5);
+	tot_y_cy = cy->xyz[1] + cy->height * cy->norm[1];
+	hit->v = (hit->phit[1] - cy_center[1]) / tot_y_cy;
+//	printf("==>u: %f, ==>v: %f\n", hit->u, hit->v);
+
 }
 
 void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
@@ -86,7 +149,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 		{
 			// vec_copy(obj->sp.rgb, &shade->rgb);
 			set_uv_sphere(hit, &obj->sp);
-			printf("=> u: %f => v: %f \n", hit->u, hit->v);
+//			printf("=> u: %f => v: %f \n", hit->u, hit->v);
 			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
 			sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
 		}
@@ -99,7 +162,9 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade)
 		}
 		else if (hit->nearest->type == CYLINDER)
 		{
-			vec_copy(obj->cy.rgb, &shade->rgb);
+			set_uv_cylinder(hit, &obj->cy);
+			set_checkerboard_rgb(hit, obj->cy.rgb, 30 , &shade->rgb);
+//			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
 	}

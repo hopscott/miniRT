@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 22:44:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/21 01:38:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ enum {
 typedef struct s_obj_lst
 {
 	int					type;
-
 	void				*content;
 	int					surface;
 	struct s_obj_lst	*next;

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 18:07:24 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/21 03:45:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_obj_lst	*obj_lstnew(int type, void *content)
 		return (NULL);
 	elem->type = type;
 	elem->content = content;
-	elem->surface = CHECKERS;
+	elem->surface = TEXTURE;
 	elem->next = NULL;
 	return (elem);
 }

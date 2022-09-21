@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 23:39:17 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/21 03:49:18 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 
 void	set_uv_plane(t_hit *hit, t_plane *pl)
 {
-	hit->u = vec_dot(hit->phit, pl->e1);
-	hit->v = vec_dot(hit->phit, pl->e2);
+	double	xyz[3];
+
+	vec_subtract(hit->phit, pl->xyz, &xyz);
+	vec_divide(xyz, 100, &xyz);
+	hit->u = fabs(fmod(vec_dot(xyz, pl->e1), 1));
+	hit->v = fabs(fmod(vec_dot(xyz, pl->e2), 1));
 }
 
 t_mat44	*mat44_init_cylinder(double angle_y, t_cylinder *cy)
@@ -94,14 +98,14 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	double	cy_center[3];
 	double	xyz[3];
 	double	theta;
-	double	ratio;
+	double	raw_u;
 	double	tot_y_cy;
 
-	ratio = 2 * (cy->height / cy->diameter);
 	vec_set(cy->xyz[0], cy->xyz[1], cy->xyz[2], &cy_center);
 	trans_to_cy(&xyz, cy, hit);
 	theta = atan(xyz[0] / xyz[2]);
-	hit->u = ratio * (1 - ((theta / (2 * M_PI)) + 0.5));
+	raw_u = theta / (2 * M_PI);
+	hit->u = 1 - (raw_u + 0.5);
 	tot_y_cy = cy->xyz[1] + cy->height * cy->norm[1];
 	hit->v = (hit->phit[1] - cy_center[1]) / tot_y_cy;
 }

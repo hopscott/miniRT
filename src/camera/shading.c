@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 19:32:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/21 02:00:26 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,20 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 
 void	set_uv_plane(t_hit *hit, t_plane *pl)
 {
+//	double	center_phit[3];
+//	double	u_center_phit[3];
+//	double	u_phit[3];
+
+//	vec_subtract(hit->phit, pl->xyz, &center_phit);
+//	vec_unit(center_phit, &u_center_phit);
+//	vec_unit(hit->phit, &u_phit);
+//	hit->u = (vec_dot(u_center_phit , pl->e1)) * 0.5 + 0.5;
+//	hit->v = (vec_dot(u_center_phit, pl->e2)) * 0.5 + 0.5;
+
 	hit->u = vec_dot(hit->phit, pl->e1);
 	hit->v = vec_dot(hit->phit, pl->e2);
+//	hit->u = vec_dot(u_phit, pl->e1);
+//	hit->v = vec_dot(u_phit, pl->e2);
 }
 
 t_mat44	*mat44_init_utils(double angle_y, t_cylinder *cy)
@@ -165,6 +177,8 @@ void	set_texture(t_hit *hit, double (*rgb)[3], t_data *tex)
 
 void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
 {
+//	int		u2;
+//	int		v2;
 	int		u2;
 	int		v2;
 	double	ncheckers_width;
@@ -175,7 +189,10 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*
 	ncheckers_height = size;
 	u2 = floor(hit->u * ncheckers_width);
 	v2 = floor(hit->v * ncheckers_height);
-	if ((u2 + v2) % 2 == 0)
+//	u2 = hit->u * ncheckers_width;
+//	v2 = hit->v * ncheckers_height;
+//	printf("u2: %f, v2: %f\n", u2, v2);
+	if ((u2 + v2) % 2  == 0)
 		vec_copy(surf_rgb, rgb);
 	else
 	{
@@ -204,6 +221,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		else if (hit->nearest->type == PLANE)
 		{
 			set_uv_plane(hit, &obj->pl);
+//			set_texture(hit, &shade->rgb, tex);
 			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
 			// vec_copy(obj->sp.rgb, &shade->rgb);
 			vec_copy(obj->pl.norm, &shade->normal);

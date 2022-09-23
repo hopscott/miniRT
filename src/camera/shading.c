@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/21 05:04:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/23 15:19:56 by jpalma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_mat44	*mat44_init_utils(double angle_y, t_cylinder *cy)
 	ret = mat44_init(a, b, c, d); 
 	return (ret);
 }
-
+/*
 void	trans_to_cy(double (*trans_phit)[3], double (*trans_cy)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	s;
@@ -124,6 +124,125 @@ void	trans_to_cy(double (*trans_phit)[3], double (*trans_cy)[3], t_cylinder *cy,
 	vec_matrix_multiply(mat, cy->xyz,1,  trans_cy);
 
 	
+}
+*/
+
+mat44	*set_rx(double	angle)
+{
+	double	a[3];
+	double	b[3];
+	double	c[3];
+	double	d[3];
+	mat44	r_x;
+
+	a[0] = 1;
+	a[1] = 0;
+	a[2] = 0;
+	b[0] = 0;
+	b[1] = cos(angle);
+	b[2] = sin(angle);
+	c[0] = 0;
+	c[1] = -sin(angle);
+	c[2] = cos(angle);
+	d[0] = 0;
+	d[1] = 0;
+	d[2] = 0;
+	r_x = mat44_init(a, b, c, d);
+}
+
+mat44	*set_ry(double	angle)
+{
+	double	a[3];
+	double	b[3];
+	double	c[3];
+	double	d[3];
+	mat44	r_y;
+
+	a[0] = cos(angle);
+	a[1] = 0;
+	a[2] = -sin(angle);
+	b[0] = 0;
+	b[1] = 1;
+	b[2] = 0;
+	c[0] = sin(angle);
+	c[1] = 0;
+	c[2] = cos(angle);
+	d[0] = 0;
+	d[1] = 0;
+	d[2] = 0;
+	r_y = mat44_init(a, b, c, d);
+}
+
+mat44	*set_rz(double	angle)
+{
+	double	a[3];
+	double	b[3];
+	double	c[3];
+	double	d[3];
+	mat44	r_z;
+
+	a[0] = cos(angle);
+	a[1] = sin(angle);
+	a[2] = 0
+	b[0] = -sin(angle);
+	b[1] = cos(angle);
+	b[2] = 0;
+	c[0] = 0;
+	c[1] = 0;
+	c[2] = 1;
+	d[0] = 0;
+	d[1] = 0;
+	d[2] = 0;
+	r_z = mat44_init(a, b, c, d);
+}
+
+mat44	*set_t(double	angle)
+{
+	double	a[3];
+	double	b[3];
+	double	c[3];
+	double	d[3];
+	mat44	t;
+
+	a[0] = 0; 
+	a[1] = 0; 
+	a[2] = 0; 
+	b[0] = 0; 
+	b[1] = 0; 
+	b[2] = 0; 
+	c[0] = 0; 
+	c[1] = 0; 
+	c[2] = 0; 
+	d[0] = - cy->xyz[0];  
+	d[1] = - cy->xyz[1];
+	d[2] = - cy->xyz[2];
+	t = mat44_init(a, b, c, d);
+}
+/*
+mat44	*set_rot_matrix(double angle)
+{
+	mat44	*r_x;
+	mat44	*r_y;
+	mat44	*r_z;
+	mat44	*t;
+
+	
+
+	
+}
+*/
+void	trans_to_cy(double (*trans_phit)[3], double (*trans_cy)[3], t_cylinder *cy, t_hit *hit)
+{
+	double	angle;
+	double	y_axis[3];
+	mat44	*rot_mat;
+	mat44	*t;
+
+	vec_set(0, 1, 0, &y_axis);
+	angle = acos(vec_dot(cy->norm, y_axis));
+	if (!angle)
+		return;
+	rot_mat = set_rot_mat((angle / 180) * M_PI);
 }
 
 void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
@@ -260,7 +379,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		else if (hit->nearest->type == CYLINDER)
 		{
 			set_uv_cylinder(hit, &obj->cy);
-//			set_texture(hit, &shade->rgb, tex);
+			set_texture(hit, &shade->rgb, tex);
 //			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}

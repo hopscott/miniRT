@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 02:45:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/09/26 16:01:50 by jpalma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,9 @@ t_mat44		*camera_lookat(t_camera *cam);
 t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
 															double (*res)[3]);
+t_mat44		*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free);
+void		print_mat(t_mat44 *mat);
+
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading, t_data *tex);
 void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);

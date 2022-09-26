@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/26 17:32:50 by jpalma           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:02:34 by jpalma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 	hit->v = (1 - (phi / M_PI)) / 2;
 	hit->u = fabs(hit->u);
 	hit->v = fabs(hit->v);
-	//	printf("u_sp: %f, v_sp: %f\n", hit->u, hit->v);
+//	printf("u_sp: %f, v_sp: %f\n", hit->u, hit->v);
 }
 
 /* ======================================================== */
@@ -65,7 +65,7 @@ t_mat44	*mat44_init_utils(double angle_y, t_cylinder *cy)
 	double	b[3];
 	double	c[3];
 	double	d[3];
-
+	
 	a[0] = cos((angle_y  / 180) * M_PI);
 	a[1] = 0;
 	a[2] = -sin((angle_y  / 180) * M_PI);
@@ -198,21 +198,21 @@ t_mat44	*set_rot_mat(double angle)
 
 t_mat44	*set_tr_mat(double angle, t_cylinder *cy)
 {
-	t_mat44	*tr_mat;
-	t_mat44	*rot_mat;
-	t_mat44	*t_mat;
+t_mat44	*tr_mat;
+t_mat44	*rot_mat;
+t_mat44	*t_mat;
 
-	rot_mat = set_rot_mat(angle);
-	t_mat = set_t(cy);
-	tr_mat = mat_x_mat(t_mat, rot_mat, 1);
-	return (tr_mat);
+rot_mat = set_rot_mat(angle);
+t_mat = set_t(cy);
+tr_mat = mat_x_mat(t_mat, rot_mat, 1);
+return (tr_mat);
 }
 
 int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 {
 	double	extr_pt[3];
 	double	res[3];
-
+	
 	vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
 	vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
 	if (!(!res[0] && !res[2] && res[1] == cy->height))
@@ -220,7 +220,7 @@ int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 	return (0);
 }
 
-int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
+void	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	angle;
 	t_mat44	*tr_mat;
@@ -229,7 +229,7 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 	vec_set(0, 1, 0, &y_axis);
 	angle = acos(vec_dot(cy->norm, y_axis));
 	if (!angle)
-		return (1);
+		return;
 	tr_mat = set_tr_mat((angle / 180) * M_PI, cy);
 	if (check_tr(cy, tr_mat))
 	{
@@ -238,7 +238,6 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 		tr_mat = set_tr_mat((angle / 180) * M_PI, cy);
 	}
 	vec_matrix_multiply(tr_mat, hit->phit, 1, trans_phit);
-	return (0);
 }
 
 void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
@@ -247,48 +246,37 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	double	theta;
 	double	raw_u;
 	double	tot_y_cy; //should be equal to height
-	int		test;
 
-	printf("BT: X: %f, Y: %f, Z: %f\n", hit->phit[0], hit->phit[1], hit->phit[2]);
-	test = trans_to_cy(&xyz, cy, hit);
-	printf("AT: X: %f, Y: %f, Z: %f\n", xyz[0], xyz[1], xyz[2]);
-	if (test)
-	{
-		xyz[0] = hit->phit[0];
-		xyz[1] = hit->phit[1];
-		xyz[2] = hit->phit[2];
-	}
+	trans_to_cy(&xyz, cy, hit);
 	theta = atan(xyz[0] / xyz[2]);
 	raw_u = theta / (2 * M_PI);
-	hit->u = (1 - (raw_u + 0.5));
+	hit->u = 1 - (raw_u + 0.5);
 	tot_y_cy = cy->height;
-	if (test)
-		hit->v = ((xyz[1] - cy->xyz[1]) / tot_y_cy) / 2;
-	else
-		hit->v = ((xyz[1]) / tot_y_cy) / 2;
+	hit->v = (hit->phit[1]) / tot_y_cy;
+	printf("==>u: %f, ==>v: %f\n", hit->u, hit->v);
 }
 
 /*
-   void	set_checkerboard_rgb_cy(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3], t_data *tex)
-   {
+void	set_checkerboard_rgb_cy(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3], t_data *tex)
+{
 //	int		u2;
 //	int		v2;
 //	double	ncheckers_width;
 //	double	ncheckers_height;
 //	double	max[3];
 
-(void)tex;
-ncheckers_width = size;
-ncheckers_height = size;
-u2 = floor(hit->u * ncheckers_width);
-v2 = floor(hit->v * ncheckers_height);
-if ((u2 + v2) % 2 == 0)
-vec_copy(surf_rgb, rgb);
-else
-{
-vec_set(255, 255, 255, &max);
-vec_subtract(max, surf_rgb, rgb);
-}
+	(void)tex;
+	ncheckers_width = size;
+	ncheckers_height = size;
+	u2 = floor(hit->u * ncheckers_width);
+	v2 = floor(hit->v * ncheckers_height);
+	if ((u2 + v2) % 2 == 0)
+		vec_copy(surf_rgb, rgb);
+	else
+	{
+		vec_set(255, 255, 255, &max);
+		vec_subtract(max, surf_rgb, rgb);
+	}
 }
 */
 
@@ -307,26 +295,26 @@ void	set_texture(t_hit *hit, double (*rgb)[3], t_data *tex)
 		hit->v = 0;
 	if (hit->v > 1)
 		hit->v = 1;
-	//	printf("bpp: %d\n", tex->bpp);
+//	printf("bpp: %d\n", tex->bpp);
 	x = (int)(hit->u * tex->w* tex->bpp/8);
 	x -= x % 4;
 	y = (int)(hit->v * tex->h * tex->bpp/8);
 	y -= y % 4;
-	//	printf("u: %f, v: %f\n", hit->u, hit->v);
-	//	printf("tex->w: %d, tex->h: %d, x: %d, y: %d\n", tex->w, tex->h, x, y);
+	printf("u: %f, v: %f\n", hit->u, hit->v);
+	printf("tex->w: %d, tex->h: %d, x: %d, y: %d\n", tex->w, tex->h, x, y);
 	color = tex->addr + x + tex->w * y;
 	rgb_pix[0] = (double)color[2];
 	rgb_pix[1] = (double)color[1];
 	rgb_pix[2] = (double)color[0];
-	//	if (!rgb_pix[0] && !rgb_pix[1] && !rgb_pix[2])
+//	if (!rgb_pix[0] && !rgb_pix[1] && !rgb_pix[2])
 	vec_copy(rgb_pix, rgb);
 }
 
 
 void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])
 {
-	//	int		u2;
-	//	int		v2;
+//	int		u2;
+//	int		v2;
 	int		u2;
 	int		v2;
 	double	ncheckers_width;
@@ -337,9 +325,9 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*
 	ncheckers_height = size;
 	u2 = floor(hit->u * ncheckers_width);
 	v2 = floor(hit->v * ncheckers_height);
-	//	u2 = hit->u * ncheckers_width;
-	//	v2 = hit->v * ncheckers_height;
-	//	printf("u2: %f, v2: %f\n", u2, v2);
+//	u2 = hit->u * ncheckers_width;
+//	v2 = hit->v * ncheckers_height;
+//	printf("u2: %f, v2: %f\n", u2, v2);
 	if ((u2 + v2) % 2  == 0)
 		vec_copy(surf_rgb, rgb);
 	else
@@ -363,8 +351,8 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 			// vec_copy(obj->sp.rgb, &shade->rgb);
 			set_uv_sphere(hit, &obj->sp);
 			set_texture(hit, &shade->rgb, tex);
-			//			printf("=> u: %f => v: %f \n", hit->u, hit->v);
-			//			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
+//			printf("=> u: %f => v: %f \n", hit->u, hit->v);
+//			set_checkerboard_rgb(hit, obj->sp.rgb, 20, &shade->rgb);
 			sphere_surface_normal(r, &obj->sp, hit->phit, &shade->normal);
 		}
 		else if (hit->nearest->type == PLANE)
@@ -378,9 +366,9 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		else if (hit->nearest->type == CYLINDER)
 		{
 			set_uv_cylinder(hit, &obj->cy);
-			set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
-			//	set_texture(hit, &shade->rgb, tex);
-			//			vec_copy(obj->cy.rgb, &shade->rgb);
+			set_checkerboard_rgb(hit, obj->pl.rgb, 0.1, &shade->rgb);
+		//	set_texture(hit, &shade->rgb, tex);
+//			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
 	}

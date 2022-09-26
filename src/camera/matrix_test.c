@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   matrix_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/26 16:56:23 by jpalma           ###   ########.fr       */
+/*   Updated: 2022/09/26 16:19:49 by jpalma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 
 /* https://www.scratchapixel.com/lessons/					 */
 /* mathematics-physics-for-computer-graphics/lookat-function */
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct s_mat44 {
+double	a[4];
+double	b[4];
+double	c[4];
+double	d[4];
+}		t_mat44;
 
 t_mat44	*mat44_init(double a[3], double b[3], double c[3], double d[3])
 {
@@ -42,51 +51,8 @@ t_mat44	*mat44_init(double a[3], double b[3], double c[3], double d[3])
 	return (mat);
 }
 
-t_mat44	*camera_lookat(t_camera *cam)
-{
-	double	fwd[3];
-	double	arb[3];
-	double	right[3];
-	double	up[3];
-	double	coord[3];
-
-	if (!cam)
-		return (NULL);
-	vec_copy(cam->norm, &fwd);
-	vec_set(0, 1, 0, &arb);
-	vec_unit(arb, &arb);
-	vec_cross(arb, fwd, &right);
-	vec_unit(right, &right);
-	vec_cross(fwd, right, &up);
-	vec_unit(up, &up);
-	vec_set(-vec_dot(right, cam->xyz), -vec_dot(up, cam->xyz), \
-			-vec_dot(fwd, cam->xyz), &coord);
-	return (mat44_init(right, up, fwd, coord));
-}
-
-
 /* https://math.stackexchange.com/questions/89621/how-to-multiply-vector- */
 /* 3-with-4by4-matrix-more-precisely-position-transformat 				  */
-
-void	vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
-		double (*res)[3])
-{
-	double	a;
-	double	b;
-	double	c;
-
-	if (mat)
-	{
-		a = (mat->a[0] * vec[0]) + (mat->b[0] * vec[1]) \
-			+ (mat->c[0] * vec[2]) + (mat->d[0] * w);
-		b = (mat->a[1] * vec[0]) + (mat->b[1] * vec[1]) \
-			+ (mat->c[1] * vec[2]) + (mat->d[1] * w);
-		c = (mat->a[2] * vec[0]) + (mat->b[2] * vec[1]) \
-			+ (mat->c[2] * vec[2]) + (mat->d[2] * w);
-		vec_set(a, b, c, res);
-	}
-}
-
 void	mat_x_mat_utils(double (*col_to_fill)[3], t_mat44 *mat1, double col[3], int d)
 {
 	int		i;
@@ -123,6 +89,55 @@ t_mat44	*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free)
 	return (ret);
 }
 
+t_mat44	*set_rx(double angle)
+{
+double	a[3];
+double	b[3];
+double	c[3];
+double	d[3];
+t_mat44	*r_x;
+
+a[0] = 1;
+a[1] = 21;
+a[2] = 12;
+b[0] = 0;
+b[1] = 570;
+b[2] = -10;
+c[0] = 0.7;
+c[1] = -30.6;
+c[2] = 70;
+d[0] = 100;
+d[1] = 0.5;
+d[2] = 10;
+r_x = mat44_init(a, b, c, d);
+return (r_x);
+}
+
+t_mat44	*set_ry(double angle)
+{
+double	a[3];
+double	b[3];
+double	c[3];
+double	d[3];
+t_mat44	*r_y;
+
+a[0] = 1010; 
+a[1] = 0.5;
+a[2] = 30;
+b[0] = 35;
+b[1] = 400;
+b[2] = 1;
+c[0] = 2;
+c[1] = 3.6;
+c[2] = 4;
+d[0] = 50;
+d[1] = 2;
+d[2] = 10;
+r_y = mat44_init(a, b, c, d);
+return (r_y);
+}
+
+
 void	print_mat(t_mat44 *mat)
 {
 	printf("%f %f %f %f\n", mat->a[0], mat->b[0], mat->c[0], mat->d[0]);
@@ -131,3 +146,13 @@ void	print_mat(t_mat44 *mat)
 	printf("0 0 0 1\n");
 }
 
+int	main(int argc, char **argv)
+{
+	t_mat44	*r_x;
+	t_mat44	*r_y;
+
+	r_x = set_rx(5);
+	r_y = set_ry(5);
+	print_mat(mat_x_mat(r_x, r_y, 1));
+	return (0);
+}

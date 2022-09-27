@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/26 17:32:50 by jpalma           ###   ########.fr       */
+/*   Updated: 2022/09/27 11:22:42 by jpalma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,15 @@ t_mat44	*set_t(t_cylinder *cy)
 	double	d[3];
 	t_mat44	*t;
 
-	a[0] = 0; 
+	a[0] = 1; 
 	a[1] = 0; 
 	a[2] = 0; 
 	b[0] = 0; 
-	b[1] = 0; 
+	b[1] = 1; 
 	b[2] = 0; 
 	c[0] = 0; 
 	c[1] = 0; 
-	c[2] = 0; 
+	c[2] = 1; 
 	d[0] = - cy->xyz[0];  
 	d[1] = - cy->xyz[1];
 	d[2] = - cy->xyz[2];
@@ -187,10 +187,18 @@ t_mat44	*set_rot_mat(double angle)
 	t_mat44	*r;
 
 	r_x = set_rx(angle);
+	printf("rx: \n");
+	print_mat(r_x);
 	r_y = set_ry(angle);
+	printf("ry: \n");
+	print_mat(r_y);
 	r_z = set_rz(angle);
+	printf("rz: \n");
+	print_mat(r_z);
 	tmp = mat_x_mat(r_y, r_x, 1);
+	printf("r_y * r_x: \n");
 	r = mat_x_mat(r_z, tmp, 1);
+	print_mat(r);
 	return (r);
 }
 
@@ -198,13 +206,18 @@ t_mat44	*set_rot_mat(double angle)
 
 t_mat44	*set_tr_mat(double angle, t_cylinder *cy)
 {
+	printf("angle is: %f\n", angle);
 	t_mat44	*tr_mat;
 	t_mat44	*rot_mat;
 	t_mat44	*t_mat;
 
 	rot_mat = set_rot_mat(angle);
 	t_mat = set_t(cy);
+	printf("t: \n");
+	print_mat(t_mat);
 	tr_mat = mat_x_mat(t_mat, rot_mat, 1);
+	printf("tr_mat (t * r): \n");
+	print_mat(tr_mat);
 	return (tr_mat);
 }
 
@@ -215,8 +228,12 @@ int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 
 	vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
 	vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+	printf("The top of the cylinder transformed:\n");
+	printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
 	if (!(!res[0] && !res[2] && res[1] == cy->height))
 		return (1);
+	else
+		printf("Good transformation\n");
 	return (0);
 }
 
@@ -228,15 +245,24 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 
 	vec_set(0, 1, 0, &y_axis);
 	angle = acos(vec_dot(cy->norm, y_axis));
+	printf("angle BT: %f\n", angle);
 	if (!angle)
 		return (1);
-	tr_mat = set_tr_mat((angle / 180) * M_PI, cy);
+	tr_mat = set_tr_mat(angle, cy);
 	if (check_tr(cy, tr_mat))
 	{
 		free(tr_mat);
 		angle *= -1;
-		tr_mat = set_tr_mat((angle / 180) * M_PI, cy);
+		tr_mat = set_tr_mat(angle, cy);
+		double	extr_pt[3];
+		double	res[3];
+
+		vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
+		vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+		printf("The top of the cylinder transformed:\n");
+		printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
 	}
+	exit (0);
 	vec_matrix_multiply(tr_mat, hit->phit, 1, trans_phit);
 	return (0);
 }

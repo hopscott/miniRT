@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/21 03:56:34 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 00:35:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	set_rgb_normal(t_hit *hit, double rgb[3], double size, t_shader *shader)
 		set_checkerboard_rgb(hit, rgb, size, &shader->rgb);
 	else if (hit->nearest->surface == TEXTURE)
 		set_texture_rgb(hit, shader->texture, &shader->rgb);
-	// else if (hit->nearest->surface == BUMP)
-		// set_bump_normal(hit, shader->bump, &shader->normal);
-	// else if (hit->nearest->surface == BUMPTEXT)
-	// {
-		// set_texture_rgb(hit, shader->texture, &shader->rgb);
-		// set_bump_normal(hit, shader->bump, &shader->normal);
-	// }
+	else if (hit->nearest->surface == BUMP)
+		set_bump_normal(hit, shader->bump, &shader->normal);
+	else if (hit->nearest->surface == BUMPTEXT)
+	{
+		set_texture_rgb(hit, shader->texture, &shader->rgb);
+		set_bump_normal(hit, shader->bump, &shader->normal);
+	}
 }
 
 void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
@@ -66,7 +66,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
 														&shader->normal);
 		set_uv_sphere(hit, &obj->sp);
 		vec_copy(obj->sp.rgb, &shader->rgb);
-		// set_rgb_normal(hit, obj->sp.rgb, 20, shader);
+		set_rgb_normal(hit, obj->sp.rgb, 20, shader);
 	}
 	else if ((hit->nearest) && (hit->nearest->type == PLANE))
 	{
@@ -80,7 +80,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
 		cylinder_surface_normal(&obj->cy, hit->phit, &shader->normal);
 		set_uv_cylinder(hit, &obj->cy);
 		vec_copy(obj->cy.rgb, &shader->rgb);
-		// set_rgb_normal(hit, obj->cy.rgb, 5, shader);
+		set_rgb_normal(hit, obj->cy.rgb, 5, shader);
 	}
 }
 

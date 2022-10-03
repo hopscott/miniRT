@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/21 01:38:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 00:24:40 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,10 @@ void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
 void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
 void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
+
+/* shading_normal.c */
+int			set_bump_normal(t_hit *hit, t_data *bump, double (*norm)[3]);
+
 
 /* =================== VISUALIZER ====================== */
 

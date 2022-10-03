@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/27 11:22:42 by jpalma           ###   ########.fr       */
+/*   Updated: 2022/10/03 19:20:19 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,9 +195,10 @@ t_mat44	*set_rot_mat(double angle)
 	r_z = set_rz(angle);
 	printf("rz: \n");
 	print_mat(r_z);
-	tmp = mat_x_mat(r_y, r_x, 1);
+	tmp = mat_x_mat(r_y, r_x, 0);
 	printf("r_y * r_x: \n");
-	r = mat_x_mat(r_z, tmp, 1);
+	r = mat_x_mat(r_z, tmp, 0);
+	r = r_z;
 	print_mat(r);
 	return (r);
 }
@@ -215,7 +216,8 @@ t_mat44	*set_tr_mat(double angle, t_cylinder *cy)
 	t_mat = set_t(cy);
 	printf("t: \n");
 	print_mat(t_mat);
-	tr_mat = mat_x_mat(t_mat, rot_mat, 1);
+	tr_mat = mat_x_mat(t_mat, rot_mat, 0);
+	tr_mat = rot_mat;
 	printf("tr_mat (t * r): \n");
 	print_mat(tr_mat);
 	return (tr_mat);
@@ -227,10 +229,15 @@ int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 	double	res[3];
 
 	vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
-	vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+//	vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+	vec_matrix_multiply(tr_mat, cy->norm, 1, &res);
+	printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
+	printf("cy->norm transformed:\n");
+	printf("x_t: %f, y_t: %f, z_t: %f\n", res[0] , res[1], res[2]);
+	vec_ray_distance_to_point(cy->xyz, res, cy->height, &extr_pt);
 	printf("The top of the cylinder transformed:\n");
-	printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
-	if (!(!res[0] && !res[2] && res[1] == cy->height))
+	printf("x_t: %f, y_t: %f, z_t: %f\n", extr_pt[0], extr_pt[1], extr_pt[2]);
+	if (!(res[0] < 0.0001 && res[2] < 0.0001 && res[1] >= 0.999999))
 		return (1);
 	else
 		printf("Good transformation\n");
@@ -258,11 +265,14 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 		double	res[3];
 
 		vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
-		vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
-		printf("The top of the cylinder transformed:\n");
+//		vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+		vec_matrix_multiply(tr_mat, cy->norm, 1, &res);
+		printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
+//		printf("The top of the cylinder transformed:\n");
+		printf("cy->norm transformed:\n");
 		printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
 	}
-	exit (0);
+//	exit (0);
 	vec_matrix_multiply(tr_mat, hit->phit, 1, trans_phit);
 	return (0);
 }
@@ -288,10 +298,7 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	raw_u = theta / (2 * M_PI);
 	hit->u = (1 - (raw_u + 0.5));
 	tot_y_cy = cy->height;
-	if (test)
-		hit->v = ((xyz[1] - cy->xyz[1]) / tot_y_cy) / 2;
-	else
-		hit->v = ((xyz[1]) / tot_y_cy) / 2;
+	hit->v = ((xyz[1] - cy->xyz[1]) / tot_y_cy) / 4;
 }
 
 /*
@@ -405,7 +412,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		{
 			set_uv_cylinder(hit, &obj->cy);
 			set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
-			//	set_texture(hit, &shade->rgb, tex);
+//			set_texture(hit, &shade->rgb, tex);
 			//			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}

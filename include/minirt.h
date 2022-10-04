@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 00:24:40 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:03:26 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,14 @@ enum {
 	CHECKERS	= 1,
 	TEXTURE		= 2,
 	BUMP		= 3,
-	BUMPTEXT	= 4,
+	BUMPTEXT	= 4
 };
 
-/* Use void pointers in linked list to build up objects */
-
-typedef struct s_obj_lst
-{
-	int					type;
-	void				*content;
-	int					surface;
-	struct s_obj_lst	*next;
-}	t_obj_lst;
+enum {
+	BRICK		= 0,
+	CUSTOM		= 1,
+	MATERIALS	= 2
+};
 
 typedef struct s_ambient
 {
@@ -189,6 +185,18 @@ typedef struct s_data
 	int		h;
 }	t_data;
 
+/* Use void pointers in linked list to build up objects */
+typedef struct s_obj_lst
+{
+	int					type;
+	void				*content;
+	int					surface;
+	int					material;
+	t_data				*texture;
+	t_data				*bump;
+	struct s_obj_lst	*next;
+}	t_obj_lst;
+
 /*	Space structure	*/
 typedef struct s_space {
 	t_camera	*camera;
@@ -202,8 +210,8 @@ typedef struct s_space {
 	double		height;
 	int			fatal_error;
 	t_arb_vecs	arb_vecs;
-	t_data		*texture;
-	t_data		*bump;
+	t_data		*textures;
+	t_data		*bumps;
 }	t_space;
 
 typedef struct s_vars
@@ -211,8 +219,8 @@ typedef struct s_vars
 	void	*mlx;
 	void	*win;
 	t_data	data;
-	t_data	texture;
-	t_data	bump;
+	t_data	textures[MATERIALS];
+	t_data	bumps[MATERIALS];
 	t_space	*space;
 }	t_vars;
 
@@ -239,7 +247,6 @@ typedef struct s_param {
 }	t_param;
 
 /*	Ray structure	*/
-
 typedef struct s_ray {
 	double	origin[3];
 	double	direction[3];
@@ -247,6 +254,7 @@ typedef struct s_ray {
 
 /*	Hit structure	*/
 typedef struct s_hit {
+	t_ray		*ray;
 	double		t;
 	t_obj_lst	*nearest;
 	double		phit[3];
@@ -291,7 +299,7 @@ void		print_light(t_light *l);
 
 /* ================== PARSER ====================== */
 /* object_list.c */
-int			obj_lstadd(t_obj_lst **lst, int type, t_object *object);
+int			obj_lstadd(t_obj_lst **lst, int type, t_object *object, char **tbl);
 void		obj_lstfree(t_obj_lst **lst);
 
 /* errorinizer.c */
@@ -325,6 +333,8 @@ int			init_3_arb_vec3(t_space *space, t_arb_vecs *arb_vecs);
 void		init_parser_params(t_space *space);
 int			check_space_null(t_space *space);
 int			line_is_space(char *str);
+int			surface_parser(char **tbl);
+int			material_parser(char **tbl);
 
 /* parser_utils2.c */
 int			tbl_3_check(char **tbl);
@@ -384,6 +394,10 @@ int			set_bump_normal(t_hit *hit, t_data *bump, double (*norm)[3]);
 void		my_mlx_pixel_put(t_data *data, int px, int py, int color);
 void		mlx_render(t_space *space, char *path_texture, char *path_bump);
 
+/* mlx_render_utils.c */
+void		set_img_addr_from_xpm(t_vars *vars, t_data *data, char *path);
+void		set_textures_and_bumps(t_vars *vars, char *texture, char *bump);
+
 /* space_render.c */
 void		space_render(t_vars *vars, int width, int height, t_space *space);
 
@@ -391,6 +405,7 @@ void		space_render(t_vars *vars, int width, int height, t_space *space);
 void		fatal_error(t_space *space);
 void		free_params(t_param *param);
 void		print_screens_and_free_matrix(t_param *param);
+void		set_surfaces(t_data *textures, t_data *bumps, t_obj_lst **lst);
 
 /* =================== INTERSECTOR ====================== */
 

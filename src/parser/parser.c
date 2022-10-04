@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 10:47:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 21:56:58 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ int	objs_builder3(char **tbl, t_space *space, int *to_switch)
 	err = 0;
 	if (!ft_strncmp(tbl[0], "L", 2) || !ft_strncmp(tbl[0], "l", 2))
 		err = obj_lstadd(&space->objects, LIGHT, \
-				(t_object *)build_light(tbl, *to_switch));
+				(t_object *)build_light(tbl, *to_switch), tbl);
 	else if (!ft_strncmp(tbl[0], "sp", 3) || !ft_strncmp(tbl[0], "SP", 3))
 		err = obj_lstadd(&space->objects, SPHERE, \
-				(t_object *)build_sphere(tbl, *to_switch));
+				(t_object *)build_sphere(tbl, *to_switch), tbl);
 	else if (!ft_strncmp(tbl[0], "pl", 3) || !ft_strncmp(tbl[0], "PL", 3))
 		err = obj_lstadd(&space->objects, PLANE, \
-				(t_object *)build_plane(space, tbl, *to_switch));
+		(t_object *)build_plane(space, tbl, *to_switch), tbl);
 	else if (!ft_strncmp(tbl[0], "cy", 3) || !ft_strncmp(tbl[0], "CY", 3))
 		err = obj_lstadd(&space->objects, CYLINDER, \
-				(t_object *)build_cylinder(tbl, *to_switch));
+			(t_object *)build_cylinder(tbl, *to_switch), tbl);
 	else if ((ft_strncmp(tbl[0], "a", 3) && ft_strncmp(tbl[0], "A", 3)) && \
-				(ft_strncmp(tbl[0], "c", 3) && ft_strncmp(tbl[0], "C", 3)))
+			(ft_strncmp(tbl[0], "c", 3) && ft_strncmp(tbl[0], "C", 3)))
 		err = 1;
 	return (err);
 }
@@ -109,9 +109,6 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 	{
 		space->camera = camera;
 		space->ambient = ambient;
-	}
-	if (!err)
-	{
 		if (check_space_null(space))
 			return (-1);
 		cy_init_cam_center(space->camera, &(space->objects));

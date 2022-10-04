@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/04 00:25:11 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/04 21:48:15 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/vec/adv_ops.c\
 			$(SRC_DIR)/vec/basic_ops.c\
 			$(SRC_DIR)/vec/utils.c\
+			$(SRC_DIR)/visualizer/mlx_render_utils.c\
 			$(SRC_DIR)/visualizer/mlx_render.c\
 			$(SRC_DIR)/visualizer/space_render_utils.c\
 			$(SRC_DIR)/visualizer/space_render.c\

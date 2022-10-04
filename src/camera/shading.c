@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 00:35:46 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:08:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	t_light		*light;
 	size_t		i;
 
-	shader.texture = space->texture;
-	shader.bump = space->bump;
+	shader.texture = hit->nearest->texture;
+	shader.bump = hit->nearest->bump;
 	shader.ray = ray;
 	shader.obj = obj;
 	surface_rgb_normal(hit, obj, &shader);

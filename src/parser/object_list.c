@@ -6,13 +6,13 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 00:37:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:41:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_obj_lst	*obj_lstnew(int type, void *content)
+t_obj_lst	*obj_lstnew(int type, void *content, int surface, int material)
 {
 	t_obj_lst	*elem;
 
@@ -23,7 +23,10 @@ t_obj_lst	*obj_lstnew(int type, void *content)
 		return (NULL);
 	elem->type = type;
 	elem->content = content;
-	elem->surface = BUMP;
+	elem->surface = surface;
+	elem->material = material;
+	if ((surface >= TEXTURE) && (material == ERROR))
+		elem->surface = NONE;
 	elem->next = NULL;
 	return (elem);
 }
@@ -37,14 +40,14 @@ t_obj_lst	*obj_lstlast(t_obj_lst *lst)
 	return (lst);
 }
 
-int	obj_lstadd(t_obj_lst **lst, int type, t_object *object)
+int	obj_lstadd(t_obj_lst **lst, int type, t_object *object, char **tbl)
 {
 	t_obj_lst	*new;
 	t_obj_lst	*last;
 
 	if (object == NULL)
 		return (1);
-	new = obj_lstnew(type, object);
+	new = obj_lstnew(type, object, surface_parser(tbl), material_parser(tbl));
 	if (!new)
 		return (1);
 	if (lst && *lst)

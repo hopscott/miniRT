@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/21 01:45:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:25:31 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@ void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 	}
 }
 
-void	set_img_addr_from_xpm(t_vars *vars, t_data *data, char *path)
-{
-	data->img = mlx_xpm_file_to_image(vars->mlx, path, \
-												&data->w, &data->h);
-	data->addr = mlx_get_data_addr(data->img, \
-					&data->bpp, &data->line_length, &data->endian);
-}
-
 void	mlx_render(t_space *space, char *path_texture, char *path_bump)
 {
 	t_vars	vars;
@@ -53,15 +45,16 @@ void	mlx_render(t_space *space, char *path_texture, char *path_bump)
 	if (!vars.mlx)
 		return (fatal_error(space));
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "miniRT");
-	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
-	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
-							&vars.data.line_length, &vars.data.endian);
-	if (path_texture)
-		set_img_addr_from_xpm(&vars, &vars.texture, path_texture);
-	if (path_bump)
-		set_img_addr_from_xpm(&vars, &vars.bump, path_bump);
+	if (!vars.win)
+		return (fatal_error(space));		// HERE
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
+	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
+	if (!vars.data.img)
+		return (fatal_error(space));		// HERE
+	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
+							&vars.data.line_length, &vars.data.endian);
+	set_textures_and_bumps(&vars, path_texture, path_bump);
 	space_render(&vars, WIDTH, HEIGHT, space);
 	if (!space->fatal_error)
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);

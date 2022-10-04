@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 02:06:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/04 20:32:41 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,33 +185,17 @@ t_mat44	*set_rot_mat(double phi, double theta)
 	t_mat44	*r;
 
 	r_y = set_ry(phi);
-	printf("ry: \n");
-	print_mat(r_y);
 	r_z = set_rz(theta);
-	printf("rz: \n");
-	print_mat(r_z);
 	r = mat_x_mat(r_z, r_y, 1);
-	print_mat(r);
 	return (r);
 }
 
-
-
-t_mat44	*set_tr_mat(double phi, double theta, t_cylinder *cy)
+t_mat44	*set_tr_mat(double phi, double theta)
 {
-	t_mat44	*tr_mat;
 	t_mat44	*rot_mat;
-	t_mat44	*t_mat;
 
 	rot_mat = set_rot_mat(phi, theta);
-	t_mat = set_t(cy);
-	printf("t: \n");
-	print_mat(t_mat);
-	tr_mat = mat_x_mat(t_mat, rot_mat, 0);
-	tr_mat = rot_mat;
-	printf("tr_mat (t * r): \n");
-	print_mat(tr_mat);
-	return (tr_mat);
+	return (rot_mat);
 }
 
 int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
@@ -219,19 +203,19 @@ int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 	double	extr_pt[3];
 	double	res[3];
 
-	vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
-//	vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
-	vec_matrix_multiply(tr_mat, cy->norm, 1, &res);
+	vec_matrix_multiply(tr_mat, cy->norm, 0, &res);
 	printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
 	printf("cy->norm transformed:\n");
 	printf("x_t: %f, y_t: %f, z_t: %f\n", res[0] , res[1], res[2]);
 	vec_ray_distance_to_point(cy->xyz, res, cy->height, &extr_pt);
 	printf("The top of the cylinder transformed:\n");
 	printf("x_t: %f, y_t: %f, z_t: %f\n", extr_pt[0], extr_pt[1], extr_pt[2]);
+/*
 	if (!(res[0] < 0.0001 && res[2] < 0.0001 && res[1] >= 0.999999))
 		return (1);
 	else
 		printf("Good transformation\n");
+*/
 	return (0);
 }
 
@@ -283,26 +267,22 @@ double	get_gisement(double dx, double dy, int i)
 
 int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
-	double	angle;
 	double	phi;
 	double	theta;
 	t_mat44	*tr_mat;
-	double	y_axis[3];
 
-	vec_set(0, 1, 0, &y_axis);
-	angle = acos(vec_dot(cy->norm, y_axis));
-	phi = get_gisement(cy->norm[2], cy->norm[0], 1);
-	theta = get_gisement(cy->norm[0], cy->norm[1], 2);
-//	phi = get_gisement(cy->norm[2], cy->norm[0]) * (M_PI / 200);
-//	theta = get_gisement(cy->norm[0], cy->norm[1]) * (M_PI / 200);
+//	phi = get_gisement(cy->norm[2], cy->norm[0], 1);
+//	theta = get_gisement(cy->norm[0], cy->norm[1], 2);	
+//	phi = (M_PI / 2) - atan(cy->norm[1] / cy->norm[0]);
+//	theta = atan(sqrt(pow(cy->norm[0], 2) + pow(cy->norm[1], 2)) / cy->norm[2]);
+	phi = (M_PI - 2.3561944901923) + M_PI + (M_PI / 2); 
+	theta = 0.95531661812451;
+//	https://keisan.casio.com/exec/system/1359533867
 	printf("---------------------\n");
 	printf("phi: %f, theta: %f\n", phi, theta);
-	printf("angle BT: %f\n", angle);
-	if (!angle)
-		return (1);
-	tr_mat = set_tr_mat(phi, theta, cy);
+	tr_mat = set_tr_mat(phi, theta);
 	check_tr(cy, tr_mat);
-	exit (0);
+//	exit(0);
 //	if (check_tr(cy, tr_mat))
 //	{
 //		free(tr_mat);
@@ -332,9 +312,7 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	double	tot_y_cy; //should be equal to height
 	int		test;
 
-	printf("BT: X: %f, Y: %f, Z: %f\n", hit->phit[0], hit->phit[1], hit->phit[2]);
 	test = trans_to_cy(&xyz, cy, hit);
-	printf("AT: X: %f, Y: %f, Z: %f\n", xyz[0], xyz[1], xyz[2]);
 	if (test)
 	{
 		xyz[0] = hit->phit[0];
@@ -459,9 +437,9 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		else if (hit->nearest->type == CYLINDER)
 		{
 			set_uv_cylinder(hit, &obj->cy);
-			//set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
+			set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
 //			set_texture(hit, &shade->rgb, tex);
-			vec_copy(obj->cy.rgb, &shade->rgb);
+//			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
 	}

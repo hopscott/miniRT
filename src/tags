@@ -1,10 +1,14 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/omoudni/miniRT/src/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
+!_TAG_PROGRAM_VERSION	5.9.0	//
 a	camera/matrix_test.c	/^double	a[4];$/;"	m	struct:s_mat44	typeref:typename:double[4]	file:
 add_diffuse_component	camera/shading_light.c	/^void	add_diffuse_component(t_shade *shade, t_ray *lray, t_light *light)$/;"	f	typeref:typename:void
 add_specular_component	camera/shading_light.c	/^void	add_specular_component(t_shade *shade, t_ray *lray, t_light *light)$/;"	f	typeref:typename:void
@@ -45,8 +49,11 @@ free_params	visualizer/space_render_utils.c	/^void	free_params(t_param *param)$/
 free_space	main.c	/^void	free_space(t_space *space)$/;"	f	typeref:typename:void
 ft_swap_double	parser/camera.c	/^void	ft_swap_double(double *a, double *b)$/;"	f	typeref:typename:void
 get_dscr	intersector/sphere_intersection.c	/^void	get_dscr(t_ray *ray, t_sphere *sp, double (*ab_dsc)[3])$/;"	f	typeref:typename:void
+get_gisement	camera/shading.c	/^double	get_gisement(double dx, double dy)$/;"	f	typeref:typename:double
+get_n	camera/shading.c	/^int	get_n(double dx, double dy)$/;"	f	typeref:typename:int
 get_short_dist	intersector/sphere_intersection.c	/^double	get_short_dist(double discriminant, double a, double b)$/;"	f	typeref:typename:double
 get_switch_coord	parser/utils.c	/^void	get_switch_coord(double (*c_switch)[3], \\$/;"	f	typeref:typename:void
+grad_to_rad	camera/shading.c	/^double	grad_to_rad(double grad)$/;"	f	typeref:typename:double
 init_cy_params	intersector/init_center_cy_cam.c	/^void	init_cy_params(t_cylinder *cylinder, t_camera *camera)$/;"	f	typeref:typename:void
 init_light_components	camera/shading.c	/^void	init_light_components(t_space *space, t_shade *shade)$/;"	f	typeref:typename:void
 init_parameters	visualizer/space_render.c	/^int	init_parameters(int width, int height, t_space *space, t_param *param)$/;"	f	typeref:typename:int
@@ -101,7 +108,7 @@ s_mat44	camera/matrix_test.c	/^typedef struct s_mat44 {$/;"	s	file:
 set_checkerboard_rgb	camera/shading.c	/^void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3])$/;"	f	typeref:typename:void
 set_direction	visualizer/space_render.c	/^void	set_direction(t_param param, t_mat44 *mat, double (*res)[3])$/;"	f	typeref:typename:void
 set_e1_e2	parser/plane.c	/^void	set_e1_e2(t_space *space, t_plane *plane)$/;"	f	typeref:typename:void
-set_rot_mat	camera/shading.c	/^t_mat44	*set_rot_mat(double angle)$/;"	f	typeref:typename:t_mat44 *
+set_rot_mat	camera/shading.c	/^t_mat44	*set_rot_mat(double phi, double theta)$/;"	f	typeref:typename:t_mat44 *
 set_rx	camera/matrix_test.c	/^t_mat44	*set_rx(double angle)$/;"	f	typeref:typename:t_mat44 *
 set_rx	camera/shading.c	/^t_mat44	*set_rx(double	angle)$/;"	f	typeref:typename:t_mat44 *
 set_ry	camera/matrix_test.c	/^t_mat44	*set_ry(double angle)$/;"	f	typeref:typename:t_mat44 *
@@ -110,7 +117,7 @@ set_rz	camera/shading.c	/^t_mat44	*set_rz(double	angle)$/;"	f	typeref:typename:t
 set_shading_char	camera/shading.c	/^void	set_shading_char(t_shade *shade, t_hit *hit)$/;"	f	typeref:typename:void
 set_t	camera/shading.c	/^t_mat44	*set_t(t_cylinder *cy)$/;"	f	typeref:typename:t_mat44 *
 set_texture	camera/shading.c	/^void	set_texture(t_hit *hit, double (*rgb)[3], t_data *tex)$/;"	f	typeref:typename:void
-set_tr_mat	camera/shading.c	/^t_mat44	*set_tr_mat(double angle, t_cylinder *cy)$/;"	f	typeref:typename:t_mat44 *
+set_tr_mat	camera/shading.c	/^t_mat44	*set_tr_mat(double phi, double theta, t_cylinder *cy)$/;"	f	typeref:typename:t_mat44 *
 set_uv_cylinder	camera/shading.c	/^void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)$/;"	f	typeref:typename:void
 set_uv_plane	camera/shading.c	/^void	set_uv_plane(t_hit *hit, t_plane *pl)$/;"	f	typeref:typename:void
 set_uv_sphere	camera/shading.c	/^void	set_uv_sphere(t_hit *hit, t_sphere *sp)$/;"	f	typeref:typename:void

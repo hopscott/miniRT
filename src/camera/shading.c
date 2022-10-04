@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/03 19:20:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/04 02:06:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,41 +178,32 @@ t_mat44	*set_t(t_cylinder *cy)
 	return (t);
 }
 
-t_mat44	*set_rot_mat(double angle)
+t_mat44	*set_rot_mat(double phi, double theta)
 {
-	t_mat44	*r_x;
 	t_mat44	*r_y;
 	t_mat44	*r_z;
-	t_mat44	*tmp;
 	t_mat44	*r;
 
-	r_x = set_rx(angle);
-	printf("rx: \n");
-	print_mat(r_x);
-	r_y = set_ry(angle);
+	r_y = set_ry(phi);
 	printf("ry: \n");
 	print_mat(r_y);
-	r_z = set_rz(angle);
+	r_z = set_rz(theta);
 	printf("rz: \n");
 	print_mat(r_z);
-	tmp = mat_x_mat(r_y, r_x, 0);
-	printf("r_y * r_x: \n");
-	r = mat_x_mat(r_z, tmp, 0);
-	r = r_z;
+	r = mat_x_mat(r_z, r_y, 1);
 	print_mat(r);
 	return (r);
 }
 
 
 
-t_mat44	*set_tr_mat(double angle, t_cylinder *cy)
+t_mat44	*set_tr_mat(double phi, double theta, t_cylinder *cy)
 {
-	printf("angle is: %f\n", angle);
 	t_mat44	*tr_mat;
 	t_mat44	*rot_mat;
 	t_mat44	*t_mat;
 
-	rot_mat = set_rot_mat(angle);
+	rot_mat = set_rot_mat(phi, theta);
 	t_mat = set_t(cy);
 	printf("t: \n");
 	print_mat(t_mat);
@@ -244,34 +235,90 @@ int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
 	return (0);
 }
 
+int	get_n(double dx, double dy, int i)
+{
+	printf("i: %d, dx: %f, dy: %f\n", i, dx, dy);
+	if (dy > 0)
+	{
+		if (dx > 0)
+			return (0);
+		else
+			return (2);
+	}
+	else
+		return (1);
+}
+
+double	grad_to_rad(double grad)
+{
+	double	rad;
+
+	rad = grad * (M_PI / 200);
+	return (rad);
+}
+
+double	get_gisement(double dx, double dy, int i)
+{
+	printf("i: %d, dx: %f, dy: %f\n",i, dx, dy);
+	if (dx < EPSILON && dy < EPSILON)
+		return (0);
+	if (dx < EPSILON)
+	{
+		if (dy > 0)
+			return (0);
+		else
+			return (grad_to_rad(200));
+	}
+	if (dy < EPSILON)
+	{
+		if (dx > 0)
+			return (grad_to_rad(100));
+		else
+			return (grad_to_rad(300));
+	}
+	printf("get_n_blabla: %d\n", get_n(dx, dy, i));
+//	printf("i: %d, dx: %f, dy: %f\n", i, dx, dy);
+	return (atan(dy / dx) + get_n(dx,dy, i) * 200);
+}
+
 int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	angle;
+	double	phi;
+	double	theta;
 	t_mat44	*tr_mat;
 	double	y_axis[3];
 
 	vec_set(0, 1, 0, &y_axis);
 	angle = acos(vec_dot(cy->norm, y_axis));
+	phi = get_gisement(cy->norm[2], cy->norm[0], 1);
+	theta = get_gisement(cy->norm[0], cy->norm[1], 2);
+//	phi = get_gisement(cy->norm[2], cy->norm[0]) * (M_PI / 200);
+//	theta = get_gisement(cy->norm[0], cy->norm[1]) * (M_PI / 200);
+	printf("---------------------\n");
+	printf("phi: %f, theta: %f\n", phi, theta);
 	printf("angle BT: %f\n", angle);
 	if (!angle)
 		return (1);
-	tr_mat = set_tr_mat(angle, cy);
-	if (check_tr(cy, tr_mat))
-	{
-		free(tr_mat);
-		angle *= -1;
-		tr_mat = set_tr_mat(angle, cy);
-		double	extr_pt[3];
-		double	res[3];
-
-		vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
-//		vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
-		vec_matrix_multiply(tr_mat, cy->norm, 1, &res);
-		printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
-//		printf("The top of the cylinder transformed:\n");
-		printf("cy->norm transformed:\n");
-		printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
-	}
+	tr_mat = set_tr_mat(phi, theta, cy);
+	check_tr(cy, tr_mat);
+	exit (0);
+//	if (check_tr(cy, tr_mat))
+//	{
+//		free(tr_mat);
+//		angle *= -1;
+//		tr_mat = set_tr_mat(phi, cy);
+//		double	extr_pt[3];
+//		double	res[3];
+//
+//		vec_ray_distance_to_point(cy->xyz, cy->norm, cy->height, &extr_pt);
+////		vec_matrix_multiply(tr_mat, extr_pt, 1, &res);
+//		vec_matrix_multiply(tr_mat, cy->norm, 1, &res);
+//		printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
+////		printf("The top of the cylinder transformed:\n");
+//		printf("cy->norm transformed:\n");
+//		printf("x_t: %f, y_t: %f, z_t: %f\n", res[0], res[1], res[2]);
+//	}
 //	exit (0);
 	vec_matrix_multiply(tr_mat, hit->phit, 1, trans_phit);
 	return (0);
@@ -299,6 +346,7 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	hit->u = (1 - (raw_u + 0.5));
 	tot_y_cy = cy->height;
 	hit->v = ((xyz[1] - cy->xyz[1]) / tot_y_cy) / 4;
+//	exit(0);
 }
 
 /*
@@ -411,9 +459,9 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_ray *r, t_shade *shade, t_d
 		else if (hit->nearest->type == CYLINDER)
 		{
 			set_uv_cylinder(hit, &obj->cy);
-			set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
+			//set_checkerboard_rgb(hit, obj->pl.rgb, 100, &shade->rgb);
 //			set_texture(hit, &shade->rgb, tex);
-			//			vec_copy(obj->cy.rgb, &shade->rgb);
+			vec_copy(obj->cy.rgb, &shade->rgb);
 			cylinder_surface_normal(&obj->cy, hit->phit, &shade->normal);
 		}
 	}

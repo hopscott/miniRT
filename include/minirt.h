@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 02:05:45 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:13:50 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include "vec.h"
-# include "vec2.h"
 # include "mlx.h"
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -348,6 +347,23 @@ void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj, t_data *tex
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
 									t_light *light, t_shade *shade);
+
+/* uv_utils.c */
+t_mat44		*set_ry(double angle);
+t_mat44		*set_rz(double angle);
+int			trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit);
+int			check_tr(t_cylinder *cy, t_mat44 *tr_mat);
+
+/* uv_utils_2.c */
+t_mat44		*mat44_init_utils(double angle_y, t_cylinder *cy);
+t_mat44		*set_rot_mat(double phi, double theta);
+
+/* uv_primitives.c */
+void		set_uv_sphere(t_hit *hit, t_sphere *sp);
+void		set_uv_plane(t_hit *hit, t_plane *pl);
+void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+void		set_texture(t_hit *hit, double (*rgb)[3], t_data *tex);
+void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3]);
 
 /* =================== VISUALIZER ====================== */
 

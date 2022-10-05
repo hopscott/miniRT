@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:18:02 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/05 17:26:19 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,6 +381,12 @@ void		shading_from_light(t_space *space, t_hit *hit, \
 void		set_uv_sphere(t_hit *hit, t_sphere *sp);
 void		set_uv_plane(t_hit *hit, t_plane *pl);
 void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+
+/* shading_uv_cy.c */
+t_mat44		*set_ry(double angle);
+t_mat44		*set_rz(double angle);
+t_mat44		*set_rot_mat(double phi, double theta);
+int			trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit);
 
 /* shading_rgb.c */
 void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \

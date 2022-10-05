@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:22:52 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/05 17:27:37 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
 		cylinder_surface_normal(&obj->cy, hit->phit, &shader->normal);
 		set_uv_cylinder(hit, &obj->cy);
 		vec_copy(obj->cy.rgb, &shader->rgb);
-		set_rgb_normal(hit, obj->cy.rgb, 5, shader);
+		set_rgb_normal(hit, obj->cy.rgb, 100, shader);
 	}
 }
 

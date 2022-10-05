@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 14:28:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 17:31:51 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 19:00:58 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av)
 	t_camera	camera;
 	t_ambient	ambient;
 
-	if (ac != 2)
+	if ((ac < 2) || (ac > 4))
 		return (puterr_free(ERROR_ARGS, NULL), 1);
 	else if (ac == 2 && !ft_strncmp(av[1], "--help", 7))
 		return (print_help(), 0);
@@ -49,7 +49,13 @@ int	main(int ac, char **av)
 	if (parser(path, &space, &camera, &ambient))
 		return (puterr_free(ERROR_PARSING, &space), 1);
 	print_space(&space);
-	mlx_render(&space);
+	if (ac == 3 && (access(av[2], F_OK) == 0))
+		mlx_render(&space, av[2], NULL);
+	else if (ac == 4 && (access(av[2], F_OK) == 0) \
+						&& (access(av[3], F_OK) == 0))
+		mlx_render(&space, av[2], av[3]);
+	else
+		mlx_render(&space, NULL, NULL);
 	if (space.fatal_error)
 		puterr_free(FATAL_ERROR, NULL);
 	free_space(&space);

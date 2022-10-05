@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 18:46:36 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 22:09:12 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,32 @@ void	print_screens_and_free_matrix(t_param *param)
 													param->screen_shading))
 		return (free_params(param));
 	free_params(param);
+}
+
+void	set_surfaces(t_data *textures, t_data *bumps, t_obj_lst **lst)
+{
+	t_obj_lst	*elem;
+	t_data		*data;
+
+	if (!lst)
+		return ;
+	elem = *lst;
+	while (elem)
+	{
+		if ((elem->surface == TEXTURE) || (elem->surface == BUMPTEXT))
+		{
+			data = &textures[elem->material];
+			elem->texture = data;
+			if (!data->img || !data->addr)
+				elem->surface = NONE;
+		}
+		else if ((elem->surface == BUMP) || (elem->surface == BUMPTEXT))
+		{
+			data = &bumps[elem->material];
+			elem->bump = data;
+			if (!data->img || !data->addr)
+				elem->surface = NONE;
+		}
+		elem = elem->next;
+	}
 }

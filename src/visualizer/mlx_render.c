@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/05 17:00:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 17:23:18 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ int	destroy(t_vars *vars)
 	return (0);
 }
 
-void	clear_window(t_vars *vars)
-{
-	ft_bzero(vars->data.addr, HEIGHT * WIDTH * 4);
-}
-
 void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 {
 	char	*dst;
@@ -42,25 +37,25 @@ void	my_mlx_pixel_put(t_data *data, int px, int py, int color)
 	}
 }
 
-void	mlx_render(t_space *space)
+void	mlx_render(t_space *space, char *path_texture, char *path_bump)
 {
 	t_vars	vars;
 
-	vars.space = space;
 	vars.mlx = mlx_init();
 	if (!vars.mlx)
 		return (fatal_error(space));
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "miniRT");
-	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
-	vars.texture.img = mlx_xpm_file_to_image(vars.mlx, "text_test.xpm", \
-							&vars.texture.w, &vars.texture.h);
-	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
-							&vars.data.line_length, &vars.data.endian);
-	vars.texture.addr = mlx_get_data_addr(vars.texture.img, &vars.texture.bpp, \
-							&vars.texture.line_length, &vars.texture.endian);
+	if (!vars.win)
+		return (fatal_error(space));		// HERE
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
-	space_render(&vars, WIDTH, HEIGHT, vars.space);
+	vars.data.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
+	if (!vars.data.img)
+		return (fatal_error(space));		// HERE
+	vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bpp, \
+							&vars.data.line_length, &vars.data.endian);
+	set_textures_and_bumps(&vars, path_texture, path_bump);
+	space_render(&vars, WIDTH, HEIGHT, space);
 	if (!space->fatal_error)
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
 	if (!space->fatal_error)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 16:39:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 17:23:33 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	space_render(t_vars *vars, int width, int height, t_space *space)
 	t_param	param;
 	t_ray	ray;
 
+	set_surfaces(vars->textures, vars->bumps, &space->objects);
 	if (init_parameters(width, height, space, &param))
 		return (fatal_error(space));
 	vec_copy(space->camera->xyz, &ray.origin);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
+#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/05 17:03:22 by omoudni          ###   ########.fr        #
+#    Updated: 2022/10/05 17:17:29 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/camera/camera_lookat_mat.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/camera/shading_light.c\
+			$(SRC_DIR)/camera/shading_normal.c\
 			$(SRC_DIR)/camera/shading_rgb.c\
 			$(SRC_DIR)/camera/shading_uv.c\
 			$(SRC_DIR)/camera/shading_uv_cy.c\
@@ -61,6 +62,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/vec/adv_ops.c\
 			$(SRC_DIR)/vec/basic_ops.c\
 			$(SRC_DIR)/vec/utils.c\
+			$(SRC_DIR)/visualizer/mlx_render_utils.c\
 			$(SRC_DIR)/visualizer/mlx_render.c\
 			$(SRC_DIR)/visualizer/space_render_utils.c\
 			$(SRC_DIR)/visualizer/space_render.c\

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 16:05:55 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/04 00:31:04 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	print_light(t_light *l)
 	printf("|");
 	printf("        ");
 	printf("|");
-	printf("            ");
+	printf("   %5.3f    ", l->brightness_ratio);
 	printf("|");
 	printf("    ");
 	printf("\n");

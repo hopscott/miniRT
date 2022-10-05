@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 16:38:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:51:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_mat44	*set_ry(double	angle)
+t_mat44	*set_ry(double angle)
 {
 	double	a[3];
 	double	b[3];
@@ -36,7 +36,7 @@ t_mat44	*set_ry(double	angle)
 	return (r_y);
 }
 
-t_mat44	*set_rz(double	angle)
+t_mat44	*set_rz(double angle)
 {
 	double	a[3];
 	double	b[3];
@@ -72,7 +72,6 @@ t_mat44	*set_rot_mat(double phi, double theta)
 	return (r);
 }
 
-
 int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	phi;
@@ -93,11 +92,11 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 		theta = 0;
 	else
 	{
-		theta = atan(sqrt(pow(cy->norm[2], 2) + pow(cy->norm[0], 2)) / cy->norm[1]);
+		theta = atan(sqrt(pow(cy->norm[2], 2) + pow(cy->norm[0], 2))
+				/ cy->norm[1]);
 		if (theta < 0)
 			theta = theta + M_PI;
 	}
 	rot_mat = set_rot_mat(phi, theta);
-	vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit);
-	return (0);
+	return (vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit), 0);
 }

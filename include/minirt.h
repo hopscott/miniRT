@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 16:39:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 17:02:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,12 +345,14 @@ void		build_helper_2(double *x, double *y, double *z, double coords[3]);
 
 /* matrix.c */
 t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
-t_mat44		*camera_lookat(t_camera *cam);
 t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
 															double (*res)[3]);
 t_mat44		*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free);
 void		print_mat(t_mat44 *mat);
+
+/* camera_lookat_mat.c */
+t_mat44		*camera_lookat(t_camera *cam);
 
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
@@ -390,7 +392,8 @@ void		set_uv_sphere(t_hit *hit, t_sphere *sp);
 void		set_uv_plane(t_hit *hit, t_plane *pl);
 void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
 void		set_texture(t_hit *hit, double (*rgb)[3], t_data *tex);
-void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], double size, double (*rgb)[3]);
+void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
+									double size, double (*rgb)[3]);
 
 /* =================== VISUALIZER ====================== */
 

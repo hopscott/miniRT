@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 02:53:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:39:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	space_render(t_vars *vars, int width, int height, t_space *space)
 			set_direction(param, param.matrix, &ray.direction);
 			param.colour = cast_ray(&ray, space, \
 						&param.screen_hit[(int)param.py][(int)param.px], \
-						&param.screen_shading[(int)param.py][(int)param.px], &vars->texture);
+						&param.screen_shading[(int)param.py][(int)param.px]);
 			my_mlx_pixel_put(&vars->data, param.px, param.py, param.colour);
 		}
 		print_progress(param.py, height);

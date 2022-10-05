@@ -1,10 +1,10 @@
 # ambient light
 # intensity col
-A 0.2  255,255,255
+A 0.3  255,255,255
 
 # point light
 # pos  intensity col
-L -20,40,10 1   255,255,255
+L -50,50,-50 0.9   255,255,255
 
 # camera
 # pos   dir  fov

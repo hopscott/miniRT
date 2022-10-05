@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 20:51:37 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/19 10:53:04 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:28:48 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,5 @@ void	vec_unit(double vec[3], double (*res)[3]);
 void	vec_cross(double vec1[3], double vec2[3], double (*res)[3]);
 
 /* ================================================= */
-
 
 #endif

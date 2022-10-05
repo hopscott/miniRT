@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uv_utils.c                                         :+:      :+:    :+:   */
+/*   shading_uv_cy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 15:57:44 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/05 16:17:15 by omoudni          ###   ########.fr       */
+/*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
+/*   Updated: 2022/10/05 16:38:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ t_mat44	*set_rz(double	angle)
 	return (r_z);
 }
 
+t_mat44	*set_rot_mat(double phi, double theta)
+{
+	t_mat44	*r_y;
+	t_mat44	*r_z;
+	t_mat44	*r;
+
+	r_y = set_ry(phi);
+	r_z = set_rz(theta);
+	r = mat_x_mat(r_z, r_y, 1);
+	return (r);
+}
+
+
 int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	phi;
@@ -84,26 +97,7 @@ int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 		if (theta < 0)
 			theta = theta + M_PI;
 	}
-//	printf("phi: %f, theta: %f\n", phi, theta);
 	rot_mat = set_rot_mat(phi, theta);
-//	check_tr(cy, rot_mat);
 	vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit);
 	return (0);
 }
-//function to check if the transformation was succesful
-/*
-int	check_tr(t_cylinder *cy, t_mat44 *tr_mat)
-{
-	double	extr_pt[3];
-	double	res[3];
-
-	vec_matrix_multiply(tr_mat, cy->norm, 0, &res);
-	printf("cy->norm : %f %f %f\n", cy->norm[0], cy->norm[1], cy->norm[2]);
-	printf("cy->norm transformed:\n");
-	printf("x_t: %f, y_t: %f, z_t: %f\n", res[0] , res[1], res[2]);
-	vec_ray_distance_to_point(cy->xyz, res, cy->height, &extr_pt);
-	printf("The top of the cylinder transformed:\n");
-	printf("x_t: %f, y_t: %f, z_t: %f\n", extr_pt[0], extr_pt[1], extr_pt[2]);
-	return (0);
-}
-*/

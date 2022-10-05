@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 16:13:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:39:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@
 # define HEIGHT 1024
 # define EPSILON 0.00000000000001
 
-# define ERROR_ARGS "Syntax not respected\nUse --help as an option for more information.\n"
-# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README for more details about the parameters.\nCheck example.rt for the file layout.\n"
-# define ERROR_PARSING "Corrupted file.\nUse --help as an option for more information.\n"
-# define ERROR_PARAMS "None of the parameters required was introduced in .rt file.\nUse --help as an option for more information.\n"
+# define ERROR_ARGS "Syntax not respected\nUse \
+--help as an option for more information.\n"
+# define HELP_MSG "Usage: ./miniRT scene_file.rt\nCheck the README \
+for more details about the parameters.\nCheck example.rt for the file layout.\n"
+# define ERROR_PARSING "Corrupted file.\nUse --help as an option \
+for more information.\n"
+# define ERROR_PARAMS "None of the parameters required was introduced \
+in .rt file.\nUse --help as an option for more information.\n"
 # define FATAL_ERROR "\nFATAL ERROR!!!\n"
 
 /* types of objects in linked list */
@@ -45,6 +49,14 @@ enum {
 	CYLINDER	= 5
 };
 
+enum {
+	NONE		= 0,
+	CHECKERS	= 1,
+	TEXTURE		= 2,
+	BUMP		= 3,
+	BUMPTEXT	= 4,
+};
+
 /* Use void pointers in linked list to build up objects */
 
 typedef struct s_obj_lst
@@ -52,6 +64,7 @@ typedef struct s_obj_lst
 	int					type;
 
 	void				*content;
+	int					surface;
 	struct s_obj_lst	*next;
 }	t_obj_lst;
 
@@ -146,7 +159,6 @@ typedef struct s_cylinder
 	double	radius;
 	double	co[3];
 	double	cross_co_orient[3];
-	double	norm_magnitude;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -165,6 +177,18 @@ typedef struct s_arb_vecs {
 	double	v3[3];
 }				t_arb_vecs;
 
+/* MLX */
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		w;
+	int		h;
+}	t_data;
+
 /*	Space structure	*/
 typedef struct s_space {
 	t_camera	*camera;
@@ -178,7 +202,17 @@ typedef struct s_space {
 	double		height;
 	int			fatal_error;
 	t_arb_vecs	arb_vecs;
+	t_data		*texture;
 }	t_space;
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	t_data	data;
+	t_data	texture;
+	t_space	*space;
+}	t_vars;
 
 /*	mat44 structure	*/
 typedef struct s_mat44 {
@@ -222,7 +256,7 @@ typedef struct s_hit {
 }	t_hit;
 
 /*	Shade structure	*/
-typedef struct s_shade {
+typedef struct s_shader {
 	t_ray		*ray;
 	t_object	*obj;
 	t_object	*lobj;
@@ -235,28 +269,8 @@ typedef struct s_shade {
 	double		specular[3];
 	double		ks;
 	double		specular_comp;
-}	t_shade;
-
-/* MLX */
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-	int		w;
-	int		h;
-}	t_data;
-
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-	t_data	data;
-	t_data	texture;
-	t_space	*space;
-}	t_vars;
+	t_data		*texture;
+}	t_shader;
 
 /* ************************************************* */
 /* ***************** FUNCTIONS ********************* */
@@ -330,6 +344,7 @@ void		build_helper_2(double *x, double *y, double *z, double coords[3]);
 /* =================== CAMERA ====================== */
 
 /* matrix.c */
+t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 t_mat44		*camera_lookat(t_camera *cam);
 t_mat44		*mat44_init(double a[3], double b[3], double c[3], double d[3]);
 void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
@@ -338,15 +353,27 @@ t_mat44		*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free);
 void		print_mat(t_mat44 *mat);
 
 /* rays.c */
-size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading, t_data *tex);
+size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
 void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
 
 /* shading.c */
-void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj, t_data *texture);
+void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
 
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
-									t_light *light, t_shade *shade);
+									t_light *light, t_shader *shader);
+
+/* shading_uv.c */
+void		set_uv_sphere(t_hit *hit, t_sphere *sp);
+void		set_uv_plane(t_hit *hit, t_plane *pl);
+void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+
+/* shading_rgb.c */
+void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
+									double size, double (*rgb)[3]);
+void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
+void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
+void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
 
 /* uv_utils.c */
 t_mat44		*set_ry(double angle);
@@ -375,7 +402,6 @@ void		mlx_render(t_space *space);
 void		space_render(t_vars *vars, int width, int height, t_space *space);
 
 /* space_render_utils.c */
-int			fatal_error_int(t_space *space);
 void		fatal_error(t_space *space);
 void		free_params(t_param *param);
 void		print_screens_and_free_matrix(t_param *param);
@@ -386,19 +412,20 @@ void		print_screens_and_free_matrix(t_param *param);
 int			light_intersection(t_ray *ray, t_light *light, t_hit *hit);
 
 /* sphere_intersection.c */
-void	sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
-void	sphere_surface_normal(t_ray *ray, t_sphere *sphere, double phit[3], \
+void		sphere_intersection(t_ray *ray, t_sphere *sp, t_hit *hit);
+void		sphere_surface_normal(t_ray *ray, t_sphere *sphere, double phit[3], \
 															double (*norm)[3]);
 
 /* plane_intersection.c */
 int			plane_intersection(t_ray *ray, t_plane *plane, t_hit *hit);
 int			plane_surface_normal(t_plane *plane, t_ray *ray, double vec[3]);
-int			normal_bmap_plane_mountains(t_plane *plane, t_hit *hit, double vec[3]);
+int			normal_bmap_plane_mountains(t_plane *pl, t_hit *hit, double v[3]);
 int			normal_bmap_plane_lines(t_plane *plane, t_hit *hit, double vec[3]);
 
 /* cylinder_intersection.c */
 int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-void		cylinder_surface_normal(t_cylinder *cy, double phit[3], double (*norm)[3]);
+void		cylinder_surface_normal(t_cylinder *cy, double phit[3], \
+															double (*norm)[3]);
 void		adjust_plane_norm(t_obj_lst *space_objs, double r_or[3]);
 
 void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);

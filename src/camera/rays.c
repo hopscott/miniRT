@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 19:31:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:39:27 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	obj_to_char(t_obj_lst *elem)
 	return ('.');
 }
 
-size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading, t_data *tex)
+size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 {
 	t_hit		hit;
 	t_object	*obj;
@@ -59,7 +59,7 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading, t_data *
 	{
 		vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
 																&hit.phit);
-		shading(space, ray, &hit, obj, tex);
+		shading(space, ray, &hit, obj);
 	}
 	else
 		vec_add(hit.rgb, space->ambient->rgb, &hit.rgb);

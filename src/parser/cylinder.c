@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 00:45:46 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:34:33 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	build_cylinder_vecs(t_cylinder **obj)
 	cy = *obj;
 	vec_set(cy->x, cy->y, cy->z, &cy->xyz);
 	vec_set(cy->vec_x, cy->vec_y, cy->vec_z, &cy->norm);
-	cy->norm_magnitude = vec_len(cy->norm);
 	vec_unit(cy->norm, &cy->norm);
 	vec_set(cy->r, cy->g, cy->b, &cy->rgb);
 }

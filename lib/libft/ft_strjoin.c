@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:30:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 15:46:18 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/19 17:30:05 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	int				len_s1;
-	int				len_s2;
-	int				i;
-	int				j;
+	int		len_s1;
+	int		len_s2;
+	int		i;
+	int		j;
 
 	if (!s1 || !s2)
 		return (0);

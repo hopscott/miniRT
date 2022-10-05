@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
+#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/09/23 13:30:35 by jpalma           ###   ########.fr        #
+#    Updated: 2022/10/05 16:38:45 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/camera/matrix.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/camera/shading_light.c\
+			$(SRC_DIR)/camera/shading_rgb.c\
+			$(SRC_DIR)/camera/shading_uv.c\
+			$(SRC_DIR)/camera/shading_uv_cy.c\
 			$(SRC_DIR)/camera/shading.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\
@@ -78,7 +81,7 @@ OBJS := $(SRCS:.c=.o)
 # Libs ==========================================
 
 LIBFT := $(LIB_DIR)/libft/libft.a
- 
+
 $(LIBFT) :
 	make -C lib/libft -f Makefile
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/20 02:51:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:28:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ void	mlx_render(t_space *space)
 	mlx_hook(vars.win, 17, 1L << 17, destroy, &vars);
 	space_render(&vars, WIDTH, HEIGHT, vars.space);
 	if (!space->fatal_error)
-	{
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.data.img, 0, 0);
+	if (!space->fatal_error)
 		mlx_loop(vars.mlx);
-	}
 	mlx_destroy_image(vars.mlx, vars.data.img);
 	mlx_destroy_window(vars.mlx, vars.win);
 	mlx_destroy_display(vars.mlx);

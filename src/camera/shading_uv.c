@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 17:13:29 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:22:27 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,21 @@ void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
 	double	theta;
 	double	raw_u;
 	int		test;
+	double	new_norm[3];
 
-	test = trans_to_cy(&xyz, cy, hit);
-	if (test)
+	if (cy->norm[0] == 0 && cy->norm[2] == 0 && cy->norm[1] == 1)
 	{
 		xyz[0] = hit->phit[0];
 		xyz[1] = hit->phit[1];
 		xyz[2] = hit->phit[2];
 	}
+	else if (cy->norm[0] < 0)
+	{
+		get_new_norm(cy->norm, &new_norm);
+		test = trans_to_cy(&xyz, new_norm, hit, 2);
+	}
+	else
+		test = trans_to_cy(&xyz, cy->norm, hit, 1);
 	theta = atan(xyz[0] / xyz[2]);
 	raw_u = theta / (2 * M_PI);
 	hit->u = (1 - (raw_u + 0.5));

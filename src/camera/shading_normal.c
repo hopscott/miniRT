@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 15:30:17 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:20:53 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,38 @@
 /* /compute-sphere-tangent-for-normal-mapping				  */
 /* ========================================================== */
 
-t_mat44	*mat44_init_tbn(t_hit *hit, double norm[3], double bump_norm[3])
+void	tbn_tangents_sphere(t_hit *hit, double surface_norm[3], \
+					double (*tangent)[3], double (*bitangent)[3])
 {
-	t_mat44	*ret;
+	vec_set((-1 * hit->r * cos(hit->theta) * sin(hit->phi)), \
+			0, \
+			(hit->r * cos(hit->theta) * cos(hit->phi)), \
+			tangent);
+	vec_cross(surface_norm, (*tangent), bitangent);
+}
+
+void	tbn_tangents_plane(t_plane *plane, \
+					double (*tangent)[3], double (*bitangent)[3])
+{
+	vec_copy(plane->e1, tangent);
+	vec_copy(plane->e2, bitangent);
+}
+
+t_mat44	*mat44_init_tbn(t_hit *hit, double surface_norm[3], \
+									int type, double bump_norm[3])
+{
 	double	tangent[3];
 	double	bitangent[3];
 	double	zeros[3];
-	double	r;
-	double	theta;
-	double	phi;
+	t_mat44	*ret;
 
-	r = vec_len(hit->phit);
-	theta = ((2 * M_PI) + 0.5) * (1 - (hit->u / 2));
-	phi = M_PI * (1 - hit->v);
-	vec_set((-r * cos(theta) * sin(phi)), \
-			0, \
-			(r * cos(theta) * cos(phi)), \
-			&tangent);
-	vec_cross(norm, tangent, &bitangent);
+	if (type == SPHERE)
+		tbn_tangents_sphere(hit, surface_norm, &tangent, &bitangent);
+	else if (type == PLANE)
+		tbn_tangents_plane((t_plane *)hit->nearest->content, \
+												&tangent, &bitangent);
+	else if (type == CYLINDER)
+		tbn_tangents_sphere(hit, surface_norm, &tangent, &bitangent);
 	vec_set(0, 0, 0, &zeros);
 	ret = mat44_init(tangent, bitangent, bump_norm, zeros);
 	return (ret);
@@ -58,23 +72,24 @@ void	convert_color(char *color, double (*bump_norm)[3])
 			2 * (rgb[1] / 255) - 1, \
 			2 * (rgb[2] / 255) - 1, \
 			bump_norm);
-	if (rgb[0] < (double)-1)
-		rgb[0] = -1;
-	if (rgb[0] > (double)1)
-		rgb[0] = 1;
-	if (rgb[1] < (double)-1)
-		rgb[1] = -1;
-	if (rgb[1] > (double)1)
-		rgb[1] = 1;
-	if (rgb[2] < (double)0)
-		rgb[2] = 0;
-	if (rgb[2] > (double)1)
-		rgb[2] = 1;
+	if ((*bump_norm)[0] < (double)-1)
+		(*bump_norm)[0] = -1;
+	if ((*bump_norm)[0] > (double)1)
+		(*bump_norm)[0] = 1;
+	if ((*bump_norm)[1] < (double)-1)
+		(*bump_norm)[1] = -1;
+	if ((*bump_norm)[1] > (double)1)
+		(*bump_norm)[1] = 1;
+	if ((*bump_norm)[2] < (double)0)
+		(*bump_norm)[2] = 0;
+	if ((*bump_norm)[2] > (double)1)
+		(*bump_norm)[2] = 1;
 }
 
-int	set_bump_normal(t_hit *hit, t_data *bump, double (*norm)[3])
+int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
+										double (*surface_norm)[3])
 {
-	// t_mat44	*tbn;
+	t_mat44	*tbn;
 	int		x;
 	int		y;
 	char	*color;
@@ -86,16 +101,14 @@ int	set_bump_normal(t_hit *hit, t_data *bump, double (*norm)[3])
 	y -= y % 4;
 	color = bump->addr + x + bump->w * y;
 	convert_color(color, &bump_norm);
-	vec_cross(*norm, bump_norm, norm);
-	
-	// tbn = mat44_init_tbn(hit, (*norm), bump_norm);
-	// if (!tbn)
-	// 	return (1);
-	// // vec_print("before", *norm);
-	// vec_matrix_multiply(tbn, (*norm), 0, norm);
-	// free(tbn);
-	// // vec_print("bump", bump_norm);
-	// // vec_print("after", *norm);
+	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
+	if (!tbn)
+		return (1);
+	// vec_print("before", *norm);
+	vec_matrix_multiply(tbn, bump_norm, 1, surface_norm);
+	free(tbn);
+	// vec_print("bump", bump_norm);
+	// vec_print("after", *norm);
 	
 	return (0);
 }

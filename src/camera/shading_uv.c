@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:24:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:13:29 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,27 @@
 void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 {
 	double	xyz[3];
-	double	r;
-	double	theta;
-	double	phi;
 
 	vec_subtract(hit->phit, sp->xyz, &xyz);
-	r = vec_len(xyz);
-	theta = acos(xyz[1] / r);
-	phi = atan(xyz[2] / xyz[0]);
+	hit->r = vec_len(xyz);
+	hit->theta = acos(xyz[1] / hit->r);
+	hit->phi = atan(xyz[2] / xyz[0]);
 	if (xyz[0] < 0)
 	{
 		if (xyz[1] >= 0)
-			phi += M_PI;
+			hit->phi += M_PI;
 		else
-			phi -= M_PI;
+			hit->phi -= M_PI;
 	}
 	if (xyz[0] == 0)
 	{
 		if (xyz[1] >= 0)
-			phi = M_PI;
+			hit->phi = M_PI;
 		else
-			phi = -M_PI;
+			hit->phi = -M_PI;
 	}
-	hit->u = 2 * (1 - ((theta / (2 * M_PI)) + 0.5));
-	hit->v = 1 - (phi / M_PI);
+	hit->u = 2 * (1 - ((hit->theta / (2 * M_PI)) + 0.5));
+	hit->v = 1 - (hit->phi / M_PI);
 }
 
 /* ======================================================== */
@@ -56,7 +53,9 @@ void	set_uv_plane(t_hit *hit, t_plane *pl)
 	vec_subtract(hit->phit, pl->xyz, &xyz);
 	vec_divide(xyz, 100, &xyz);
 	hit->u = fabs(fmod(vec_dot(xyz, pl->e1), 1));
-	hit->v = fabs(fmod(vec_dot(xyz, pl->e2), 1));
+	hit->v = fmod(vec_dot(xyz, pl->e2), 1);
+	if (hit->v < 0)
+		hit->v = fmod(hit->v + 1, 1);
 }
 
 void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)

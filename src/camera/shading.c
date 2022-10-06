@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:27:37 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:50:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ void	set_shading_char(t_shader *shader, t_hit *hit)
 		hit->shading = 'x';
 }
 
-void	set_rgb_normal(t_hit *hit, double rgb[3], double size, t_shader *shader)
+void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 {
 	vec_copy(rgb, &shader->rgb);
 	if (hit->nearest->surface == CHECKERS)
-		set_checkerboard_rgb(hit, rgb, size, &shader->rgb);
+		set_checkerboard_rgb(hit, rgb, type, &shader->rgb);
 	else if (hit->nearest->surface == TEXTURE)
 		set_texture_rgb(hit, shader->texture, &shader->rgb);
 	else if (hit->nearest->surface == BUMP)
-		set_bump_normal(hit, shader->bump, &shader->normal);
+		set_bump_normal(hit, shader->bump, type, &shader->normal);
 	else if (hit->nearest->surface == BUMPTEXT)
 	{
 		set_texture_rgb(hit, shader->texture, &shader->rgb);
-		set_bump_normal(hit, shader->bump, &shader->normal);
+		set_bump_normal(hit, shader->bump, type, &shader->normal);
 	}
 }
 
@@ -66,21 +66,21 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
 														&shader->normal);
 		set_uv_sphere(hit, &obj->sp);
 		vec_copy(obj->sp.rgb, &shader->rgb);
-		set_rgb_normal(hit, obj->sp.rgb, 20, shader);
+		set_rgb_normal(hit, obj->sp.rgb, SPHERE, shader);
 	}
 	else if ((hit->nearest) && (hit->nearest->type == PLANE))
 	{
 		vec_copy(obj->pl.norm, &shader->normal);
 		set_uv_plane(hit, &obj->pl);
 		vec_copy(obj->pl.rgb, &shader->rgb);
-		set_rgb_normal(hit, obj->pl.rgb, 0.1, shader);
+		set_rgb_normal(hit, obj->pl.rgb, PLANE, shader);
 	}
 	else if ((hit->nearest) && (hit->nearest->type == CYLINDER))
 	{
 		cylinder_surface_normal(&obj->cy, hit->phit, &shader->normal);
 		set_uv_cylinder(hit, &obj->cy);
 		vec_copy(obj->cy.rgb, &shader->rgb);
-		set_rgb_normal(hit, obj->cy.rgb, 100, shader);
+		set_rgb_normal(hit, obj->cy.rgb, CYLINDER, shader);
 	}
 }
 

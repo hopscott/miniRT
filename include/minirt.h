@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:26:19 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:19:45 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,9 @@ typedef struct s_hit {
 	char		shading;
 	double		u;
 	double		v;
+	double		r;
+	double		theta;
+	double		phi;
 }	t_hit;
 
 /*	Shade structure	*/
@@ -390,14 +393,14 @@ int			trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit);
 
 /* shading_rgb.c */
 void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
-									double size, double (*rgb)[3]);
+									int type, double (*rgb)[3]);
 void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
 void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
 void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
 
 /* shading_normal.c */
-int			set_bump_normal(t_hit *hit, t_data *bump, double (*norm)[3]);
-
+int			set_bump_normal(t_hit *hit, t_data *bump, int type, \
+													double (*surface_norm)[3]);
 
 /* =================== VISUALIZER ====================== */
 

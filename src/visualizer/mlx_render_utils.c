@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/04 22:09:57 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:40:49 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ void	set_img_addr_from_xpm(t_vars *vars, t_data *data, char *path)
 
 void	set_textures_and_bumps(t_vars *vars, char *texture, char *bump)
 {
+	int	i;
+
+	i = -1;
+	while (++i < MATERIALS)
+	{
+		vars->textures[i].img = NULL;
+		vars->bumps[i].addr = NULL;
+	}
 	set_img_addr_from_xpm(vars, &vars->textures[BRICK], "assets/brick.xpm");
 	set_img_addr_from_xpm(vars, &vars->bumps[BRICK], "assets/brick_normal.xpm");
 	set_img_addr_from_xpm(vars, &vars->textures[CUSTOM], texture);

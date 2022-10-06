@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/06 23:28:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:28:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,6 @@ void	cylinder_surface_normal(t_cylinder *cy, double phit[3], \
 	vec_ray_distance_to_point(cy->xyz, cy->norm, t, &pt);
 	vec_subtract(phit, pt, norm);
 	vec_unit(*norm, norm);
+	printf("norm_x: %f norm_y: %f norm_z: %f\n", (*norm)[0], (*norm)[1], (*norm)[2]);
+	exit(0);
 }

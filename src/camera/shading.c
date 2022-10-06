@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:50:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:54:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_shading_char(t_shader *shader, t_hit *hit)
 	{
 		if ((shader->specular_comp > shader->diffuse_comp))
 		{
-			if (shader->specular_comp > 0.01)
+			if (shader->specular_comp > 0.001)
 				hit->shading = '*';
 		}
 		else if (shader->diffuse_comp > 0.5)

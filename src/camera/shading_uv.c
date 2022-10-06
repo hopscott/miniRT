@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 17:22:27 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 22:14:04 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 
 	vec_subtract(hit->phit, sp->xyz, &xyz);
 	hit->r = vec_len(xyz);
-	hit->theta = acos(xyz[1] / hit->r);
-	hit->phi = atan(xyz[2] / xyz[0]);
+	hit->theta = acos(xyz[0] / hit->r);
+	hit->phi = atan(xyz[2] / xyz[1]);
 	if (xyz[0] < 0)
 	{
 		if (xyz[1] >= 0)
@@ -38,8 +38,8 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 		else
 			hit->phi = -M_PI;
 	}
-	hit->u = 2 * (1 - ((hit->theta / (2 * M_PI)) + 0.5));
-	hit->v = 1 - (hit->phi / M_PI);
+	hit->u = fabs(1 - ((hit->theta / (2 * M_PI)) + 0.5));
+	hit->v = fabs((1 - (hit->phi / M_PI)) / 2);
 }
 
 /* ======================================================== */

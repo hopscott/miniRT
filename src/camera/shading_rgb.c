@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 17:00:51 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 22:16:31 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 
 	ncheckers_size = 1;
 	if (type == SPHERE)
-		ncheckers_size = 20;
+		ncheckers_size = 40;
 	else if (type == PLANE)
 		ncheckers_size = 10;
 	else if (type == CYLINDER)

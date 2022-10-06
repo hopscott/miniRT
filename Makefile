@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/05 17:25:00 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/06 16:11:21 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ HEADERS := 	$(INC_DIR)/libft.h\
 
 SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/camera/matrix.c\
+			$(SRC_DIR)/camera/matrix_2.c\
 			$(SRC_DIR)/camera/camera_lookat_mat.c\
 			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/camera/shading_light.c\
@@ -40,6 +41,7 @@ SRCS	:= 	$(SRC_DIR)/camera/hits.c\
 			$(SRC_DIR)/camera/shading_rgb.c\
 			$(SRC_DIR)/camera/shading_uv.c\
 			$(SRC_DIR)/camera/shading_uv_cy.c\
+			$(SRC_DIR)/camera/shading_uv_cy_2.c\
 			$(SRC_DIR)/camera/shading.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\

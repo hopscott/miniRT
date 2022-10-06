@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:04:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/06 14:08:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,43 +72,29 @@ t_mat44	*set_rot_mat(double phi, double theta)
 	return (r);
 }
 
-double	get_phi(double cy_norm[3])
-{
-	double	phi;
-
-	if (cy_norm[2] == 0)
-		phi = 0;
-	else if (cy_norm[0] == 0 && cy_norm[2] < 0)
-		phi = M_PI / 2 + M_PI;
-	else if (cy_norm[0] == 0 && cy_norm[2] > 0)
-		phi = M_PI / 2;
-	else
-	{
-		phi = atan(cy_norm[0] / cy_norm[2]);
-		if (phi < 0)
-			phi = phi + 2 * M_PI;
-	}
-	return (phi);
-}
-
-int	trans_to_cy(double (*trans_phit)[3], double cy_norm[3], t_hit *hit, int i)
+int	trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit)
 {
 	double	phi;
 	double	theta;
 	t_mat44	*rot_mat;
 
-	phi = get_phi(cy_norm);
-	if (cy_norm[1] == 0)
-		theta = M_PI / 2;
+	if (cy->norm[0] == 0 && cy->norm[2] == 0 && cy->norm[1] == 1)
+		return (1);
+	if (cy->norm[2] == 0 || cy->norm[0] == 0)
+		phi = 0;
 	else
 	{
-		theta = atan(sqrt(pow(cy_norm[2], 2) + pow(cy_norm[0], 2))
-				/ (cy_norm[1]));
-		if (theta < 0)
-			theta = theta + M_PI;
+		phi = atan(cy->norm[0]/ cy->norm[2]);
+		if (phi < 0)
+			phi = phi + 2 *  M_PI;
 	}
+	if (cy->norm[1] == 0)
+		theta = 0;
+	else
+		theta = atan(sqrt(pow(cy->norm[2], 2) + pow(cy->norm[0], 2))
+				/ fabs(cy->norm[1]));
+	printf("theta: %f, phi: %f\n", theta, phi);
+//	exit (0);
 	rot_mat = set_rot_mat(phi, theta);
-	if (i == 1)
-		return (vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit), 0);
-	return (vec_matrix_multiply_bis(rot_mat, hit->phit, 1, trans_phit), 0);
+	return (vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit), 0);
 }

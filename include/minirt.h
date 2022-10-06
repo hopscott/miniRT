@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:26:19 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:09:37 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,6 +363,10 @@ void		vec_matrix_multiply(t_mat44 *mat, double vec[3], double w, \
 t_mat44		*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free);
 void		print_mat(t_mat44 *mat);
 
+/* matrix_2.c */
+void		vec_matrix_multiply_bis(t_mat44 *mat, double vec[3], double w, \
+															double (*res)[3]);
+
 /* camera_lookat_mat.c */
 t_mat44		*camera_lookat(t_camera *cam);
 
@@ -386,7 +390,10 @@ void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
 t_mat44		*set_ry(double angle);
 t_mat44		*set_rz(double angle);
 t_mat44		*set_rot_mat(double phi, double theta);
-int			trans_to_cy(double (*trans_phit)[3], t_cylinder *cy, t_hit *hit);
+int			trans_to_cy(double (*trans_phit)[3], double cy_norm[3], t_hit *hit, int i);
+
+/* shading_uv_cy_2.c */
+void		get_new_norm(double old_norm[3], double (*new_norm)[3]);
 
 /* shading_rgb.c */
 void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \

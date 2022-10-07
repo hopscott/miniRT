@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:42:28 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:18:47 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	obj_lstadd(t_obj_lst **lst, int type, t_object *object, char **tbl)
 
 	if (object == NULL)
 		return (1);
-	printf("TYPE > %d | TEXT > %d | MATERIAL > %d \n", type, surface_parser(tbl), material_parser(tbl));
 	new = obj_lstnew(type, object, surface_parser(tbl), material_parser(tbl));
 	if (!new)
 		return (1);

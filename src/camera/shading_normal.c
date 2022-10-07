@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:20:53 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 01:47:00 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	convert_color(char *color, double (*bump_norm)[3])
 {
 	double	rgb[3];
 
-	vec_set((double)color[0], \
+	vec_set((double)color[2], \
 			(double)color[1], \
-			(double)color[2], \
+			(double)color[0], \
 			&rgb);
 	vec_set(2 * (rgb[0] / 255) - 1, \
 			2 * (rgb[1] / 255) - 1, \
-			2 * (rgb[2] / 255) - 1, \
+			rgb[2] / 255, \
 			bump_norm);
 	if ((*bump_norm)[0] < (double)-1)
 		(*bump_norm)[0] = -1;

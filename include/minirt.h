@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 17:22:10 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:29:31 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ enum {
 
 enum {
 	BRICK		= 0,
-	CUSTOM		= 1,
-	MATERIALS	= 2
+	WOOD		= 1,
+	CUSTOM		= 2,
+	MATERIALS	= 3
 };
 
 typedef struct s_ambient

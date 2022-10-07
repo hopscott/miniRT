@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/04 22:41:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:30:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	material_parser(char **tbl)
 	str = tbl[i];
 	if (!ft_strncmp(str, "BRICK", 5) || !ft_strncmp(str, "brick", 5))
 		return (BRICK);
+	else if (!ft_strncmp(str, "WOOD", 4) || !ft_strncmp(str, "wood", 4))
+		return (WOOD);
 	else if (!ft_strncmp(str, "CUSTOM", 6) || !ft_strncmp(str, "custom", 6))
 		return (CUSTOM);
 	return (ERROR);

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/19 13:17:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 01:58:38 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 		return (1);
 	return (0);
 }
+
+/* ===================================================== */
+/* https://stackoverflow.com/questions/36266357/		 */
+/* how-can-i-compute-normal-on-the-surface-of-a-cylinder */
+/* ===================================================== */
 
 void	cylinder_surface_normal(t_cylinder *cy, double phit[3], \
 														double (*norm)[3])

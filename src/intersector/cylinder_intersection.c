@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/07 02:02:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 21:10:46 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	abc[2] = vec_dot(cy->cross_co_orient, cy->cross_co_orient) \
 												- pow(cy->radius, 2);
 	discr = pow(abc[1], 2) - 4 * abc[0] * abc[2];
-	if (discr < 0)
+	if (discr < (double)0)
 		hit->t = -1;
 	vec_set(discr, abc[0], abc[1], &dab);
 	hit->t = find_smallest_dist(ray->origin, ray->direction, cy, dab);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading_uv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scottwillis <scottwillis@student.42.fr>    +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 18:44:29 by scottwillis      ###   ########.fr       */
+/*   Updated: 2022/10/07 21:33:52 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	set_uv_sphere(t_hit *hit, t_sphere *sp)
 	vec_unit(n, &n);
 	hit->theta = asin(n[1]);
 	hit->phi = atan2(n[0], n[2]);
-	hit->u = (hit->phi / (2 * M_PI)) + 0.5;
-	hit->v = (hit->theta * 0.5 + 0.5) / 2;
-	printf("u -> %f | v-> %f \n", hit->u, hit->v);
+	hit->u = fabs((hit->phi / (2 * M_PI)) + 0.5);
+	hit->v = fabs((hit->theta * 0.5 + 0.5) / 2);
 }
 
 /* ======================================================== */

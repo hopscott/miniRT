@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 00:40:21 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 21:51:56 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	shading_from_light(t_space *space, t_hit *hit, \
 	if (lhit.nearest)
 	{
 		shader->lobj = (t_object *)(lhit.nearest->content);
-		if (shader->lobj == shader->obj)
-		{
+		// if (shader->lobj == shader->obj)
+		// {
 			add_diffuse_component(shader, &lray, light);
 			add_specular_component(shader, &lray, light);
-		}
+		// }
 	}
 }

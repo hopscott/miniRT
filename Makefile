@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
+#    By: scottwillis <scottwillis@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/06 17:21:56 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/07 19:03:45 by scottwillis      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,10 @@ EXE := $(BIN_DIR)/miniRT
 CC := cc 
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
+
+# # macOS
+# LDFLAGS ?= -Lmlx -lmlx -framework OpenGL -framework AppKit
+# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -Imlx -O3 -g -fsanitize=address
 
 # Src files ======================================
 

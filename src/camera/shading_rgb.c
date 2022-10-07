@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading_rgb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: scottwillis <scottwillis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 23:52:06 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 18:41:47 by scottwillis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 
 void	set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3])
 {
-	int		x;
-	int		y;
-	char	*color;
-	double	rgb_pix[3];
+	int				x;
+	int				y;
+	unsigned char	*color;
+	double			rgb_pix[3];
 
 	if (hit->u < 0)
 		hit->u = 0;
@@ -57,9 +57,9 @@ void	set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3])
 	x -= x % 4;
 	y = (int)(hit->v * tex->h * tex->bpp / 8);
 	y -= y % 4;
-	color = tex->addr + x + (tex->w * y);
-	rgb_pix[0] = fmod((double)color[2] / 255, 1) * 255;
-	rgb_pix[1] = fmod((double)color[1] / 255, 1) * 255;
-	rgb_pix[2] = fmod((double)color[0] / 255, 1) * 255;
+	color = (unsigned char *)(tex->addr + x + (tex->w * y));
+	rgb_pix[0] = (double)color[2];
+	rgb_pix[1] = (double)color[1];
+	rgb_pix[2] = (double)color[0];
 	vec_copy(rgb_pix, rgb);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading_normal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: scottwillis <scottwillis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 01:47:00 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:04:06 by scottwillis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_mat44	*mat44_init_tbn(t_hit *hit, double surface_norm[3], \
 /* https://shader-tutorial.dev/intermediates/normal-mapping/ */
 /* ========================================================= */
 
-void	convert_color(char *color, double (*bump_norm)[3])
+void	convert_color(unsigned char *color, double (*bump_norm)[3])
 {
 	double	rgb[3];
 
@@ -70,7 +70,7 @@ void	convert_color(char *color, double (*bump_norm)[3])
 			&rgb);
 	vec_set(2 * (rgb[0] / 255) - 1, \
 			2 * (rgb[1] / 255) - 1, \
-			rgb[2] / 255, \
+			(rgb[2] - 127 )/ 128, \
 			bump_norm);
 	if ((*bump_norm)[0] < (double)-1)
 		(*bump_norm)[0] = -1;
@@ -89,17 +89,17 @@ void	convert_color(char *color, double (*bump_norm)[3])
 int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
 										double (*surface_norm)[3])
 {
-	t_mat44	*tbn;
-	int		x;
-	int		y;
-	char	*color;
-	double	bump_norm[3];
+	t_mat44			*tbn;
+	int				x;
+	int				y;
+	unsigned char	*color;
+	double			bump_norm[3];
 
 	x = (int)(hit->u * bump->w * bump->bpp / 8);
 	x -= x % 4;
 	y = (int)(hit->v * bump->h * bump->bpp / 8);
 	y -= y % 4;
-	color = bump->addr + x + bump->w * y;
+	color = (unsigned char *)(bump->addr + x + bump->w * y);
 	convert_color(color, &bump_norm);
 	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
 	if (!tbn)

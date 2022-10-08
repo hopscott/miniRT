@@ -6,13 +6,13 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 23:18:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/13 02:31:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_obj_lst	*obj_lstnew(int type, void *content, int surface, int material)
+t_obj_lst	*obj_lstnew(int type, void *content)
 {
 	t_obj_lst	*elem;
 
@@ -23,10 +23,6 @@ t_obj_lst	*obj_lstnew(int type, void *content, int surface, int material)
 		return (NULL);
 	elem->type = type;
 	elem->content = content;
-	elem->surface = surface;
-	elem->material = material;
-	if ((surface >= TEXTURE) && (material == ERROR))
-		elem->surface = NONE;
 	elem->next = NULL;
 	return (elem);
 }
@@ -40,14 +36,14 @@ t_obj_lst	*obj_lstlast(t_obj_lst *lst)
 	return (lst);
 }
 
-int	obj_lstadd(t_obj_lst **lst, int type, t_object *object, char **tbl)
+int	obj_lstadd(t_obj_lst **lst, int type, t_object *object)
 {
 	t_obj_lst	*new;
 	t_obj_lst	*last;
 
 	if (object == NULL)
 		return (1);
-	new = obj_lstnew(type, object, surface_parser(tbl), material_parser(tbl));
+	new = obj_lstnew(type, object);
 	if (!new)
 		return (1);
 	if (lst && *lst)
@@ -58,6 +54,24 @@ int	obj_lstadd(t_obj_lst **lst, int type, t_object *object, char **tbl)
 	else
 		*lst = new;
 	return (0);
+}
+
+void	obj_lstfree_sub(t_obj_lst **elem_ptr)
+{
+	t_object	*obj;
+	t_obj_lst	*elem;
+
+	elem = *elem_ptr;
+	obj = (t_object *)(elem->content);
+	if (elem->type == SPHERE)
+		vec3_free_multi(obj->sp.xyz, obj->sp.rgb, NULL, 0);
+	else if (elem->type == PLANE)
+		vec3_free_multi(obj->pl.xyz, obj->pl.norm, obj->pl.rgb, 0);
+	else if (elem->type == CYLINDER)
+		vec3_free_multi(obj->cy.xyz, obj->cy.norm, obj->cy.rgb, 0);
+	else if (elem->type == LIGHT)
+		vec3_free_multi(obj->l.xyz, obj->l.rgb, NULL, 0);
+	free(elem->content);
 }
 
 void	obj_lstfree(t_obj_lst **lst)
@@ -72,7 +86,7 @@ void	obj_lstfree(t_obj_lst **lst)
 		{
 			next = elem->next;
 			if (elem->content)
-				free(elem->content);
+				obj_lstfree_sub(&elem);
 			free(elem);
 			elem = next;
 		}

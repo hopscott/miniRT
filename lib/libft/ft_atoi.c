@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:25:50 by swillis           #+#    #+#             */
-/*   Updated: 2022/09/20 14:56:40 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/07 23:17:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	if (c == '\t' || c == '\n' || c == '\r')
 		return (1);
@@ -19,13 +19,13 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-int	ft_isnum(char c)
+static int	ft_isnum(char c)
 {
 	if ((c >= '0') && (c <= '9'))
 		return (1);
 	return (0);
 }
-
+ 
 int	ft_atoi(char *str)
 {
 	int				i;

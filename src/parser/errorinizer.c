@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   errorinizer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 18:32:56 by swillis           #+#    #+#             */
-/*   Updated: 2022/08/11 15:46:25 by swillis          ###   ########.fr       */
+/*   Created: 2022/08/15 02:18:15 by omoudni           #+#    #+#             */
+/*   Updated: 2022/09/12 22:26:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minirt.h"
 
-char	*ft_strndup(char *src, size_t n)
+void	puterr_free(char *err, t_space *space)
 {
-	char	*dst;
-	size_t			i;
+	write(2, err, ft_strlen(err));
+	free_space(space);
+}
 
-	dst = malloc(sizeof(dst) * (n + 1));
-	if (!dst)
-		return (0);
-	i = 0;
-	while (src[i] && (i < n))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+void	print_help(void)
+{
+	write(2, HELP_MSG, ft_strlen(HELP_MSG));
 }

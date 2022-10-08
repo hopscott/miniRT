@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/04 21:56:58 by swillis          ###   ########.fr       */
+/*   Updated: 2022/09/13 21:11:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	objs_builder1(char **tbl, t_space *space, t_ambient *ambient)
 	int	err;
 
 	err = 0;
-	if (!ft_strncmp(tbl[0], "A", 2) || !ft_strncmp(tbl[0], "a", 2))
+	if (!ft_strncmp(tbl[0], "A", 2) || !ft_strncmp(tbl[0], "a", 2) )
 	{
 		if (space->ambient)
 			return (2);
@@ -26,6 +26,7 @@ int	objs_builder1(char **tbl, t_space *space, t_ambient *ambient)
 	}
 	return (err);
 }
+
 
 int	objs_builder2(char **tbl, t_space *space, int *to_switch, t_camera *camera)
 {
@@ -42,6 +43,7 @@ int	objs_builder2(char **tbl, t_space *space, int *to_switch, t_camera *camera)
 	return (err);
 }
 
+
 int	objs_builder3(char **tbl, t_space *space, int *to_switch)
 {
 	int	err;
@@ -49,18 +51,17 @@ int	objs_builder3(char **tbl, t_space *space, int *to_switch)
 	err = 0;
 	if (!ft_strncmp(tbl[0], "L", 2) || !ft_strncmp(tbl[0], "l", 2))
 		err = obj_lstadd(&space->objects, LIGHT, \
-				(t_object *)build_light(tbl, *to_switch), tbl);
+				(t_object *)build_light(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "sp", 3) || !ft_strncmp(tbl[0], "SP", 3))
 		err = obj_lstadd(&space->objects, SPHERE, \
-				(t_object *)build_sphere(tbl, *to_switch), tbl);
+				(t_object *)build_sphere(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "pl", 3) || !ft_strncmp(tbl[0], "PL", 3))
 		err = obj_lstadd(&space->objects, PLANE, \
-		(t_object *)build_plane(space, tbl, *to_switch), tbl);
+				(t_object *)build_plane(tbl, *to_switch));
 	else if (!ft_strncmp(tbl[0], "cy", 3) || !ft_strncmp(tbl[0], "CY", 3))
 		err = obj_lstadd(&space->objects, CYLINDER, \
-			(t_object *)build_cylinder(tbl, *to_switch), tbl);
-	else if ((ft_strncmp(tbl[0], "a", 3) && ft_strncmp(tbl[0], "A", 3)) && \
-			(ft_strncmp(tbl[0], "c", 3) && ft_strncmp(tbl[0], "C", 3)))
+				(t_object *)build_cylinder(tbl, *to_switch));
+	else if ((ft_strncmp(tbl[0], "a", 3) && ft_strncmp(tbl[0], "A", 3)) && (ft_strncmp(tbl[0], "c", 3) && ft_strncmp(tbl[0], "C", 3))) 
 		err = 1;
 	return (err);
 }
@@ -75,19 +76,27 @@ int	sub_parser(t_space *space, int fd, t_camera *camera, t_ambient *ambient)
 	err = 0;
 	to_switch = 0;
 	str = get_next_line(fd);
-	while (!err && str)
+	while (str && !err)
 	{
-		if (!err && !(*str == '\n') && !(*str == '#') && !line_is_space(str))
+		if (!(*str == '\n') && !(*str == '#') && !line_is_space(str))
 		{
 			tbl = ft_split(str, ' ');
 			err = objs_builder1(tbl, space, ambient);
+			printf("err1: %d\n", err);
 			if (!err)
 				err = objs_builder2(tbl, space, &to_switch, camera);
+			printf("err2: %d\n", err);
 			if (!err)
 				err = objs_builder3(tbl, space, &to_switch);
+			printf("err3: %d\n", err);
 			ft_freetbl(tbl, -1);
+			free(str);
+			str = NULL;
+			if (err)
+				break ;
 		}
-		free(str);
+		if (str)
+			free(str);
 		str = get_next_line(fd);
 	}
 	return (err);
@@ -98,6 +107,8 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 	int			err;
 	int			fd;
 
+//	camera = NULL;
+//	ambient = NULL;
 	init_parser_params(space);
 	if (check_rt(path))
 		return (1);
@@ -109,9 +120,9 @@ int	parser(char *path, t_space *space, t_camera *camera, t_ambient *ambient)
 	{
 		space->camera = camera;
 		space->ambient = ambient;
-		if (check_space_null(space))
-			return (-1);
-		cy_init_cam_center(space->camera, &(space->objects));
 	}
+	close(fd);
+	if (!err && check_space_null(space))
+		return (-1);
 	return (err);
 }

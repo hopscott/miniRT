@@ -3,19 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
+#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/08 16:41:24 by swillis          ###   ########.fr        #
+#    Updated: 2022/09/13 22:28:57 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Name ==========================================
+
+NAME := miniRT.a #I'm not sure if we are suppose to build a library
 
 # Dirs ==========================================
 
 SRC_DIR := src
 INC_DIR := include
 LIB_DIR := lib
-OBJ_DIR := build
 BIN_DIR := .
 
 # Exes ==========================================
@@ -24,78 +27,62 @@ EXE := $(BIN_DIR)/miniRT
 
 # Compilation ====================================
 
-CC := cc 
+CC := cc
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g # -fsanitize=address
-
-# # macOS
-# LDFLAGS ?= -Lmlx -lmlx -framework OpenGL -framework AppKit
-# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -Imlx -O3 -g -fsanitize=address
+# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g -fsanitize=address
+CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g
 
 # Src files ======================================
 
-HEADERS := 	$(INC_DIR)/minirt.h\
-			$(INC_DIR)/vec.h\
-			$(INC_DIR)/libft.h\
+HEADERS := 	$(INC_DIR)/libft.h\
 
-SRCS	:= 	$(SRC_DIR)/camera/camera_lookat_matrix.c\
-			$(SRC_DIR)/camera/matrix_operations.c\
-			$(SRC_DIR)/intersector/cylinder_intersection.c\
-			$(SRC_DIR)/intersector/init_center_cy_cam.c\
+SRCS	:= 	$(SRC_DIR)/printer/printer.c\
+			$(SRC_DIR)/parser/parser.c\
+			$(SRC_DIR)/parser/parser_utils.c\
+			$(SRC_DIR)/parser/free_er.c\
+			$(SRC_DIR)/parser/object_list.c\
+			$(SRC_DIR)/parser/errorinizer.c\
+			$(SRC_DIR)/parser/ambient.c\
+			$(SRC_DIR)/parser/camera.c\
+			$(SRC_DIR)/parser/light.c\
+			$(SRC_DIR)/parser/sphere.c\
+			$(SRC_DIR)/parser/plane.c\
+			$(SRC_DIR)/parser/cylinder.c\
+			$(SRC_DIR)/vec3/utils.c\
+			$(SRC_DIR)/vec3/basic_ops.c\
+			$(SRC_DIR)/vec3/adv_ops.c\
+			$(SRC_DIR)/vec3/extra_ops.c\
+			$(SRC_DIR)/camera/matrix.c\
+			$(SRC_DIR)/camera/shading_light.c\
+			$(SRC_DIR)/camera/shading.c\
+			$(SRC_DIR)/camera/rays.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\
+			$(SRC_DIR)/intersector/normal_plan_bmap.c\
 			$(SRC_DIR)/intersector/sphere_intersection.c\
-			$(SRC_DIR)/parser/build_ambient.c\
-			$(SRC_DIR)/parser/build_camera.c\
-			$(SRC_DIR)/parser/build_cylinder.c\
-			$(SRC_DIR)/parser/build_light.c\
-			$(SRC_DIR)/parser/build_plane.c\
-			$(SRC_DIR)/parser/build_sphere.c\
-			$(SRC_DIR)/parser/build_utils.c\
-			$(SRC_DIR)/parser/object_list.c\
-			$(SRC_DIR)/parser/parser.c\
-			$(SRC_DIR)/parser/parser_checks.c\
-			$(SRC_DIR)/parser/parser_init_free.c\
-			$(SRC_DIR)/parser/parser_surface.c\
-			$(SRC_DIR)/printers/matrix_printer.c\
-			$(SRC_DIR)/printers/parsing_printer.c\
-			$(SRC_DIR)/printers/parsing_printer_utils.c\
-			$(SRC_DIR)/printers/progress_printer.c\
-			$(SRC_DIR)/printers/screen_printer.c\
-			$(SRC_DIR)/rays/cast_ray.c\
-			$(SRC_DIR)/rays/nearest_hit.c\
-			$(SRC_DIR)/shading/bump_mapping.c\
-			$(SRC_DIR)/shading/checkerboard_textures.c\
-			$(SRC_DIR)/shading/shading.c\
-			$(SRC_DIR)/shading/shading_from_light.c\
-			$(SRC_DIR)/shading/uv_mapping.c\
-			$(SRC_DIR)/shading/uv_mapping_cy_utils.c\
-			$(SRC_DIR)/vec/adv_ops.c\
-			$(SRC_DIR)/vec/basic_ops.c\
-			$(SRC_DIR)/vec/utils.c\
-			$(SRC_DIR)/render/mlx_render.c\
-			$(SRC_DIR)/render/mlx_render_utils.c\
-			$(SRC_DIR)/render/space_render.c\
-			$(SRC_DIR)/render/space_render_utils.c\
+			$(SRC_DIR)/intersector/cylinder_intersection.c\
+			$(SRC_DIR)/visualizer/mlx_render.c\
+			$(SRC_DIR)/visualizer/space_render.c\
 			$(SRC_DIR)/main.c\
+			$(SRC_DIR)/utils.c\
 
 # Make all ========================================
 
-all : miniRT
+all : $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	mkdir -p 	$(OBJ_DIR) $(OBJ_DIR)/camera $(OBJ_DIR)/intersector $(OBJ_DIR)/parser $(OBJ_DIR)/printers \
-				$(OBJ_DIR)/rays $(OBJ_DIR)/render $(OBJ_DIR)/shading $(OBJ_DIR)/vec
-	$(CC) $(CFLAGS) -c $< -o $@ 
+$(NAME): miniRT
+
+%.o: %.c $(HEADERS)
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Objects ========================================
 
-OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS := $(SRCS:.c=.o)
 
 # Libs ==========================================
 
 LIBFT := $(LIB_DIR)/libft/libft.a
-
+ 
 $(LIBFT) :
 	make -C lib/libft -f Makefile
 
@@ -111,12 +98,11 @@ miniRT : $(OBJS) $(LIBFT) $(ULIMIT)
 
 clean:
 	make -C lib/libft -f Makefile clean
-	rm -rf $(OBJS) $(OBJ_DIR)
+	rm -rf $(OBJS)
 
 fclean : clean
 	make -C lib/libft -f Makefile fclean
-	rm -f $(EXE)
-	rm -f "hit.txt" "shading.txt"
+	rm -rf $(EXE)
 
 # Additional ========================================
 

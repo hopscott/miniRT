@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 21:44:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/07 21:56:00 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit)
 	{
 		obj = (t_object *)(elem->content);
 		find_intersection(elem->type, ray, obj, hit);
-		if ((hit->t >= EPSILON) && (hit->t < tmin))
+		if ((hit->t > EPSILON) && (hit->t < tmin))
 		{
 			hit->nearest = elem;
 			tmin = hit->t;

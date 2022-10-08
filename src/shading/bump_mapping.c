@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading_normal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scottwillis <scottwillis@student.42.fr>    +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 19:04:06 by scottwillis      ###   ########.fr       */
+/*   Updated: 2022/10/08 15:37:07 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,7 @@ int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
 	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
 	if (!tbn)
 		return (1);
-	// vec_print("before", *norm);
 	vec_matrix_multiply(tbn, bump_norm, 1, surface_norm);
 	free(tbn);
-	// vec_print("bump", bump_norm);
-	// vec_print("after", *norm);
-	
 	return (0);
 }

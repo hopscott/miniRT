@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:23:33 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:43:11 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	init_parameters(int width, int height, t_space *space, t_param *param)
 	param->matrix = camera_lookat(space->camera);
 	if (!param->matrix)
 		return (1);
-	param->scale = tan(deg2rad(space->camera->fov / 2));
+	param->scale = tan(((space->camera->fov / 2) * (M_PI / 180)));
 	param->aspect_ratio = (double)param->width / (double)param->height;
 	param->colour = 0;
 	if (sub_create_debugger(&param->screen_hit, height, width))

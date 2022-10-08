@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   progress_printer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:12:26 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 00:38:11 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:29:45 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-double	deg2rad(double degree)
-{
-	return (degree * (M_PI / 180));
-}
 
 void	print_progress(int i, int total)
 {
@@ -36,59 +31,4 @@ void	print_progress(int i, int total)
 	}
 	else if (i == total - 1)
 		printf("\n======================\n");
-}
-
-size_t	rgb_colour(double rgb[3])
-{
-	size_t	r;
-	size_t	g;
-	size_t	b;
-
-	r = (size_t)rgb[0];
-	if (r > 255)
-		r = 255;
-	g = (size_t)rgb[1];
-	if (g > 255)
-		g = 255;
-	b = (size_t)rgb[2];
-	if (b > 255)
-		b = 255;
-	return ((r << 16) + (g << 8) + b);
-}
-
-void	rgb_multiply(double rgb1[3], double rgb2[3], double (*rgb)[3])
-{
-	size_t	r;
-	size_t	g;
-	size_t	b;
-
-	r = (size_t)rgb1[0] * (size_t)rgb2[0] / 255;
-	g = (size_t)rgb1[1] * (size_t)rgb2[1] / 255;
-	b = (size_t)rgb1[2] * (size_t)rgb2[2] / 255;
-	vec_set(r, g, b, rgb);
-}
-
-void	print_screen(char **screen)
-{
-	int	y;	
-	int	x;
-
-	printf("    ");
-	x = -1;
-	while (++x < WIDTH + 2)
-		if (x % 10 == 0)
-			printf("_");
-	printf("_\n");
-	y = -1;
-	while (++y < HEIGHT)
-	{
-		x = -1;
-		if (y % 20 == 0)
-			printf("%4d|", y);
-		while (++x < WIDTH)
-			if ((x % 10 == 0) && (y % 20 == 0))
-				printf("%c", screen[y][x]);
-		if (y % 20 == 0)
-			printf("|\n");
-	}
 }

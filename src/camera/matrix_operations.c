@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:46:19 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:10:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:28:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,23 @@ t_mat44	*mat_x_mat(t_mat44 *mat1, t_mat44 *mat2, int to_free)
 	return (ret);
 }
 
-void	print_mat(t_mat44 *mat)
+void	vec_matrix_multiply_bis(t_mat44 *mat, double old_vec[3], double w, \
+		double (*res)[3])
 {
-	printf("%f %f %f %f\n", mat->a[0], mat->b[0], mat->c[0], mat->d[0]);
-	printf("%f %f %f %f\n", mat->a[1], mat->b[1], mat->c[1], mat->d[1]);
-	printf("%f %f %f %f\n", mat->a[2], mat->b[2], mat->c[2], mat->d[2]);
-	printf("0 0 0 1\n");
+	double	a;
+	double	b;
+	double	c;
+	double	vec[3];
+
+	get_new_norm(old_vec, &vec);
+	if (mat)
+	{
+		a = (mat->a[0] * vec[0]) + (mat->b[0] * vec[1]) \
+			+ (mat->c[0] * vec[2]) + (mat->d[0] * w);
+		b = (mat->a[1] * vec[0]) + (mat->b[1] * vec[1]) \
+			+ (mat->c[1] * vec[2]) + (mat->d[1] * w);
+		c = (mat->a[2] * vec[0]) + (mat->b[2] * vec[1]) \
+			+ (mat->c[2] * vec[2]) + (mat->d[2] * w);
+		vec_set(a, b, c, res);
+	}
 }

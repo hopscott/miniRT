@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/06 23:29:43 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:39:40 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 void	set_img_addr_from_xpm(t_vars *vars, t_data *data, char *path)
 {
-	data->img = mlx_xpm_file_to_image(vars->mlx, path, \
+	if (access(path, F_OK) == 0)
+	{
+		data->img = mlx_xpm_file_to_image(vars->mlx, path, \
 												&data->w, &data->h);
-	if (!data->img)
-		return ;
-	data->addr = mlx_get_data_addr(data->img, \
-					&data->bpp, &data->line_length, &data->endian);
+		if (!data->img)
+		{
+			data->img = NULL;
+			data->addr = NULL;
+		}
+		else
+			data->addr = mlx_get_data_addr(data->img, \
+						&data->bpp, &data->line_length, &data->endian);
+	}
 }
 
 void	set_textures_and_bumps(t_vars *vars, char *texture, char *bump)
@@ -30,6 +37,8 @@ void	set_textures_and_bumps(t_vars *vars, char *texture, char *bump)
 	while (++i < MATERIALS)
 	{
 		vars->textures[i].img = NULL;
+		vars->textures[i].addr = NULL;
+		vars->bumps[i].img = NULL;
 		vars->bumps[i].addr = NULL;
 	}
 	set_img_addr_from_xpm(vars, &vars->textures[WOOD], "assets/wood.xpm");

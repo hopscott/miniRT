@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading_light.c                                    :+:      :+:    :+:   */
+/*   shading_from_light.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 21:51:56 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:44:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,22 @@ void	shading_from_light(t_space *space, t_hit *hit, \
 	if (lhit.nearest)
 	{
 		shader->lobj = (t_object *)(lhit.nearest->content);
-		// if (shader->lobj == shader->obj)
-		// {
+		if (shader->lobj == shader->obj)
+		{
 			add_diffuse_component(shader, &lray, light);
 			add_specular_component(shader, &lray, light);
-		// }
+		}
 	}
+}
+
+void	rgb_multiply(double rgb1[3], double rgb2[3], double (*rgb)[3])
+{
+	size_t	r;
+	size_t	g;
+	size_t	b;
+
+	r = (size_t)rgb1[0] * (size_t)rgb2[0] / 255;
+	g = (size_t)rgb1[1] * (size_t)rgb2[1] / 255;
+	b = (size_t)rgb1[2] * (size_t)rgb2[2] / 255;
+	vec_set(r, g, b, rgb);
 }

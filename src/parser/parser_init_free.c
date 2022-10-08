@@ -6,20 +6,24 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:49:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/09/16 16:48:58 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:34:39 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	tbl_3_check(char **tbl)
+void	init_parser_params(t_space *space)
 {
-	int	len;
-
-	len = dptr_len(tbl);
-	if (len != 3)
-		return (1);
-	return (0);
+	vec_set(1, 0, 0, &space->arb_vecs.v1);
+	vec_set(0, 1, 0, &space->arb_vecs.v2);
+	vec_set(0, 0, 1, &space->arb_vecs.v3);
+	space->ambient = NULL;
+	space->camera = NULL;
+	space->cam = 0;
+	space->amb = 0;
+	space->objects = NULL;
+	space->lights = NULL;
+	space->fatal_error = 0;
 }
 
 void	pl_cy_tbl_free(t_cylinder **cy, t_plane **p, char ***tbl)
@@ -68,16 +72,4 @@ int	dptr_len(char **tbl)
 	while (tbl && tbl[len])
 		len++;
 	return (len);
-}
-
-int	check_rt(char *path)
-{
-	int	len;
-
-	len = ft_strlen(path);
-	if (len < 3)
-		return (1);
-	if (ft_strncmp(&(path[len - 3]), ".rt", 3))
-		return (1);
-	return (0);
 }

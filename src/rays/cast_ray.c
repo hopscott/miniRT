@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/05 17:18:09 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:42:00 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ char	obj_to_char(t_obj_lst *elem)
 			return ('%');
 	}
 	return ('.');
+}
+
+size_t	rgb_colour(double rgb[3])
+{
+	size_t	r;
+	size_t	g;
+	size_t	b;
+
+	r = (size_t)rgb[0];
+	if (r > 255)
+		r = 255;
+	g = (size_t)rgb[1];
+	if (g > 255)
+		g = 255;
+	b = (size_t)rgb[2];
+	if (b > 255)
+		b = 255;
+	return ((r << 16) + (g << 8) + b);
 }
 
 size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)

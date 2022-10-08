@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading_uv.c                                       :+:      :+:    :+:   */
+/*   uv_mapping.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 21:33:52 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:39:45 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ void	set_uv_plane(t_hit *hit, t_plane *pl)
 	hit->v = fmod(vec_dot(xyz, pl->e2), 1);
 	if (hit->v < 0)
 		hit->v = fmod(hit->v + 1, 1);
+}
+
+void	get_new_norm(double old_norm[3], double (*new_norm)[3])
+{
+	(*new_norm)[0] = -1 * old_norm[0];
+	(*new_norm)[1] = old_norm[1];
+	(*new_norm)[2] = -1 * old_norm[2];
 }
 
 void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)

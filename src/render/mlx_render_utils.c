@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:55:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/08 16:39:40 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 18:04:18 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 void	set_img_addr_from_xpm(t_vars *vars, t_data *data, char *path)
 {
-	if (access(path, F_OK) == 0)
+	if (path)
 	{
-		data->img = mlx_xpm_file_to_image(vars->mlx, path, \
-												&data->w, &data->h);
-		if (!data->img)
+		if (access(path, F_OK) == 0)
 		{
-			data->img = NULL;
-			data->addr = NULL;
+			data->img = mlx_xpm_file_to_image(vars->mlx, path, \
+													&data->w, &data->h);
+			if (!data->img)
+			{
+				data->img = NULL;
+				data->addr = NULL;
+			}
+			else
+				data->addr = mlx_get_data_addr(data->img, \
+							&data->bpp, &data->line_length, &data->endian);
 		}
-		else
-			data->addr = mlx_get_data_addr(data->img, \
-						&data->bpp, &data->line_length, &data->endian);
 	}
 }
 

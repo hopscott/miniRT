@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 19:01:03 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/09 17:22:21 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 		set_bump_normal(hit, shader->bump, type, &shader->normal);
 	else if (hit->nearest->surface == BUMPTEXT)
 	{
-		set_texture_rgb(hit, shader->texture, &shader->rgb);
 		set_bump_normal(hit, shader->bump, type, &shader->normal);
+		set_texture_rgb(hit, shader->texture, &shader->rgb);
 	}
 }
 
-void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
+void	set_surface(t_hit *hit, t_object *obj, t_shader *shader)
 {
 	if ((hit->nearest) && (hit->nearest->type == SPHERE))
 	{
@@ -98,7 +98,7 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	shader.bump = hit->nearest->bump;
 	shader.ray = ray;
 	shader.obj = obj;
-	surface_rgb_normal(hit, obj, &shader);
+	set_surface(hit, obj, &shader);
 	init_light_components(space, &shader);
 	i = 0;
 	while (i < space->n_lights)

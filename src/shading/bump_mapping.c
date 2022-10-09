@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 15:12:42 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/09 17:52:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,12 @@ int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
 	y -= y % 4;
 	color = (unsigned char *)(bump->addr + x + bump->w * y);
 	convert_color(color, &bump_norm);
+	if (type == CYLINDER)
+		return (0);
 	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
 	if (!tbn)
 		return (1);
-	vec_matrix_multiply(tbn, bump_norm, 0, surface_norm);
+	vec_matrix_multiply(tbn, bump_norm, 1, surface_norm);
 	vec_unit((*surface_norm), surface_norm);
 	vec_multiply((*surface_norm), -1, surface_norm);
 	free(tbn);

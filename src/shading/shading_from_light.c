@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 15:44:39 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/09 17:51:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	add_specular_component(t_shader *shader, t_ray *lray, t_light *light)
 	vec_multiply(shader->normal, 2 * \
 							vec_dot(shader->normal, lray->direction), &r);
 	vec_subtract(r, lray->direction, &r);
+	vec_unit(r, &r);
 	vec_copy(shader->ray->direction, &v);
 	shader->specular_comp = shader->ks * pow(vec_dot(v, r), n);
 	if (shader->specular_comp > 0)

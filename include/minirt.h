@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 16:50:23 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/09 16:58:48 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,7 +394,8 @@ void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
 t_mat44		*set_ry(double angle);
 t_mat44		*set_rz(double angle);
 t_mat44		*set_rot_mat(double phi, double theta);
-int			trans_to_cy(double (*trans_phit)[3], double cy_norm[3], t_hit *hit, int i);
+int			trans_to_cy(double (*trans_phit)[3], double cy_norm[3], \
+														t_hit *hit, int i);
 
 /* shading_uv_cy_2.c */
 void		get_new_norm(double old_norm[3], double (*new_norm)[3]);

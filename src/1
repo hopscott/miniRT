@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 18:55:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/09 18:29:20 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	while (i < space->n_lights)
 	{
 		light = space->lights[i++];
-		if (hit->nearest->type == CYLINDER)
-			init_cy_params(&(shader.obj->cy), light->xyz, LIGHT);
 		shading_from_light(space, hit, light, &shader);
 		set_shading_char(&shader, hit);
 	}

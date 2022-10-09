@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/08 16:41:24 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/09 20:23:14 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ HEADERS := 	$(INC_DIR)/minirt.h\
 SRCS	:= 	$(SRC_DIR)/camera/camera_lookat_matrix.c\
 			$(SRC_DIR)/camera/matrix_operations.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
+			$(SRC_DIR)/intersector/cylinder_intersection_2.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\

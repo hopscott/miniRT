@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/08 16:41:24 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/09 13:43:19 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,8 +84,7 @@ SRCS	:= 	$(SRC_DIR)/camera/camera_lookat_matrix.c\
 all : miniRT
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	mkdir -p 	$(OBJ_DIR) $(OBJ_DIR)/camera $(OBJ_DIR)/intersector $(OBJ_DIR)/parser $(OBJ_DIR)/printers \
-				$(OBJ_DIR)/rays $(OBJ_DIR)/render $(OBJ_DIR)/shading $(OBJ_DIR)/vec
+	mkdir -p 	$(OBJ_DIR) $(OBJ_DIR)/camera $(OBJ_DIR)/intersector $(OBJ_DIR)/parser $(OBJ_DIR)/printers $(OBJ_DIR)/rays $(OBJ_DIR)/render $(OBJ_DIR)/shading $(OBJ_DIR)/vec
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 # Objects ========================================

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/07 02:02:22 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/08 19:01:03 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ void	surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader)
 	{
 		sphere_surface_normal(shader->ray, &obj->sp, hit->phit, \
 														&shader->normal);
-		set_uv_sphere(hit, &obj->sp);
 		vec_copy(obj->sp.rgb, &shader->rgb);
+		set_uv_sphere(hit, &obj->sp);
 		set_rgb_normal(hit, obj->sp.rgb, SPHERE, shader);
 	}
 	else if ((hit->nearest) && (hit->nearest->type == PLANE))
 	{
 		vec_copy(obj->pl.norm, &shader->normal);
-		set_uv_plane(hit, &obj->pl);
 		vec_copy(obj->pl.rgb, &shader->rgb);
+		set_uv_plane(hit, &obj->pl);
 		set_rgb_normal(hit, obj->pl.rgb, PLANE, shader);
 	}
 	else if ((hit->nearest) && (hit->nearest->type == CYLINDER))
 	{
 		cylinder_surface_normal(&obj->cy, hit->phit, &shader->normal);
-		set_uv_cylinder(hit, &obj->cy);
 		vec_copy(obj->cy.rgb, &shader->rgb);
+		set_uv_cylinder(hit, &obj->cy);
 		set_rgb_normal(hit, obj->cy.rgb, CYLINDER, shader);
 	}
 }

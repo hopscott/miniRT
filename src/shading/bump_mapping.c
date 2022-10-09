@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading_normal.c                                   :+:      :+:    :+:   */
+/*   bump_mapping.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 15:37:07 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:12:42 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ t_mat44	*mat44_init_tbn(t_hit *hit, double surface_norm[3], \
 	else if (type == PLANE)
 		tbn_tangents_plane((t_plane *)hit->nearest->content, \
 												&tangent, &bitangent);
-	else if (type == CYLINDER)
-		tbn_tangents_sphere(hit, surface_norm, &tangent, &bitangent);
 	vec_set(0, 0, 0, &zeros);
 	ret = mat44_init(tangent, bitangent, bump_norm, zeros);
 	return (ret);
@@ -70,20 +68,8 @@ void	convert_color(unsigned char *color, double (*bump_norm)[3])
 			&rgb);
 	vec_set(2 * (rgb[0] / 255) - 1, \
 			2 * (rgb[1] / 255) - 1, \
-			(rgb[2] - 127 )/ 128, \
+			-1 * (rgb[2] - 127) / 128, \
 			bump_norm);
-	if ((*bump_norm)[0] < (double)-1)
-		(*bump_norm)[0] = -1;
-	if ((*bump_norm)[0] > (double)1)
-		(*bump_norm)[0] = 1;
-	if ((*bump_norm)[1] < (double)-1)
-		(*bump_norm)[1] = -1;
-	if ((*bump_norm)[1] > (double)1)
-		(*bump_norm)[1] = 1;
-	if ((*bump_norm)[2] < (double)0)
-		(*bump_norm)[2] = 0;
-	if ((*bump_norm)[2] > (double)1)
-		(*bump_norm)[2] = 1;
 }
 
 int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
@@ -104,7 +90,9 @@ int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
 	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
 	if (!tbn)
 		return (1);
-	vec_matrix_multiply(tbn, bump_norm, 1, surface_norm);
+	vec_matrix_multiply(tbn, bump_norm, 0, surface_norm);
+	vec_unit((*surface_norm), surface_norm);
+	vec_multiply((*surface_norm), -1, surface_norm);
 	free(tbn);
 	return (0);
 }

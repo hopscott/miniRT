@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
+#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/09 13:43:19 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/09 20:31:59 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ EXE := $(BIN_DIR)/miniRT
 
 # Compilation ====================================
 
-CC := cc 
+CC := cc
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g # -fsanitize=address
 
@@ -41,6 +41,7 @@ HEADERS := 	$(INC_DIR)/minirt.h\
 SRCS	:= 	$(SRC_DIR)/camera/camera_lookat_matrix.c\
 			$(SRC_DIR)/camera/matrix_operations.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
+			$(SRC_DIR)/intersector/cylinder_intersection_2.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\
 			$(SRC_DIR)/intersector/light_intersection.c\
 			$(SRC_DIR)/intersector/plane_intersection.c\
@@ -85,7 +86,7 @@ all : miniRT
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	mkdir -p 	$(OBJ_DIR) $(OBJ_DIR)/camera $(OBJ_DIR)/intersector $(OBJ_DIR)/parser $(OBJ_DIR)/printers $(OBJ_DIR)/rays $(OBJ_DIR)/render $(OBJ_DIR)/shading $(OBJ_DIR)/vec
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Objects ========================================
 

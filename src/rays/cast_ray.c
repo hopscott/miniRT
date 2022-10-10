@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 15:42:00 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 01:07:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 
 	hit.shading = '.';
 	vec_set(0, 0, 0, &hit.rgb);
-	nearest_hit_object(ray, space->objects, &hit);
+	nearest_hit_object(ray, space->objects, &hit, 1);
 	if (hit.nearest)
 		obj = (t_object *)(hit.nearest->content);
 	if ((hit.nearest) && (hit.nearest->type == LIGHT))
@@ -78,6 +78,8 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 		vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
 																&hit.phit);
 		shading(space, ray, &hit, obj);
+		if (space->fatal_error)
+			return (-1);
 	}
 	else
 		vec_add(hit.rgb, space->ambient->rgb, &hit.rgb);

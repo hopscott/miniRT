@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 16:58:48 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 10:59:01 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ in .rt file.\nUse --help as an option for more information.\n"
 # define FATAL_ERROR "\nFATAL ERROR!!!\n"
 
 /* types of objects in linked list */
-
 enum {
 	ERROR		= -1,
 	AMBIENT		= 0,
@@ -155,6 +154,8 @@ typedef struct s_cylinder
 	double	radius;
 	double	co[3];
 	double	cross_co_orient[3];
+	double	lo[3];
+	double	cross_lo_orient[3];
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -376,7 +377,7 @@ t_mat44		*camera_lookat(t_camera *cam);
 
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
-void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit);
+void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit, int i);
 
 /* shading.c */
 void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
@@ -384,11 +385,12 @@ void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
 									t_light *light, t_shader *shader);
+void		init_cy_with_lights(t_obj_lst **objs, double l_xyz[3]);
 
 /* shading_uv.c */
 void		set_uv_sphere(t_hit *hit, t_sphere *sp);
 void		set_uv_plane(t_hit *hit, t_plane *pl);
-void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+void		set_uv_cylinder(t_space *space, t_hit *hit, t_cylinder *cy);
 
 /* shading_uv_cy.c */
 t_mat44		*set_ry(double angle);
@@ -405,7 +407,8 @@ void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 									int type, double (*rgb)[3]);
 void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
 void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
-void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
+void		surface_rgb_normal(t_space *space, t_hit *hit, t_object *obj, \
+		t_shader *shader);
 
 /* shading_normal.c */
 int			set_bump_normal(t_hit *hit, t_data *bump, int type, \
@@ -448,11 +451,16 @@ int			normal_bmap_plane_lines(t_plane *plane, t_hit *hit, double vec[3]);
 
 /* cylinder_intersection.c */
 int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-void		cylinder_surface_normal(t_cylinder *cy, double phit[3], \
-															double (*norm)[3]);
+int			cy_intersection_2(t_ray *ray, t_cylinder *cy, t_hit *hit);
 void		adjust_plane_norm(t_obj_lst *space_objs, double r_or[3]);
 
+/* cylinder_intersection_2.c */
+void		cylinder_surface_normal(t_cylinder *cy, double phit[3], \
+															double (*norm)[3]);
+
+/* init_center_cy_cam.c */
 void		cy_init_cam_center(t_camera *camera, t_obj_lst **objs);
+void		init_cy_params(t_cylinder *cylinder, double xyz[3], int type);
 
 /* =================== MAIN ====================== */
 

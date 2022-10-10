@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 15:43:11 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 01:34:19 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	space_render(t_vars *vars, int width, int height, t_space *space)
 			param.colour = cast_ray(&ray, space, \
 						&param.screen_hit[(int)param.py][(int)param.px], \
 						&param.screen_shading[(int)param.py][(int)param.px]);
+			if (space->fatal_error)
+				return (free_params(&param));
 			my_mlx_pixel_put(&vars->data, param.px, param.py, param.colour);
 		}
 		print_progress(param.py, height);

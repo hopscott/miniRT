@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/07 21:10:46 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 00:41:43 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,24 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	return (0);
 }
 
-/* ===================================================== */
-/* https://stackoverflow.com/questions/36266357/		 */
-/* how-can-i-compute-normal-on-the-surface-of-a-cylinder */
-/* ===================================================== */
-
-void	cylinder_surface_normal(t_cylinder *cy, double phit[3], \
-														double (*norm)[3])
+int	cy_intersection_2(t_ray *ray, t_cylinder *cy, t_hit *hit)
 {
-	double	t;
-	double	dist[3];
-	double	pt[3];
+	double	abc[3];
+	double	rot_r_dir[3];
+	double	discr;
+	double	dab[3];
 
-	vec_subtract(phit, cy->xyz, &dist);
-	t = vec_dot(dist, cy->norm);
-	vec_ray_distance_to_point(cy->xyz, cy->norm, t, &pt);
-	vec_subtract(phit, pt, norm);
-	vec_unit(*norm, norm);
+	vec_cross(ray->direction, cy->norm, &rot_r_dir);
+	abc[0] = vec_dot(rot_r_dir, rot_r_dir);
+	abc[1] = 2 * vec_dot(rot_r_dir, cy->cross_lo_orient);
+	abc[2] = vec_dot(cy->cross_lo_orient, cy->cross_lo_orient) \
+												- pow(cy->radius, 2);
+	discr = pow(abc[1], 2) - 4 * abc[0] * abc[2];
+	if (discr < (double)0)
+		hit->t = -1;
+	vec_set(discr, abc[0], abc[1], &dab);
+	hit->t = find_smallest_dist(ray->origin, ray->direction, cy, dab);
+	if (hit->t == -10)
+		return (1);
+	return (0);
 }

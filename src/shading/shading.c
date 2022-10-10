@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/09 17:22:21 by swillis          ###   ########.fr       */
+=======
+/*   Updated: 2022/10/10 02:32:31 by omoudni          ###   ########.fr       */
+>>>>>>> 1c8b2aa1c65cae869ca1c5358a5b2ec51af33269
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +61,8 @@ void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 	}
 }
 
-void	set_surface(t_hit *hit, t_object *obj, t_shader *shader)
+void	surface_rgb_normal(t_space *space, t_hit *hit, t_object *obj, \
+		t_shader *shader)
 {
 	if ((hit->nearest) && (hit->nearest->type == SPHERE))
 	{
@@ -78,7 +83,9 @@ void	set_surface(t_hit *hit, t_object *obj, t_shader *shader)
 	{
 		cylinder_surface_normal(&obj->cy, hit->phit, &shader->normal);
 		vec_copy(obj->cy.rgb, &shader->rgb);
-		set_uv_cylinder(hit, &obj->cy);
+		set_uv_cylinder(space, hit, &obj->cy);
+		if (space->fatal_error)
+			return ;
 		set_rgb_normal(hit, obj->cy.rgb, CYLINDER, shader);
 	}
 }
@@ -98,12 +105,15 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	shader.bump = hit->nearest->bump;
 	shader.ray = ray;
 	shader.obj = obj;
-	set_surface(hit, obj, &shader);
+	surface_rgb_normal(space, hit, obj, &shader);
+	if (space->fatal_error)
+		return ;
 	init_light_components(space, &shader);
 	i = 0;
 	while (i < space->n_lights)
 	{
 		light = space->lights[i++];
+		init_cy_with_lights(&space->objects, light->xyz);
 		shading_from_light(space, hit, light, &shader);
 		set_shading_char(&shader, hit);
 	}

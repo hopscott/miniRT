@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 11:21:20 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:39:57 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,18 @@ size_t	cast_ray(t_ray *ray, t_space *space, char *chit, char *cshading)
 	vec_set(0, 0, 0, &hit.rgb);
 	nearest_hit_object(ray, space->objects, &hit, CAMERA);
 	if (hit.nearest)
-		obj = (t_object *)(hit.nearest->content);
-	if ((hit.nearest) && (hit.nearest->type == LIGHT))
-		vec_add(hit.rgb, obj->l.rgb, &hit.rgb);
-	else if (hit.nearest)
 	{
-		vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
-																&hit.phit);
-		shading(space, ray, &hit, obj);
-		if (space->fatal_error)
-			return (-1);
+		obj = (t_object *)(hit.nearest->content);
+		if (hit.nearest->type == LIGHT)
+			vec_add(hit.rgb, obj->l.rgb, &hit.rgb);
+		else
+		{
+			vec_ray_distance_to_point(ray->origin, ray->direction, hit.t, \
+																	&hit.phit);
+			shading(space, ray, &hit, obj);
+			if (space->fatal_error)
+				return (-1);
+		}
 	}
 	else
 		vec_add(hit.rgb, space->ambient->rgb, &hit.rgb);

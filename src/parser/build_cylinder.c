@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 20:42:53 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 11:10:54 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:45:33 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	build_cylinder_vecs(t_cylinder **obj)
 	vec_set(cy->vec_x, cy->vec_y, cy->vec_z, &cy->norm);
 	vec_unit(cy->norm, &cy->norm);
 	vec_set(cy->r, cy->g, cy->b, &cy->rgb);
-	cy->is_lray = 0;
 }
 
 t_cylinder	*sub_build_cy(char **tbl, int to_switch, t_cylinder **cy, \

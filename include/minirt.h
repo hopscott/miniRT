@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 11:22:31 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:47:51 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ typedef struct s_cylinder
 	double	cross_co_orient[3];
 	double	lo[3];
 	double	cross_lo_orient[3];
-	int		is_lray;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -245,9 +244,23 @@ typedef struct s_param {
 	double		px;
 	double		py;
 	size_t		colour;
+}	t_param;
+
+/*	DEBUG Param structure	*/
+/*
+typedef struct s_param {
+	int			height;
+	int			width;
+	double		scale;
+	double		aspect_ratio;
+	t_mat44		*matrix;
+	double		px;
+	double		py;
+	size_t		colour;
 	char		**screen_hit;
 	char		**screen_shading;
 }	t_param;
+*/
 
 /*	Ray structure	*/
 typedef struct s_ray {
@@ -373,6 +386,9 @@ void		print_mat(t_mat44 *mat);
 /* matrix_2.c */
 void		vec_matrix_multiply_bis(t_mat44 *mat, double vec[3], double w, \
 															double (*res)[3]);
+
+/* matrix_transpose.c */
+void		transpose_matrix(t_mat44 *mat);
 
 /* camera_lookat_mat.c */
 t_mat44		*camera_lookat(t_camera *cam);

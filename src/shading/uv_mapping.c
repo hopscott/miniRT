@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 02:26:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:11:15 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	set_uv_plane(t_hit *hit, t_plane *pl)
 
 	vec_subtract(hit->phit, pl->xyz, &xyz);
 	vec_divide(xyz, 100, &xyz);
-	hit->u = fabs(fmod(vec_dot(xyz, pl->e1), 1));
+	hit->u = fmod(vec_dot(xyz, pl->e1), 1);
+	if (hit->u < 0)
+		hit->u = fmod(hit->u + 1, 1);
 	hit->v = fmod(vec_dot(xyz, pl->e2), 1);
 	if (hit->v < 0)
 		hit->v = fmod(hit->v + 1, 1);

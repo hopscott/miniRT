@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 10:59:58 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 11:00:04 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:44:32 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,10 @@ int	set_bump_normal(t_hit *hit, t_data *bump, int type, \
 	tbn = mat44_init_tbn(hit, (*surface_norm), type, bump_norm);
 	if (!tbn)
 		return (1);
-	vec_matrix_multiply(tbn, bump_norm, 1, surface_norm);
-	vec_unit((*surface_norm), surface_norm);
-	vec_multiply((*surface_norm), -1, surface_norm);
+	transpose_matrix(tbn);
+	vec_matrix_multiply(tbn, bump_norm, 1, &bump_norm);
+	vec_unit(bump_norm, surface_norm);
+	vec_multiply(*surface_norm, -1, surface_norm);
 	free(tbn);
 	return (0);
 }

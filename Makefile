@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
+#    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/09 20:31:59 by omoudni          ###   ########.fr        #
+#    Updated: 2022/10/10 13:48:20 by swillis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ HEADERS := 	$(INC_DIR)/minirt.h\
 
 SRCS	:= 	$(SRC_DIR)/camera/camera_lookat_matrix.c\
 			$(SRC_DIR)/camera/matrix_operations.c\
+			$(SRC_DIR)/camera/matrix_transpose.c\
 			$(SRC_DIR)/intersector/cylinder_intersection.c\
 			$(SRC_DIR)/intersector/cylinder_intersection_2.c\
 			$(SRC_DIR)/intersector/init_center_cy_cam.c\

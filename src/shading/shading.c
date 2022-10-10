@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:00:27 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 11:00:31 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:24:41 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ void	init_light_components(t_space *space, t_shader *shader)
 	vec_set(0, 0, 0, &shader->specular);
 }
 
-void	set_shading_char(t_shader *shader, t_hit *hit)
-{
-	if (shader->lobj == shader->obj)
-	{
-		if ((shader->specular_comp > shader->diffuse_comp))
-		{
-			if (shader->specular_comp > 0.001)
-				hit->shading = '*';
-		}
-		else if (shader->diffuse_comp > 0.5)
-			hit->shading = 'o';
-	}
-	else
-		hit->shading = 'x';
-}
 
 void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 {
@@ -58,7 +43,7 @@ void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 }
 
 void	surface_rgb_normal(t_space *space, t_hit *hit, t_object *obj, \
-		t_shader *shader)
+														t_shader *shader)
 {
 	if ((hit->nearest) && (hit->nearest->type == SPHERE))
 	{
@@ -111,6 +96,37 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 		light = space->lights[i++];
 		init_cy_with_lights(&space->objects, light->xyz);
 		shading_from_light(space, hit, light, &shader);
+	}
+	vec_copy(shader.ambient, &hit->rgb);
+	vec_add(hit->rgb, shader.diffuse, &hit->rgb);
+	vec_add(hit->rgb, shader.specular, &hit->rgb);
+	rgb_multiply(hit->rgb, shader.rgb, &hit->rgb);
+}
+
+/* ===== */
+/* DEBUG */
+/* ===== */
+/* 
+void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
+{
+	t_shader	shader;
+	t_light		*light;
+	size_t		i;
+
+	shader.texture = hit->nearest->texture;
+	shader.bump = hit->nearest->bump;
+	shader.ray = ray;
+	shader.obj = obj;
+	surface_rgb_normal(space, hit, obj, &shader);
+	if (space->fatal_error)
+		return ;
+	init_light_components(space, &shader);
+	i = 0;
+	while (i < space->n_lights)
+	{
+		light = space->lights[i++];
+		init_cy_with_lights(&space->objects, light->xyz);
+		shading_from_light(space, hit, light, &shader);
 		set_shading_char(&shader, hit);
 	}
 	vec_copy(shader.ambient, &hit->rgb);
@@ -118,3 +134,20 @@ void	shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj)
 	vec_add(hit->rgb, shader.specular, &hit->rgb);
 	rgb_multiply(hit->rgb, shader.rgb, &hit->rgb);
 }
+
+void	set_shading_char(t_shader *shader, t_hit *hit)
+{
+	if (shader->lobj == shader->obj)
+	{
+		if ((shader->specular_comp > shader->diffuse_comp))
+		{
+			if (shader->specular_comp > 0.001)
+				hit->shading = '*';
+		}
+		else if (shader->diffuse_comp > 0.5)
+			hit->shading = 'o';
+	}
+	else
+		hit->shading = 'x';
+}
+*/

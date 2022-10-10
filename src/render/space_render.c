@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 01:34:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:20:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,54 @@ int	space_set_lights(t_space *space, t_obj_lst *elem)
 	return (0);
 }
 
+
+int	init_parameters(int width, int height, t_space *space, t_param *param)
+{
+	param->width = width;
+	param->height = height;
+	if (space_set_lights(space, space->objects))
+		return (1);
+	param->matrix = camera_lookat(space->camera);
+	if (!param->matrix)
+		return (1);
+	param->scale = tan(((space->camera->fov / 2) * (M_PI / 180)));
+	param->aspect_ratio = (double)param->width / (double)param->height;
+	param->colour = 0;
+	adjust_plane_norm(space->objects, space->camera->xyz);
+	param->py = -1;
+	return (0);
+}
+
+void	space_render(t_vars *vars, int width, int height, t_space *space)
+{
+	t_param	param;
+	t_ray	ray;
+
+	set_surfaces(vars->textures, vars->bumps, &space->objects);
+	if (init_parameters(width, height, space, &param))
+		return (fatal_error(space));
+	vec_copy(space->camera->xyz, &ray.origin);
+	adjust_plane_norm(space->objects, ray.origin);
+	while (++param.py < param.height)
+	{
+		param.px = -1;
+		while (++param.px < param.width)
+		{
+			set_direction(param, param.matrix, &ray.direction);
+			param.colour = cast_ray(&ray, space, NULL, NULL);
+			if (space->fatal_error)
+				return (free_params(&param));
+			my_mlx_pixel_put(&vars->data, param.px, param.py, param.colour);
+		}
+		print_progress(param.py, height);
+	}
+	free_params(&param);
+}
+
+/* ====== */
+/* DEBUG  */
+/* ====== */
+/*
 int	sub_create_debugger(char ***tab, int dim_y, int dim_x)
 {
 	char	**tableau;
@@ -129,3 +177,4 @@ void	space_render(t_vars *vars, int width, int height, t_space *space)
 	}
 	print_screens_and_free_matrix(&param);
 }
+*/

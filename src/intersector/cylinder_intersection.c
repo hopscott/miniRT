@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:31:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/10/10 00:41:43 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:07:54 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit)
 	return (0);
 }
 
-int	cy_intersection_2(t_ray *ray, t_cylinder *cy, t_hit *hit)
+int	cy_intersection_lray(t_ray *ray, t_cylinder *cy, t_hit *hit)
 {
 	double	abc[3];
 	double	rot_r_dir[3];

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 10:56:47 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:18:20 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	shading_from_light(t_space *space, t_hit *hit, \
 	vec_copy(light->xyz, &lray.origin);
 	vec_subtract(hit->phit, light->xyz, &lray.direction);
 	vec_unit(lray.direction, &lray.direction);
-	nearest_hit_object(&lray, space->objects, &lhit, 2);
+	nearest_hit_object(&lray, space->objects, &lhit, LIGHT);
 	if (lhit.nearest)
 	{
 		shader->lobj = (t_object *)(lhit.nearest->content);

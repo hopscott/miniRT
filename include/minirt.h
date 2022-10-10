@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 10:59:01 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:22:31 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ in .rt file.\nUse --help as an option for more information.\n"
 
 /* types of objects in linked list */
 enum {
-	ERROR		= -1,
-	AMBIENT		= 0,
-	CAMERA		= 1,
-	LIGHT		= 2,
-	SPHERE		= 3,
-	PLANE		= 4,
-	CYLINDER	= 5
+	ERROR			= -1,
+	AMBIENT			= 0,
+	CAMERA			= 1,
+	LIGHT			= 2,
+	SPHERE			= 3,
+	PLANE			= 4,
+	CYLINDER		= 5,
+	CYLINDER_L_RAY	= 6
 };
 
 enum {
@@ -156,6 +157,7 @@ typedef struct s_cylinder
 	double	cross_co_orient[3];
 	double	lo[3];
 	double	cross_lo_orient[3];
+	int		is_lray;
 }			t_cylinder;
 
 /*	Union object structure	*/
@@ -377,7 +379,8 @@ t_mat44		*camera_lookat(t_camera *cam);
 
 /* rays.c */
 size_t		cast_ray(t_ray *ray, t_space *space, char *object, char *shading);
-void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit, int i);
+void		nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit, \
+														int ray_type);
 
 /* shading.c */
 void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
@@ -451,7 +454,7 @@ int			normal_bmap_plane_lines(t_plane *plane, t_hit *hit, double vec[3]);
 
 /* cylinder_intersection.c */
 int			cy_intersection(t_ray *ray, t_cylinder *cy, t_hit *hit);
-int			cy_intersection_2(t_ray *ray, t_cylinder *cy, t_hit *hit);
+int			cy_intersection_lray(t_ray *ray, t_cylinder *cy, t_hit *hit);
 void		adjust_plane_norm(t_obj_lst *space_objs, double r_or[3]);
 
 /* cylinder_intersection_2.c */

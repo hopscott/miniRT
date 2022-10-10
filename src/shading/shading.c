@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:00:27 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 13:24:41 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:52:47 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_light_components(t_space *space, t_shader *shader)
 	shader->specular_comp = 0;
 	vec_set(0, 0, 0, &shader->specular);
 }
-
 
 void	set_rgb_normal(t_hit *hit, double rgb[3], int type, t_shader *shader)
 {

@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 23:33:02 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/10 13:20:54 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:52:43 by swillis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	space_set_lights(t_space *space, t_obj_lst *elem)
 	space->lights[i] = NULL;
 	return (0);
 }
-
 
 int	init_parameters(int width, int height, t_space *space, t_param *param)
 {

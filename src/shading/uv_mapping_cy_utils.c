@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading_uv_cy.c                                    :+:      :+:    :+:   */
+/*   uv_mapping_cy_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/06 16:04:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 01:58:39 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ t_mat44	*set_rot_mat(double phi, double theta)
 	t_mat44	*r;
 
 	r_y = set_ry(phi);
+	if (!r_y)
+		return (NULL);
 	r_z = set_rz(theta);
+	if (!r_z)
+		return (free(r_y), NULL);
 	r = mat_x_mat(r_z, r_y, 1);
 	return (r);
 }
@@ -107,8 +111,13 @@ int	trans_to_cy(double (*trans_phit)[3], double cy_norm[3], t_hit *hit, int i)
 		if (theta < 0)
 			theta = theta + M_PI;
 	}
+	printf("phi: %f, theta: %f\n", phi, theta);
 	rot_mat = set_rot_mat(phi, theta);
+	if (!rot_mat)
+		return (1);
 	if (i == 1)
-		return (vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit), 0);
-	return (vec_matrix_multiply_bis(rot_mat, hit->phit, 1, trans_phit), 0);
+		vec_matrix_multiply(rot_mat, hit->phit, 1, trans_phit);
+	else
+		vec_matrix_multiply_bis(rot_mat, hit->phit, 1, trans_phit);
+	return (free(rot_mat), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:58:55 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 20:32:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 02:33:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,11 +385,12 @@ void		shading(t_space *space, t_ray *ray, t_hit *hit, t_object *obj);
 /* shading_light.c */
 void		shading_from_light(t_space *space, t_hit *hit, \
 									t_light *light, t_shader *shader);
+void		init_cy_with_lights(t_obj_lst **objs, double l_xyz[3]);
 
 /* shading_uv.c */
 void		set_uv_sphere(t_hit *hit, t_sphere *sp);
 void		set_uv_plane(t_hit *hit, t_plane *pl);
-void		set_uv_cylinder(t_hit *hit, t_cylinder *cy);
+void		set_uv_cylinder(t_space *space, t_hit *hit, t_cylinder *cy);
 
 /* shading_uv_cy.c */
 t_mat44		*set_ry(double angle);
@@ -406,7 +407,8 @@ void		set_checkerboard_rgb(t_hit *hit, double surf_rgb[3], \
 									int type, double (*rgb)[3]);
 void		set_texture_rgb(t_hit *hit, t_data *tex, double (*rgb)[3]);
 void		set_rgb(t_hit *hit, double rgb[3], double size, t_shader *shader);
-void		surface_rgb_normal(t_hit *hit, t_object *obj, t_shader *shader);
+void		surface_rgb_normal(t_space *space, t_hit *hit, t_object *obj, \
+		t_shader *shader);
 
 /* shading_normal.c */
 int			set_bump_normal(t_hit *hit, t_data *bump, int type, \

@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 20:33:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 02:28:20 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void find_intersection(int type, t_ray *ray, t_object *obj, t_hit *hit)
+void	find_intersection(int type, t_ray *ray, t_object *obj, t_hit *hit)
 {
 	if (type == LIGHT)
 		light_intersection(ray, &obj->l, hit);
@@ -43,8 +43,8 @@ void	find_intersection_2(int type, t_ray *ray, t_object *obj, t_hit *hit)
 
 void	nearest_hit_object(t_ray *ray, t_obj_lst *elem, t_hit *hit, int i)
 {
-	double tmin;
-	t_object *obj;
+	double		tmin;
+	t_object	*obj;
 
 	hit->nearest = NULL;
 	tmin = INFINITY;

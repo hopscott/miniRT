@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/08 15:39:45 by swillis          ###   ########.fr       */
+/*   Updated: 2022/10/10 02:26:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,29 @@ void	get_new_norm(double old_norm[3], double (*new_norm)[3])
 	(*new_norm)[2] = -1 * old_norm[2];
 }
 
-void	set_uv_cylinder(t_hit *hit, t_cylinder *cy)
+void	set_uv_cylinder(t_space *space, t_hit *hit, t_cylinder *cy)
 {
 	double	xyz[3];
 	double	theta;
 	double	raw_u;
 	double	new_norm[3];
+	int		error;
 
+	error = 0;
 	if (cy->norm[0] == 0 && cy->norm[2] == 0 && cy->norm[1] == 1)
 		vec_copy(hit->phit, &xyz);
 	else if (cy->norm[0] < 0)
 	{
 		get_new_norm(cy->norm, &new_norm);
-		trans_to_cy(&xyz, new_norm, hit, 2);
+		error = trans_to_cy(&xyz, new_norm, hit, 2);
 	}
 	else
-		trans_to_cy(&xyz, cy->norm, hit, 1);
+		error = trans_to_cy(&xyz, cy->norm, hit, 1);
+	if (error)
+	{
+		space->fatal_error = 1;
+		return ;
+	}
 	theta = atan(xyz[0] / xyz[2]);
 	raw_u = theta / (2 * M_PI);
 	hit->u = (1 - (raw_u + 0.5));

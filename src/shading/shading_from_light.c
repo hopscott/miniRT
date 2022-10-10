@@ -6,7 +6,7 @@
 /*   By: swillis <swillis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 20:17:24 by swillis           #+#    #+#             */
-/*   Updated: 2022/10/09 19:00:15 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/10/10 02:31:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,23 @@ void	rgb_multiply(double rgb1[3], double rgb2[3], double (*rgb)[3])
 	g = (size_t)rgb1[1] * (size_t)rgb2[1] / 255;
 	b = (size_t)rgb1[2] * (size_t)rgb2[2] / 255;
 	vec_set(r, g, b, rgb);
+}
+
+void	init_cy_with_lights(t_obj_lst **objs, double l_xyz[3])
+{
+	t_obj_lst	*elem;
+	t_obj_lst	*next;
+	t_object	*obj;
+
+	elem = *objs;
+	while (elem)
+	{
+		next = elem->next;
+		if (elem->type == CYLINDER)
+		{
+			obj = (t_object *)elem->content;
+			init_cy_params(&(obj->cy), l_xyz, LIGHT);
+		}
+		elem = elem->next;
+	}
 }

@@ -6,7 +6,7 @@
 #    By: swillis <swillis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 19:55:04 by swillis           #+#    #+#              #
-#    Updated: 2022/10/10 13:48:20 by swillis          ###   ########.fr        #
+#    Updated: 2022/10/10 14:15:34 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ EXE := $(BIN_DIR)/miniRT
 
 CC := cc
 LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g # -fsanitize=address
+CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g 
 
 # # macOS
 # LDFLAGS ?= -Lmlx -lmlx -framework OpenGL -framework AppKit
@@ -100,12 +100,9 @@ LIBFT := $(LIB_DIR)/libft/libft.a
 $(LIBFT) :
 	make -C lib/libft -f Makefile
 
-$(ULIMIT) :
-	ulimit -s 65536
-
 # Recipes ========================================
 
-miniRT : $(OBJS) $(LIBFT) $(ULIMIT)
+miniRT : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(EXE)
 
 # Cleanup ========================================

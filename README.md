@@ -16,7 +16,7 @@
 	
 	~/shell$> ./miniRT example.rt example_texture.xpm example_bump.xpm
 
-### Example .rt file
+### .rt file components
 
 -------------------------------------------------------------------
 					  Scene general components

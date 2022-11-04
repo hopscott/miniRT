@@ -1,3 +1,23 @@
+# miniRT
+
+**miniRT** is a project from the **42** Common Core, The project aims to build your own raytracer from scratch in C.
+
+
+### Usage
+
+	~/shell$> make
+	~/shell$> ./miniRT example.rt
+	
+	To use CUSTOM texture maps (must be in .xpm format)
+	
+	~/shell$> ./miniRT example.rt example_texture.xpm
+	
+	To use CUSTOM texture maps + bump maps (must be in .xpm format)
+	
+	~/shell$> ./miniRT example.rt example_texture.xpm example_bump.xpm
+
+### Example .rt file
+
 -------------------------------------------------------------------
 					  Scene general components
 -------------------------------------------------------------------

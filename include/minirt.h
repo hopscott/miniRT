@@ -23,8 +23,8 @@
 # include <math.h>
 # include <stdint.h>
 
-# define WIDTH 1280
-# define HEIGHT 1024
+# define WIDTH 1024
+# define HEIGHT 768
 # define EPSILON 0.00000000000001
 
 # define ERROR_ARGS "Syntax not respected\nUse \

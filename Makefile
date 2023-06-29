@@ -25,12 +25,14 @@ EXE := $(BIN_DIR)/miniRT
 # Compilation ====================================
 
 CC := cc
-LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g 
 
-# # macOS
-# LDFLAGS ?= -Lmlx -lmlx -framework OpenGL -framework AppKit
-# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -Imlx -O3 -g -fsanitize=address
+# # linux
+# LDFLAGS ?= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+# CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3 -g 
+
+# macOS
+LDFLAGS ?= -Lmlx -lmlx -framework OpenGL -framework AppKit
+CFLAGS ?= -Wall -Wextra -Werror -I$(INC_DIR) -Imlx -O3 -g #-fsanitize=address
 
 # Src files ======================================
 

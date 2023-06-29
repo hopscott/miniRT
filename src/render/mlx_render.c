@@ -14,15 +14,17 @@
 
 int	keypress(int key, t_vars *vars)
 {
+	(void)key;
 	(void)vars;
-	if (key == 65307)
-		mlx_loop_end(vars->mlx);
+	// if (key == 65307)
+	// 	mlx_loop_end(vars->mlx);  // COMPILE ISSUE MACOS
 	return (0);
 }
 
 int	destroy(t_vars *vars)
 {
-	mlx_loop_end(vars->mlx);
+	(void)vars;
+	// mlx_loop_end(vars->mlx); // COMPILE ISSUE MACOS
 	return (0);
 }
 
@@ -55,7 +57,7 @@ void	free_vars(t_vars *vars, t_space *space, int fatal)
 		mlx_destroy_image(vars->mlx, vars->data.img);
 	if (vars->mlx)
 	{
-		mlx_destroy_display(vars->mlx);
+		// mlx_destroy_display(vars->mlx);	// COMPILE ISSUE MACOS
 		free(vars->mlx);
 	}
 	if (fatal)

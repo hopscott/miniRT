@@ -101,13 +101,11 @@ void	rgb_multiply(double rgb1[3], double rgb2[3], double (*rgb)[3])
 void	init_cy_with_lights(t_obj_lst **objs, double l_xyz[3])
 {
 	t_obj_lst	*elem;
-	t_obj_lst	*next;
 	t_object	*obj;
 
 	elem = *objs;
 	while (elem)
 	{
-		next = elem->next;
 		if (elem->type == CYLINDER)
 		{
 			obj = (t_object *)elem->content;
